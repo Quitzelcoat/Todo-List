@@ -8,7 +8,79 @@
 </head>
 <body>
     
+    <main id="container">
 
+        <article class="navbar">
+            <div class="nav">
+                <h3 class="navTitle">The Todo List</h3>
+                <div class="navHome">Home</div>
+                <div class="navProject">Projects</div>
+                <div class="notes">Notes</div>
+                <div class="navContact">Contact Us</div>
+            </div>
+        </article>
+
+        <article class="mainContainer">
+            <div id="mainContent">
+                <div class="mainTitle">
+                    <h2>Welcome</h2>
+                </div>
+                <div class="allTasks"></div>
+                <div class="mainNewTasks"></div>
+            </div>
+        </article>
+
+        <article class="data-dialog">
+            <dialog open>
+                <form>
+                    <label for="todoTitle">Title</label>
+                    <input type="text" name="todoTitle" id="todoTitle">
+                </form>
+                <button class="addBtn" autofocus>Add Task</button>
+            </dialog>
+        </article>
+
+        <article class="leftSideBar">
+            <div class="leftBar">
+
+                <div class="sideProfile">
+                    <h3>User Name</h3>
+                </div>
+
+                <div>
+                    <div class="side newTaskSide">
+                        <button class="newTaskBtn" type="button">Add Tasks.</button>
+                    </div>
+                    <div class="side sideInbox">
+                        Inbox
+                    </div>
+                    <div class="side sidetoday">
+                        Today
+                    </div>
+                    <div class="side sideWeek">
+                        Upcoming
+                    </div>
+                    <div class="side completeSide">
+                        Complete Tasks
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="side sideProjects">
+                        My Projects
+                    </div>
+                </div>
+
+                <div>
+                    <div class="side sideNotes">
+                        Notes
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+    </main>
 
     <script src="main.js"></script>
 </body>
