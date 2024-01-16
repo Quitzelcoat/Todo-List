@@ -9,7 +9,6 @@ h2, h3 {
 #container {
     display: grid;
     grid-template-columns: 1fr 3fr;
-    /* grid-template-rows: 1fr 2fr 1fr; */
 }
 
 .navbar {
@@ -26,6 +25,10 @@ h2, h3 {
 
 .mainContainer {
     grid-column: 2/3;
+    grid-row: 2/3;
+}
+
+.leftSideBar {
     grid-row: 2/3;
 }
 
