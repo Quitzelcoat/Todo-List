@@ -32,36 +32,47 @@ export const dialogData = () => {
     pageControl.close();
   });
 
-  // const projectBtn = document.querySelector(".projectBtn");
-  // const pagesDialog = document.querySelector(".pagesDialog");
-  // projectBtn.addEventListener('click', () => {
-  //   pagesDialog.showModal();
-  // });
-
+  
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
     
     const taskElement = document.createElement('div');
     taskElement.className = "taskElement";
     taskElement.textContent = titleInput.value;
-
+    
     tasksContainer.appendChild(taskElement);
     titleInput.value = "";
     mainDialog.close();
   });
-
+  
   // Creates a new element and adds project Names.
   newProjectBtn.addEventListener('click', () => {
-
+    
     const projectElement = document.createElement('div');
     projectElement.className = 'newProjectPages';
     projectElement.textContent = projectInput.value;
-
+    
     addProjectName.appendChild(projectElement);
     projectInput.value = "";
     projectDialog.close();
-
+    
     pageControlCreate();
+  });
+  
+  const newPageBtn = document.querySelector(".newPageBtn");
+  const pagesDialog = document.querySelector('.pagesDialog');
+  const pageTitle = document.getElementById('pageTitle');
+  newPageBtn.addEventListener('click', () => {
+
+    const pageTaskPara = document.querySelector('.pageTaskPara');
+
+    const newElement = document.createElement('div');
+    newElement.className = 'newElement';
+    newElement.textContent = pageTitle.value;
+
+    pageTaskPara.appendChild(newElement);
+    pageTitle.value = '';
+    pagesDialog.close();
   });
 }
 

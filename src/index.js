@@ -19,21 +19,19 @@ DOM MINIPULATION:
         todo.(Done).
     5. Also make sure in the side bar for the new project when selected inside dialog only 
         ask for the title to create a field/div for that project. (Done).
-        
     6. When select that project create a new page for that project, And inside the
-        that page, we can create todo's of that project.
-    7. Put todo's in the right pages when created.
-    8. Add other functions needed inside dialogue. And make them work.
-        (e.g., priority and stuff).
-    9. Add edit and delete functions and make them working etc.
-    10. Do the remaining  css and other stuff.
-    11. Finall move to notes and make a dialogue for them to make them working.
+        that page, we can create todo's of that project.(Done).
 
-3. function to push the todo list task to the project. 
-4. function for representing what kind of projects to create.
-    (e.g., projects, simple todo task and notes)
-5. function to show where the following tasks created will be in
-    (e.g., in all tasks and complete tasks and todo
-        task or notes or projects.)
-6. Modules for edit, delete and priority of the task creted.
+    7. Create Today, completedTasks and upComming pages.
+    8. Add other functions needed inside dialogue. (e.g., priority, description, calander 
+        and stuff). (The calander working later)
+    9. Add sample check, edit, delete, priority, date(not editable) etc inside todo tasks.
+    10. Make the Dailog other functions working inside the todo tasks sample.
+        (edit, delete, check will work in the next task).
+    11. Make the calander working so that it will add to its specific pages according to date 
+        and add the date to the task created.
+    12. Put todo's in the rest of the right pages when created.
+    13. Do the remaining  css and other stuff.
+    14. Finall move to notes and make a dialogue for them to make them working.
+
 */
