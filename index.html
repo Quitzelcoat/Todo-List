@@ -44,30 +44,69 @@
                     <button class="newTodo" autofocus>Basic Todos</button>
                     <button class="createNewProject" autofocus>New Project</button>
                     <button class="createNewNotes" autofocus>Notes</button>
-
                 </div>
             </dialog>
 
             <dialog class="mainDialog">
                 <form>
-                    <label for="todoTitle">Task Name</label>
-                    <input type="text" name="todoTitle" id="todoTitle">
+                    <div class="title">
+                        <label for="todoTitle">Task Name</label>
+                        <input type="text" name="todoTitle" id="todoTitle">
+                    </div>
+                    <div class="description">
+                        <label for="todoDescription">Task Description</label>
+                        <input type="text" name="todoDescription" id="todoDescription">
+                    </div>
+                    <div class="priority">
+                        <h2 class="priorityTodo">
+                            Task Priority
+                        </h2>
+                        <div class="redTodo">red</div>
+                        <div class="yellowTodo">yellow</div>
+                        <div class="greenTodo">green</div>
+                        <div class="greyTodo">Grey</div>
+                    </div>
+                    <div class="date">
+                        <label for="todoTaskDate">Select Date</label>
+                        <input type="date" name="todoTaskDate" id="todoTaskDate">
+                    </div>
                 </form>
                 <button class="addBtn" autofocus>Add Task</button>
             </dialog>
 
             <dialog class="projectDialog">
                 <form>
-                    <label for="projectTtile">Create Project</label>
-                    <input type="text" name="projectTtile" id="projectTtile">
+                    <div class="title">
+                        <label for="projectTtile">Create Project</label>
+                        <input type="text" name="projectTtile" id="projectTtile">
+                    </div>
                 </form>
                 <button class="newProjectBtn" autofocus>New Project.</button>
             </dialog>
 
             <dialog class="pagesDialog">
                 <form>
-                    <label for="pageTitle">Create Project</label>
-                    <input type="text" name="pageTitle" id="pageTitle">
+                    <div class="title">
+                        <label for="pageTitle">Create Project</label>
+                        <input type="text" name="pageTitle" id="pageTitle">
+                    </div>
+                    <div class="description">
+                        <label for="pagesDescription">Task Description</label>
+                        <input type="text" name="pagesDescription" id="pagesDescription">
+                    </div>
+                    <div class="priority">
+                        <h2 class="priorityPages">
+                            Task Priority
+                        </h2>
+                        <div class="redPages">red</div>
+                        <div class="yellowPages">yellow</div>
+                        <div class="greenPages">green</div>
+                        <div class="greyPages">Grey</div>
+                    </div>
+                    <div class="date">
+                        <label for="pagesTaskDate">Select Date</label>
+                        <input type="date" name="pagesTaskDate" id="pagesTaskDate">
+                    </div>
                 </form>
                 <button class="newPageBtn" autofocus>Create Task</button>
             </dialog>
@@ -89,10 +128,10 @@
                     <div class="side sideInbox">
                         <p>Inbox</p>
                     </div>
-                    <div class="side sidetoday">
+                    <div class="side sideToday">
                         <p>Today</p>
                     </div>
-                    <div class="side sideWeek">
+                    <div class="side sideFuture">
                         <p>Upcoming</p>
                     </div>
                     <div class="side completeSide">
