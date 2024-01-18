@@ -19,18 +19,17 @@ export const projectPages = (clickedPage) => {
     const projectBtnDiv = document.createElement('div');
     const projectBtn = document.createElement('button');
     const pageTaskDiv = document.createElement('div');
-    const pageTaskPara = document.createElement('p');
-    
+    // const pageTaskPara = document.createElement('div');
+
     projectPage.classList.add('projectPage');
     projectPage.setAttribute('id', 'mainContent');
     titleDiv.classList.add('projectTitle');
     projectBtnDiv.classList.add('projectBtnDiv');
     projectBtn.classList.add('projectBtn');
     pageTaskDiv.classList.add('pageTaskDiv');
-    pageTaskPara.classList.add('pageTaskPara');
     
-    pageTitle.textContent = clickedPage.textContent;
     projectBtn.textContent = "Add Task";
+    pageTitle.textContent = clickedPage.textContent;
 
     mainContainer.prepend(projectPage);
     projectPage.prepend(titleDiv);
@@ -39,7 +38,6 @@ export const projectPages = (clickedPage) => {
     projectPage.appendChild(projectBtnDiv);
     projectBtnDiv.appendChild(projectBtn);
     projectPage.appendChild(pageTaskDiv);
-    pageTaskDiv.appendChild(pageTaskPara);
     
     const projectBtns = document.querySelectorAll(".projectBtn");
     const pagesDialog = document.querySelector(".pagesDialog");
