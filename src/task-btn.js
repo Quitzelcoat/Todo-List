@@ -18,6 +18,9 @@ export const dialogData = () => {
   const projectDialog = document.querySelector('.projectDialog');
   const projectInput = document.getElementById('projectTtile');
   const addProjectName = document.querySelector('.projectNames');
+  const newPageBtn = document.querySelector(".newPageBtn");
+  const pagesDialog = document.querySelector('.pagesDialog');
+  const pageTitle = document.getElementById('pageTitle');
 
   
   // "Show the dialog" button opens the dialog modally
@@ -36,18 +39,25 @@ export const dialogData = () => {
   });
 
   
+
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
     
+    const taskDetailTitle = document.querySelector('.taskDetailTitle');
+    const taskDetailDailog = document.querySelector('.taskDetailDailog');
     const taskTitleDiv = document.createElement('div');
     const taskElement = document.createElement('div');
     const taskCheck = document.createElement('div');
     const taskCheckInput = document.createElement('input');
     const taskCheckLabel = document.createElement('label')
+    const taskDetailBtn = document.createElement('button');
     const taskEdit = document.createElement('div');
     const taskRemove = document.createElement('div');
     const taskPriority = document.createElement('div');
     const taskDate = document.createElement('div');
+
+    const todoDescription = document.getElementById('todoDescription');
+    const taskDetailText = document.querySelector('.taskDetailText');
 
     taskTitleDiv.className = "taskTitleDiv";
     taskElement.className = "taskElement";
@@ -56,15 +66,19 @@ export const dialogData = () => {
     taskRemove.className = "taskRemove";
     taskPriority.className = "taskPriority";
     taskDate.className = "taskDate";
+    taskDetailBtn.className = "taskDetailBtn";
 
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
     taskPriority.textContent = "Task Priority"
     taskDate.textContent = "Task Date";
+    taskDetailBtn.textContent = "Detail";
     taskElement.textContent = titleInput.value;
+    taskDetailTitle.textContent = titleInput.value;
+    taskDetailText.textContent = todoDescription.value;
     
     const taskInputId = Math.floor(Math.random() * 100);
-
+    
     // Assigning the attributes to created checkbox
     taskCheckInput.type = "checkbox";
     taskCheckInput.name = "taskCheckInput";
@@ -77,44 +91,64 @@ export const dialogData = () => {
     taskTitleDiv.appendChild(taskElement);
     taskTitleDiv.appendChild(taskCheckLabel);
     taskTitleDiv.appendChild(taskCheckInput);
+    taskCheck.appendChild(taskDetailBtn);
     taskCheck.appendChild(taskEdit);
     taskCheck.appendChild(taskRemove);
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
 
+    
     titleInput.value = "";
+    todoDescription.value = "";
     mainDialog.close();
+
+    taskDetailBtn.addEventListener('click', () => {
+      taskDetailDailog.showModal();
+    });
+
+    const detailCloseBtn = document.querySelector('.detailCloseBtn');
+    detailCloseBtn.addEventListener('click', () => {
+      taskDetailDailog.close();
+    });
   });
   
-  // Creates a new element and adds project Names.
+  
+  // Creates a new element and adds project Names For Side Bar.
   newProjectBtn.addEventListener('click', () => {
     
     const projectElement = document.createElement('div');
+
     projectElement.className = 'newProjectPages';
+
     projectElement.textContent = projectInput.value;
     
     addProjectName.appendChild(projectElement);
+
+
     projectInput.value = "";
     projectDialog.close();
-    
     pageControlCreate();
   });
   
-  const newPageBtn = document.querySelector(".newPageBtn");
-  const pagesDialog = document.querySelector('.pagesDialog');
-  const pageTitle = document.getElementById('pageTitle');
+  // Creates new Pages and adds html inside it.
   newPageBtn.addEventListener('click', () => {
-
+    const taskDetailDailog = document.querySelector('.taskDetailDailog');
     const pageTaskDiv = document.querySelector('.pageTaskDiv');
     const pageTaskPara = document.createElement('div');
     const newElement = document.createElement('div');
-    const pageCheck = document.createElement('div');
     const pageCheckInput = document.createElement('input');
     const pageCheckLabel = document.createElement('label')
+    const pageCheck = document.createElement('div');
+    const pageDetailBtn = document.createElement('button');
+    const pagePriority = document.createElement('div');
     const pageEdit = document.createElement('div');
     const pageRemove = document.createElement('div');
-    const pagePriority = document.createElement('div');
     const pageDate = document.createElement('div');
+
+    const taskDetailText = document.querySelector('.taskDetailText');
+    const taskDetailTitle = document.querySelector('.taskDetailTitle');
+    const pagesDescription = document.getElementById('pagesDescription');
+
 
     newElement.className = 'newElement';
     pageCheck.className = "pageCheck";
@@ -123,12 +157,17 @@ export const dialogData = () => {
     pagePriority.className = "pagePriority";
     pageDate.className = "pageDate";
     pageTaskPara.className ='pageTaskPara';
+    pageDetailBtn.className = 'pageDetailBtn';
 
     pageEdit.textContent = "Edit Page";
     pageRemove.textContent = "Delete Page";
     pagePriority.textContent = "Page Priority"
     pageDate.textContent = "Page Date";
+    pageDetailBtn.textContent = "Detail"
     newElement.textContent = pageTitle.value;
+    taskDetailTitle.textContent = pageTitle.value;
+    taskDetailText.textContent = pagesDescription.value;
+    
 
     const pageInputId = Math.floor(Math.random() * 100);
 
@@ -138,13 +177,29 @@ export const dialogData = () => {
     pageCheckInput.id = `pageCheckInput${pageInputId}`;
     pageCheckLabel.htmlFor = `pageCheckInput${pageInputId}`;
 
+    pageTaskDiv.appendChild(pageTaskPara);
+    pageTaskDiv.appendChild(pageCheck);
     pageTaskPara.appendChild(newElement);
     pageTaskPara.appendChild(pageCheckLabel);
     pageTaskPara.appendChild(pageCheckInput);
-    pageTaskDiv.appendChild(pageTaskPara);
+    pageCheck.appendChild(pageDetailBtn);
+    pageCheck.appendChild(pagePriority);
+    pageCheck.appendChild(pageEdit);
+    pageCheck.appendChild(pageRemove);
+    pageCheck.appendChild(pageDate);
 
     pageTitle.value = '';
+    pagesDescription.value = '';
     pagesDialog.close();
+
+    pageDetailBtn.addEventListener('click', () => {
+      taskDetailDailog.showModal();
+    });
+
+    const detailCloseBtn = document.querySelector('.detailCloseBtn');
+    detailCloseBtn.addEventListener('click', () => {
+      taskDetailDailog.close();
+    });
   });
 }
 

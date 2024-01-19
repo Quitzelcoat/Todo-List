@@ -39,6 +39,7 @@
 
         <!-- Dialogs -->
         <article class="data-dialog">
+            <!-- Todo Type Buttons Dialog -->
             <dialog class="todoTypesDialog">
                 <div class="typesBtns">
                     <button class="newTodo" autofocus>Basic Todos</button>
@@ -46,16 +47,18 @@
                     <button class="createNewNotes" autofocus>Notes</button>
                 </div>
             </dialog>
+            <!-- Todo Type Buttons Dialog -->
 
+            <!-- Task Page main Dialog -->
             <dialog class="mainDialog">
                 <form>
                     <div class="title">
-                        <label for="todoTitle">Task Name</label>
+                        <label class="todo-title" for="todoTitle">Task Name</label>
                         <input type="text" name="todoTitle" id="todoTitle">
                     </div>
                     <div class="description">
                         <label for="todoDescription">Task Description</label>
-                        <input type="text" name="todoDescription" id="todoDescription">
+                        <input type="text" name="todoDescription" id="todoDescription" required>
                     </div>
                     <div class="priority">
                         <h2 class="priorityTodo">
@@ -73,7 +76,9 @@
                 </form>
                 <button class="addBtn" autofocus>Add Task</button>
             </dialog>
+            <!-- Task Page main Dialog -->
 
+            <!-- New Project Pages Title Dialog -->
             <dialog class="projectDialog">
                 <form>
                     <div class="title">
@@ -83,7 +88,9 @@
                 </form>
                 <button class="newProjectBtn" autofocus>New Project.</button>
             </dialog>
+            <!-- New Project Pages Title Dialog -->
 
+            <!-- Pages Task Creation Dialog -->
             <dialog class="pagesDialog">
                 <form>
                     <div class="title">
@@ -110,6 +117,31 @@
                 </form>
                 <button class="newPageBtn" autofocus>Create Task</button>
             </dialog>
+            <!-- Pages Task Creation Dialog -->
+
+            <!-- Task Detail Dialog -->
+            <dialog class="taskDetailDailog">
+                <form>
+                    <div class="titleDetails">
+                        <h3>Title:</h3>
+                        <div class="taskDetailTitle"></div>
+                    </div>
+                    <div class="descriptionDetails">
+                        <h3>Description:</h3>
+                        <div class="taskDetailText"></div>
+                    </div>
+                    <div class="priorityDetails">
+                        <h3>Task Priority:</h3>
+                        <div class="taskDetailPriority"></div>
+                    </div>
+                    <div class="dateDetails">
+                        <h3>Due Date:</h3>
+                        <div class="taskDetailDate"></div>
+                    </div>
+                </form>
+                <button class="detailCloseBtn">Close</button>
+            </dialog>
+            <!-- Task Detail Dialog -->
         </article>
         <!-- Dialogs -->
 

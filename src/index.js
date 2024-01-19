@@ -23,15 +23,19 @@ DOM MINIPULATION:
         that page, we can create todo's of that project.(Done).
     7.  Create Today, completedTasks and upComming pages.(Done).
     8.  Add other functions needed inside dialogue. (e.g., priority, description, calander).(Done)
-    9.  Add (check), (edit), (delete), (priority), date(div) etc inside todo tasks.(Done).
-
-    10. Make the Dailog other functions (priority, description) work inside the todo tasks. 
-        (edit, delete, check will work in the next task).
-    12. Make the edit, delete functions work for the tasks.(Check later)
-    11. Make the calander working so that it will add to its specific pages according to date
+    9.  Add (check), (edit), (delete), (priority), date(div), (Description) etc inside todo tasks.(Done).
+    10. Create a detail button for each task which will show a dailog with all the details
+        of title, description(it will not show on task only in detail dialog), priority,
+        Date etc. (Only create, functionality in next).(Done).
+        
+    11. Make the Dailog and Detail functions work (description, Title) (priority next)
+        inside the todo tasks.(edit, delete, check, date later in the next task).
+    12. Create priority sections, when click show the priority on todo and on detail dialog.
+    13. Make the edit, delete functions work for the tasks.(Check later)
+    14. Make the calander working so that it will add to its specific pages according to date
         and add the date to the task created.
-    12. Put todo's in the rest of the right pages when created.(Also make the check work).
-    13. Do the remaining css and other stuff.
-    14. Finally move to notes and make a dialogue for them to make them working.
+    15. Put todo's in the rest of the right pages when created. Also make the check work.
+    16. Do the remaining css and other stuff.
+    17. Finally move to notes and make a dialogue for them to make them working.
 
 */
