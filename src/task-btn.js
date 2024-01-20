@@ -42,11 +42,13 @@ export const dialogData = () => {
 
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
-    
+    const todoDescription = document.getElementById('todoDescription');
+    const taskDetailText = document.querySelector('.taskDetailText');
     const taskDetailTitle = document.querySelector('.taskDetailTitle');
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
     const taskTitleDiv = document.createElement('div');
     const taskElement = document.createElement('div');
+    const taskDescText = document.createElement('div');
     const taskCheck = document.createElement('div');
     const taskCheckInput = document.createElement('input');
     const taskCheckLabel = document.createElement('label')
@@ -56,8 +58,7 @@ export const dialogData = () => {
     const taskPriority = document.createElement('div');
     const taskDate = document.createElement('div');
 
-    const todoDescription = document.getElementById('todoDescription');
-    const taskDetailText = document.querySelector('.taskDetailText');
+    
 
     taskTitleDiv.className = "taskTitleDiv";
     taskElement.className = "taskElement";
@@ -67,6 +68,7 @@ export const dialogData = () => {
     taskPriority.className = "taskPriority";
     taskDate.className = "taskDate";
     taskDetailBtn.className = "taskDetailBtn";
+    taskDescText.className = "taskDescText";
 
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
@@ -76,6 +78,7 @@ export const dialogData = () => {
     taskElement.textContent = titleInput.value;
     taskDetailTitle.textContent = titleInput.value;
     taskDetailText.textContent = todoDescription.value;
+    taskDescText.textContent = todoDescription.value;
     
     const taskInputId = Math.floor(Math.random() * 100);
     
@@ -102,10 +105,17 @@ export const dialogData = () => {
     todoDescription.value = "";
     mainDialog.close();
 
+    // Open and show the content on dialog for Main Pages.
     taskDetailBtn.addEventListener('click', () => {
+      const currentTaskTitle = taskElement.textContent;
+      const currentTaskDescription = taskDescText.textContent;
+
+      taskDetailTitle.textContent = currentTaskTitle;
+      taskDetailText.textContent = currentTaskDescription;
       taskDetailDailog.showModal();
     });
 
+    // Closes the dialog for Main Pages.
     const detailCloseBtn = document.querySelector('.detailCloseBtn');
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();
@@ -115,15 +125,10 @@ export const dialogData = () => {
   
   // Creates a new element and adds project Names For Side Bar.
   newProjectBtn.addEventListener('click', () => {
-    
     const projectElement = document.createElement('div');
-
     projectElement.className = 'newProjectPages';
-
     projectElement.textContent = projectInput.value;
-    
     addProjectName.appendChild(projectElement);
-
 
     projectInput.value = "";
     projectDialog.close();
@@ -132,10 +137,14 @@ export const dialogData = () => {
   
   // Creates new Pages and adds html inside it.
   newPageBtn.addEventListener('click', () => {
+    const taskDetailText = document.querySelector('.taskDetailText');
+    const taskDetailTitle = document.querySelector('.taskDetailTitle');
+    const pagesDescription = document.getElementById('pagesDescription');
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
     const pageTaskDiv = document.querySelector('.pageTaskDiv');
     const pageTaskPara = document.createElement('div');
     const newElement = document.createElement('div');
+    const pageDescText = document.createElement('div');
     const pageCheckInput = document.createElement('input');
     const pageCheckLabel = document.createElement('label')
     const pageCheck = document.createElement('div');
@@ -145,11 +154,6 @@ export const dialogData = () => {
     const pageRemove = document.createElement('div');
     const pageDate = document.createElement('div');
 
-    const taskDetailText = document.querySelector('.taskDetailText');
-    const taskDetailTitle = document.querySelector('.taskDetailTitle');
-    const pagesDescription = document.getElementById('pagesDescription');
-
-
     newElement.className = 'newElement';
     pageCheck.className = "pageCheck";
     pageEdit.className = "pageEdit";
@@ -157,17 +161,19 @@ export const dialogData = () => {
     pagePriority.className = "pagePriority";
     pageDate.className = "pageDate";
     pageTaskPara.className ='pageTaskPara';
+    pageDescText.className = 'pageDescText';
     pageDetailBtn.className = 'pageDetailBtn';
+    pageCheckInput.className = 'page-CheckInput';
 
     pageEdit.textContent = "Edit Page";
     pageRemove.textContent = "Delete Page";
     pagePriority.textContent = "Page Priority"
     pageDate.textContent = "Page Date";
-    pageDetailBtn.textContent = "Detail"
+    pageDetailBtn.textContent = "Detail";
     newElement.textContent = pageTitle.value;
     taskDetailTitle.textContent = pageTitle.value;
+    pageDescText.textContent = pagesDescription.value;
     taskDetailText.textContent = pagesDescription.value;
-    
 
     const pageInputId = Math.floor(Math.random() * 100);
 
@@ -192,10 +198,17 @@ export const dialogData = () => {
     pagesDescription.value = '';
     pagesDialog.close();
 
+    // Open and show the content on dialog for Pages.
     pageDetailBtn.addEventListener('click', () => {
+      const currentPageTitle = newElement.textContent;
+      const currentPageDescription = pageDescText.textContent;
+
+      taskDetailTitle.textContent = currentPageTitle;
+      taskDetailText.textContent = currentPageDescription;
       taskDetailDailog.showModal();
     });
 
+    // Close the dialog for Pages.
     const detailCloseBtn = document.querySelector('.detailCloseBtn');
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();

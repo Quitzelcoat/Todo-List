@@ -27,9 +27,9 @@ DOM MINIPULATION:
     10. Create a detail button for each task which will show a dailog with all the details
         of title, description(it will not show on task only in detail dialog), priority,
         Date etc. (Only create, functionality in next).(Done).
-        
     11. Make the Dailog and Detail functions work (description, Title) (priority next)
-        inside the todo tasks.(edit, delete, check, date later in the next task).
+        inside the todo tasks.(edit, delete, check, date later in the next task).(Done).
+
     12. Create priority sections, when click show the priority on todo and on detail dialog.
     13. Make the edit, delete functions work for the tasks.(Check later)
     14. Make the calander working so that it will add to its specific pages according to date
