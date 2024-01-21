@@ -30,10 +30,10 @@ DOM MINIPULATION:
     11. Make the Dailog and Detail functions work (description, Title) (priority next)
         inside the todo tasks.(edit, delete, check, date later in the next task).(Done).
 
-    12. Create priority sections, when click show the priority on todo and on detail dialog.
-    13. Make the edit, delete functions work for the tasks.(Check later)
-    14. Make the calander working so that it will add to its specific pages according to date
+    12. Make the edit, delete functions work for the tasks.(Check later)
+    13. Make the calander working so that it will add to its specific pages according to date
         and add the date to the task created.
+    14. Create priority sections, when click show the priority on todo and on detail dialog.
     15. Put todo's in the rest of the right pages when created. Also make the check work.
     16. Do the remaining css and other stuff.
     17. Finally move to notes and make a dialogue for them to make them working.

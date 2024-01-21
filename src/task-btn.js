@@ -22,7 +22,6 @@ export const dialogData = () => {
   const pagesDialog = document.querySelector('.pagesDialog');
   const pageTitle = document.getElementById('pageTitle');
 
-  
   // "Show the dialog" button opens the dialog modally
   showButton.addEventListener("click", () => {
     pageControl.showModal();
@@ -38,10 +37,9 @@ export const dialogData = () => {
     pageControl.close();
   });
 
-  
-
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
+
     const todoDescription = document.getElementById('todoDescription');
     const taskDetailText = document.querySelector('.taskDetailText');
     const taskDetailTitle = document.querySelector('.taskDetailTitle');
@@ -58,7 +56,6 @@ export const dialogData = () => {
     const taskPriority = document.createElement('div');
     const taskDate = document.createElement('div');
 
-    
 
     taskTitleDiv.className = "taskTitleDiv";
     taskElement.className = "taskElement";
@@ -88,7 +85,6 @@ export const dialogData = () => {
     taskCheckInput.id = `taskCheckInput${taskInputId}`;
     taskCheckLabel.htmlFor = `taskCheckInput${taskInputId}`;
 
-
     tasksContainer.appendChild(taskTitleDiv);
     tasksContainer.appendChild(taskCheck);
     taskTitleDiv.appendChild(taskElement);
@@ -100,7 +96,6 @@ export const dialogData = () => {
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
 
-    
     titleInput.value = "";
     todoDescription.value = "";
     mainDialog.close();
@@ -122,7 +117,6 @@ export const dialogData = () => {
     });
   });
   
-  
   // Creates a new element and adds project Names For Side Bar.
   newProjectBtn.addEventListener('click', () => {
     const projectElement = document.createElement('div');
@@ -133,8 +127,8 @@ export const dialogData = () => {
     projectInput.value = "";
     projectDialog.close();
     pageControlCreate();
-  });
-  
+  }); 
+
   // Creates new Pages and adds html inside it.
   newPageBtn.addEventListener('click', () => {
     const taskDetailText = document.querySelector('.taskDetailText');
@@ -214,6 +208,7 @@ export const dialogData = () => {
       taskDetailDailog.close();
     });
   });
+
 }
 
 // Changes the pages after removing them.
@@ -262,6 +257,7 @@ export const pageControlCreate = () => {
     clearTab();
     notesPages();
   });
+
 }
 
 // Removes the main page.

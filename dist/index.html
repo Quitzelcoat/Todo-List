@@ -60,15 +60,21 @@
                         <label for="todoDescription">Task Description</label>
                         <input type="text" name="todoDescription" id="todoDescription" required>
                     </div>
-                    <div class="priority">
-                        <h2 class="priorityTodo">
-                            Task Priority
-                        </h2>
-                        <div class="redTodo">red</div>
-                        <div class="yellowTodo">yellow</div>
-                        <div class="greenTodo">green</div>
-                        <div class="greyTodo">Grey</div>
-                    </div>
+
+                    <fieldset class="priority">
+                        <legend>Task Priority</legend>
+                        <div>
+                            <input type="radio" id="redTodo" class="priorityTask" name="priorityTask" value="High" checked />
+                            <label class="priority-task" for="redTodo">Heigh</label>
+                            <input type="radio" id="yellowTodo" class="priorityTask" name="priorityTask" value="Medium" />
+                            <label class="priority-task" for="yellowTodo">Medium</label>
+                            <input type="radio" id="greenTodo" class="priorityTask" name="priorityTask" value="Low" />
+                            <label class="priority-task" for="greenTodo">Low</label>
+                            <input type="radio" id="greyTodo" class="priorityTask" name="priorityTask" value="none" />
+                            <label class="priority-task" for="greyTodo">none</label>
+                        </div>
+                    </fieldset>
+
                     <div class="date">
                         <label for="todoTaskDate">Select Date</label>
                         <input type="date" name="todoTaskDate" id="todoTaskDate">
@@ -101,15 +107,19 @@
                         <label for="pagesDescription">Task Description</label>
                         <input type="text" name="pagesDescription" id="pagesDescription">
                     </div>
-                    <div class="priority">
-                        <h2 class="priorityPages">
-                            Task Priority
-                        </h2>
-                        <div class="redPages">red</div>
-                        <div class="yellowPages">yellow</div>
-                        <div class="greenPages">green</div>
-                        <div class="greyPages">Grey</div>
-                    </div>
+                    <fieldset class="priority">
+                        <legend>Task Priority</legend>
+                        <div>
+                            <input type="radio" id="redPages" name="priorityPage" value="Heigh"/>
+                            <label for="redPages">Heigh</label>
+                            <input type="radio" id="yellowPages" name="priorityPage" value="Medium" />
+                            <label for="yellowPages">Medium</label>
+                            <input type="radio" id="greenPages" name="priorityPage" value="Low" />
+                            <label for="greenPages">Low</label>
+                            <input type="radio" id="greyPages" name="priorityPage" value="none" checked />
+                            <label for="greyPages">none</label>
+                        </div>
+                    </fieldset>
                     <div class="date">
                         <label for="pagesTaskDate">Select Date</label>
                         <input type="date" name="pagesTaskDate" id="pagesTaskDate">
