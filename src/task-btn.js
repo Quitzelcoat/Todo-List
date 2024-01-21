@@ -115,20 +115,24 @@ export const dialogData = () => {
     });
 
     // Priority buttons Show
-    const addBtn = document.querySelectorAll('.addBtn');
-    const priorityTask = document.querySelectorAll('input[name="priorityTask"]');
-    addBtn.addEventListener('click', () => {
+    const addBtns = document.querySelectorAll('.addBtn');
+    const priorityTasks = document.querySelectorAll('input[name="priorityTask"]');
+
+    addBtns.forEach((addBtn) => {
+      addBtn.addEventListener('click', () => {
         let somethingWork;
-        for (const priorityTasks of priorityTask) {
-          if (priorityTasks.checked) {
-            somethingWork = priorityTasks.getAttribute('value');
+        for (const priorityTask of priorityTasks) {
+          if (priorityTask.checked) {
+            somethingWork = priorityTask.getAttribute('value');
             break;
           }
         }
+
         const taskPriority = document.querySelectorAll('.taskPriority');
         taskPriority.forEach((taskPriorityElement) => {
           taskPriorityElement.innerText = somethingWork ? `You selected ${somethingWork}` : `You haven't selected any size`;
         });
+      });
     });
   });
   
