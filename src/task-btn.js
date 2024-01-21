@@ -39,7 +39,6 @@ export const dialogData = () => {
 
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
-
     const todoDescription = document.getElementById('todoDescription');
     const taskDetailText = document.querySelector('.taskDetailText');
     const taskDetailTitle = document.querySelector('.taskDetailTitle');
@@ -55,7 +54,6 @@ export const dialogData = () => {
     const taskRemove = document.createElement('div');
     const taskPriority = document.createElement('div');
     const taskDate = document.createElement('div');
-
 
     taskTitleDiv.className = "taskTitleDiv";
     taskElement.className = "taskElement";
@@ -115,6 +113,23 @@ export const dialogData = () => {
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();
     });
+
+    // Priority buttons Show
+    const addBtn = document.querySelectorAll('.addBtn');
+    const priorityTask = document.querySelectorAll('input[name="priorityTask"]');
+    addBtn.addEventListener('click', () => {
+        let somethingWork;
+        for (const priorityTasks of priorityTask) {
+          if (priorityTasks.checked) {
+            somethingWork = priorityTasks.getAttribute('value');
+            break;
+          }
+        }
+        const taskPriority = document.querySelectorAll('.taskPriority');
+        taskPriority.forEach((taskPriorityElement) => {
+          taskPriorityElement.innerText = somethingWork ? `You selected ${somethingWork}` : `You haven't selected any size`;
+        });
+    });
   });
   
   // Creates a new element and adds project Names For Side Bar.
@@ -127,8 +142,8 @@ export const dialogData = () => {
     projectInput.value = "";
     projectDialog.close();
     pageControlCreate();
-  }); 
-
+  });
+  
   // Creates new Pages and adds html inside it.
   newPageBtn.addEventListener('click', () => {
     const taskDetailText = document.querySelector('.taskDetailText');
@@ -208,7 +223,6 @@ export const dialogData = () => {
       taskDetailDailog.close();
     });
   });
-
 }
 
 // Changes the pages after removing them.
@@ -257,7 +271,6 @@ export const pageControlCreate = () => {
     clearTab();
     notesPages();
   });
-
 }
 
 // Removes the main page.
