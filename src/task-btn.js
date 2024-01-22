@@ -40,6 +40,8 @@ export const dialogData = () => {
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
     const todoDescription = document.getElementById('todoDescription');
+    const taskDetailPriority = document.querySelector('.taskDetailPriority');
+    const priorityTask = document.querySelectorAll('input[name="priorityTask"]');
     const taskDetailText = document.querySelector('.taskDetailText');
     const taskDetailTitle = document.querySelector('.taskDetailTitle');
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
@@ -67,7 +69,6 @@ export const dialogData = () => {
 
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
-    taskPriority.textContent = "Task Priority"
     taskDate.textContent = "Task Date";
     taskDetailBtn.textContent = "Detail";
     taskElement.textContent = titleInput.value;
@@ -75,6 +76,9 @@ export const dialogData = () => {
     taskDetailText.textContent = todoDescription.value;
     taskDescText.textContent = todoDescription.value;
     
+    const checkedPriorityTask = Array.from(priorityTask).find(task => task.checked);
+    taskPriority.textContent = checkedPriorityTask ? `${checkedPriorityTask.value}` : `You haven't selected any priority`;
+    taskDetailPriority.textContent = checkedPriorityTask ? `${checkedPriorityTask.value}` : `You haven't selected any priority`;
     const taskInputId = Math.floor(Math.random() * 100);
     
     // Assigning the attributes to created checkbox
@@ -113,29 +117,14 @@ export const dialogData = () => {
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();
     });
-
-    // Priority buttons Show
-    const addBtns = document.querySelectorAll('.addBtn');
-    const priorityTasks = document.querySelectorAll('input[name="priorityTask"]');
-
-    addBtns.forEach((addBtn) => {
-      addBtn.addEventListener('click', () => {
-        let somethingWork;
-        for (const priorityTask of priorityTasks) {
-          if (priorityTask.checked) {
-            somethingWork = priorityTask.getAttribute('value');
-            break;
-          }
-        }
-
-        const taskPriority = document.querySelectorAll('.taskPriority');
-        taskPriority.forEach((taskPriorityElement) => {
-          taskPriorityElement.innerText = somethingWork ? `You selected ${somethingWork}` : `You haven't selected any size`;
-        });
-      });
-    });
+    
   });
   
+  // const addBtn = document.querySelectorAll('.addbtn');
+  // addBtn.addEventListener('click', () => {
+  //   alert("something");
+  // });
+
   // Creates a new element and adds project Names For Side Bar.
   newProjectBtn.addEventListener('click', () => {
     const projectElement = document.createElement('div');
@@ -187,7 +176,14 @@ export const dialogData = () => {
     taskDetailTitle.textContent = pageTitle.value;
     pageDescText.textContent = pagesDescription.value;
     taskDetailText.textContent = pagesDescription.value;
+    
+    const taskDetailPriority = document.querySelector('.taskDetailPriority');
+    taskDetailPriority.textContent = checkedpriorityPage ? `${checkedpriorityPage.value}` : `You haven't selected any priority`;
 
+
+    const priorityPage = document.querySelectorAll('input[name="priorityPage"]');
+    const checkedpriorityPage = Array.from(priorityPage).find(task => task.checked);
+    pagePriority.textContent = checkedpriorityPage ? `${checkedpriorityPage.value}` : `You haven't selected any priority`;
     const pageInputId = Math.floor(Math.random() * 100);
 
     // Assigning the attributes to created checkbox
