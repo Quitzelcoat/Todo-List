@@ -19,7 +19,6 @@ export const projectPages = (clickedPage) => {
     const projectBtnDiv = document.createElement('div');
     const projectBtn = document.createElement('button');
     const pageTaskDiv = document.createElement('div');
-    // const pageTaskPara = document.createElement('div');
 
     projectPage.classList.add('projectPage');
     projectPage.setAttribute('id', 'mainContent');

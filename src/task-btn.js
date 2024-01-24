@@ -56,6 +56,8 @@ export const dialogData = () => {
     const taskRemove = document.createElement('div');
     const taskPriority = document.createElement('div');
     const taskDate = document.createElement('div');
+    const removeTask = document.createElement('div');
+
 
     taskTitleDiv.className = "taskTitleDiv";
     taskElement.className = "taskElement";
@@ -66,6 +68,7 @@ export const dialogData = () => {
     taskDate.className = "taskDate";
     taskDetailBtn.className = "taskDetailBtn";
     taskDescText.className = "taskDescText";
+    removeTask.className = "removeTask";
 
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
@@ -76,9 +79,12 @@ export const dialogData = () => {
     taskDetailText.textContent = todoDescription.value;
     taskDescText.textContent = todoDescription.value;
     
+    taskDetailBtn.addEventListener('click', () => {
+      taskDetailPriority.textContent = taskPriority.textContent;
+    });
+    
     const checkedPriorityTask = Array.from(priorityTask).find(task => task.checked);
     taskPriority.textContent = checkedPriorityTask ? `${checkedPriorityTask.value}` : `You haven't selected any priority`;
-    taskDetailPriority.textContent = checkedPriorityTask ? `${checkedPriorityTask.value}` : `You haven't selected any priority`;
     const taskInputId = Math.floor(Math.random() * 100);
     
     // Assigning the attributes to created checkbox
@@ -87,8 +93,10 @@ export const dialogData = () => {
     taskCheckInput.id = `taskCheckInput${taskInputId}`;
     taskCheckLabel.htmlFor = `taskCheckInput${taskInputId}`;
 
-    tasksContainer.appendChild(taskTitleDiv);
-    tasksContainer.appendChild(taskCheck);
+
+    tasksContainer.appendChild(removeTask);
+    removeTask.appendChild(taskTitleDiv);
+    removeTask.appendChild(taskCheck);
     taskTitleDiv.appendChild(taskElement);
     taskTitleDiv.appendChild(taskCheckLabel);
     taskTitleDiv.appendChild(taskCheckInput);
@@ -102,6 +110,7 @@ export const dialogData = () => {
     todoDescription.value = "";
     mainDialog.close();
 
+    
     // Open and show the content on dialog for Main Pages.
     taskDetailBtn.addEventListener('click', () => {
       const currentTaskTitle = taskElement.textContent;
@@ -117,13 +126,16 @@ export const dialogData = () => {
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();
     });
-    
+
+    taskRemove.addEventListener('click', () => {
+      if (removeTask) {
+        removeTask.innerHTML = "";
+      }
+    });
+
   });
   
-  // const addBtn = document.querySelectorAll('.addbtn');
-  // addBtn.addEventListener('click', () => {
-  //   alert("something");
-  // });
+  
 
   // Creates a new element and adds project Names For Side Bar.
   newProjectBtn.addEventListener('click', () => {
@@ -131,7 +143,7 @@ export const dialogData = () => {
     projectElement.className = 'newProjectPages';
     projectElement.textContent = projectInput.value;
     addProjectName.appendChild(projectElement);
-
+    
     projectInput.value = "";
     projectDialog.close();
     pageControlCreate();
@@ -139,6 +151,8 @@ export const dialogData = () => {
   
   // Creates new Pages and adds html inside it.
   newPageBtn.addEventListener('click', () => {
+    const priorityPage = document.querySelectorAll('input[name="priorityPage"]');
+    const taskDetailPriority = document.querySelector('.taskDetailPriority');
     const taskDetailText = document.querySelector('.taskDetailText');
     const taskDetailTitle = document.querySelector('.taskDetailTitle');
     const pagesDescription = document.getElementById('pagesDescription');
@@ -155,6 +169,7 @@ export const dialogData = () => {
     const pageEdit = document.createElement('div');
     const pageRemove = document.createElement('div');
     const pageDate = document.createElement('div');
+    const removePage = document.createElement('div');
 
     newElement.className = 'newElement';
     pageCheck.className = "pageCheck";
@@ -166,6 +181,7 @@ export const dialogData = () => {
     pageDescText.className = 'pageDescText';
     pageDetailBtn.className = 'pageDetailBtn';
     pageCheckInput.className = 'page-CheckInput';
+    removePage.className = 'removePage';
 
     pageEdit.textContent = "Edit Page";
     pageRemove.textContent = "Delete Page";
@@ -177,11 +193,10 @@ export const dialogData = () => {
     pageDescText.textContent = pagesDescription.value;
     taskDetailText.textContent = pagesDescription.value;
     
-    const taskDetailPriority = document.querySelector('.taskDetailPriority');
-    taskDetailPriority.textContent = checkedpriorityPage ? `${checkedpriorityPage.value}` : `You haven't selected any priority`;
-
-
-    const priorityPage = document.querySelectorAll('input[name="priorityPage"]');
+    pageDetailBtn.addEventListener('click', () => {
+      taskDetailPriority.textContent = pagePriority.textContent;
+    });
+    
     const checkedpriorityPage = Array.from(priorityPage).find(task => task.checked);
     pagePriority.textContent = checkedpriorityPage ? `${checkedpriorityPage.value}` : `You haven't selected any priority`;
     const pageInputId = Math.floor(Math.random() * 100);
@@ -192,8 +207,9 @@ export const dialogData = () => {
     pageCheckInput.id = `pageCheckInput${pageInputId}`;
     pageCheckLabel.htmlFor = `pageCheckInput${pageInputId}`;
 
-    pageTaskDiv.appendChild(pageTaskPara);
-    pageTaskDiv.appendChild(pageCheck);
+    pageTaskDiv.appendChild(removePage);
+    removePage.appendChild(pageTaskPara);
+    removePage.appendChild(pageCheck);
     pageTaskPara.appendChild(newElement);
     pageTaskPara.appendChild(pageCheckLabel);
     pageTaskPara.appendChild(pageCheckInput);
@@ -221,6 +237,12 @@ export const dialogData = () => {
     const detailCloseBtn = document.querySelector('.detailCloseBtn');
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();
+    });
+
+    pageRemove.addEventListener('click', () => {
+      if (removePage) {
+        removePage.innerHTML = "";
+      }
     });
   });
 }
