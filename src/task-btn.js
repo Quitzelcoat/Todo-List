@@ -11,7 +11,7 @@ export const dialogData = () => {
   const mainDialog = document.querySelector('.mainDialog');
   const newTodo = document.querySelector('.newTodo');
   const addTaskButton = document.querySelector(".addBtn");
-  const tasksContainer = document.querySelector('.tasksContainer');
+  const mainShow = document.querySelector('.mainShow');
   const titleInput = document.getElementById('todoTitle');
   const createNewProject = document.querySelector('.createNewProject');
   const newProjectBtn = document.querySelector('.newProjectBtn');
@@ -58,7 +58,6 @@ export const dialogData = () => {
     const taskDate = document.createElement('div');
     const removeTask = document.createElement('div');
 
-
     taskTitleDiv.className = "taskTitleDiv";
     taskElement.className = "taskElement";
     taskCheck.className = "taskCheck";
@@ -74,10 +73,10 @@ export const dialogData = () => {
     taskRemove.textContent = "Delete Task";
     taskDate.textContent = "Task Date";
     taskDetailBtn.textContent = "Detail";
-    taskElement.textContent = titleInput.value;
     taskDetailTitle.textContent = titleInput.value;
-    taskDetailText.textContent = todoDescription.value;
     taskDescText.textContent = todoDescription.value;
+    taskDetailText.textContent = todoDescription.value;
+    taskElement.textContent = titleInput.value;
     
     taskDetailBtn.addEventListener('click', () => {
       taskDetailPriority.textContent = taskPriority.textContent;
@@ -93,8 +92,7 @@ export const dialogData = () => {
     taskCheckInput.id = `taskCheckInput${taskInputId}`;
     taskCheckLabel.htmlFor = `taskCheckInput${taskInputId}`;
 
-
-    tasksContainer.appendChild(removeTask);
+    mainShow.appendChild(removeTask);
     removeTask.appendChild(taskTitleDiv);
     removeTask.appendChild(taskCheck);
     taskTitleDiv.appendChild(taskElement);
@@ -105,11 +103,6 @@ export const dialogData = () => {
     taskCheck.appendChild(taskRemove);
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
-
-    titleInput.value = "";
-    todoDescription.value = "";
-    mainDialog.close();
-
     
     // Open and show the content on dialog for Main Pages.
     taskDetailBtn.addEventListener('click', () => {
@@ -126,17 +119,26 @@ export const dialogData = () => {
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();
     });
+    
+    taskEdit.addEventListener('click', () => {
+      mainDialog.showModal();
+    });
 
     taskRemove.addEventListener('click', () => {
       if (removeTask) {
-        removeTask.innerHTML = "";
+        mainShow.removeChild(removeTask);
       }
     });
 
+    if(newTodo) {
+      newTodo.addEventListener('click', () => {
+        todoDescription.value = "";
+        titleInput.value = "";
+      });
+    }
+    mainDialog.close();
   });
   
-  
-
   // Creates a new element and adds project Names For Side Bar.
   newProjectBtn.addEventListener('click', () => {
     const projectElement = document.createElement('div');
@@ -241,7 +243,7 @@ export const dialogData = () => {
 
     pageRemove.addEventListener('click', () => {
       if (removePage) {
-        removePage.innerHTML = "";
+        pageTaskDiv.removeChild(removePage);
       }
     });
   });
