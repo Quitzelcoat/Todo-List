@@ -37,6 +37,8 @@ export const dialogData = () => {
     pageControl.close();
   });
 
+  const taskDataArray = [];
+
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
     const todoDescription = document.getElementById('todoDescription');
@@ -58,6 +60,8 @@ export const dialogData = () => {
     const taskDate = document.createElement('div');
     const removeTask = document.createElement('div');
 
+    const checkedPriorityTask = Array.from(priorityTask).find(task => task.checked);
+
     taskTitleDiv.className = "taskTitleDiv";
     taskElement.className = "taskElement";
     taskCheck.className = "taskCheck";
@@ -69,21 +73,29 @@ export const dialogData = () => {
     taskDescText.className = "taskDescText";
     removeTask.className = "removeTask";
 
+    const taskDetailObject = {
+      title: titleInput.value,
+      description: todoDescription.value,
+      priority: checkedPriorityTask ? `${checkedPriorityTask.value}` : `You haven't selected any priority`,
+    };
+    
+    taskDataArray.push(taskDetailObject);
+    console.log(taskDataArray);
+
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
     taskDate.textContent = "Task Date";
     taskDetailBtn.textContent = "Detail";
-    taskDetailTitle.textContent = titleInput.value;
-    taskDescText.textContent = todoDescription.value;
-    taskDetailText.textContent = todoDescription.value;
-    taskElement.textContent = titleInput.value;
-    
+    taskElement.textContent = taskDetailObject.title;
+    taskDetailTitle.textContent = taskDetailObject.title;
+    taskDescText.textContent = taskDetailObject.description;
+    taskDetailText.textContent = taskDetailObject.description;
+    taskPriority.textContent = taskDetailObject.priority
+
     taskDetailBtn.addEventListener('click', () => {
-      taskDetailPriority.textContent = taskPriority.textContent;
+      taskDetailPriority.textContent = taskDetailObject.priority;
     });
-    
-    const checkedPriorityTask = Array.from(priorityTask).find(task => task.checked);
-    taskPriority.textContent = checkedPriorityTask ? `${checkedPriorityTask.value}` : `You haven't selected any priority`;
+
     const taskInputId = Math.floor(Math.random() * 100);
     
     // Assigning the attributes to created checkbox
@@ -103,7 +115,7 @@ export const dialogData = () => {
     taskCheck.appendChild(taskRemove);
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
-    
+
     // Open and show the content on dialog for Main Pages.
     taskDetailBtn.addEventListener('click', () => {
       const currentTaskTitle = taskElement.textContent;
@@ -120,16 +132,13 @@ export const dialogData = () => {
       taskDetailDailog.close();
     });
     
-    taskEdit.addEventListener('click', () => {
-      mainDialog.showModal();
-    });
-
+    
     taskRemove.addEventListener('click', () => {
       if (removeTask) {
         mainShow.removeChild(removeTask);
       }
     });
-
+    
     if(newTodo) {
       newTodo.addEventListener('click', () => {
         todoDescription.value = "";
@@ -137,8 +146,42 @@ export const dialogData = () => {
       });
     }
     mainDialog.close();
+
+    // Edit the task and Update It
+    taskEdit.addEventListener('click', () => {
+      mainDialog.showModal();
+
+      titleInput.value = taskDetailObject.title;
+      todoDescription.value = taskDetailObject.description;
+      const priorityInput = document.querySelector(`input[name="priorityTask"][value="${taskDetailObject.priority}"]`);
+      if (priorityInput) {
+        priorityInput.checked = true;
+      }
+
+      isEditingTask = true; 
+    });
+    
+    let isEditingTask = false;
+    let addTaskListener = () => {
+      const title = titleInput.value;
+      taskDetailObject.title = title;
+      taskElement.textContent = title;
+      mainDialog.close();
+      isEditingTask = false;
+    };
+    if (taskEdit) {
+      addTaskButton.addEventListener('click', () => {
+        if (isEditingTask) {
+          addTaskListener();
+
+          mainShow.removeChild(removeTask);
+        }
+      });
+    }
+
   });
   
+
   // Creates a new element and adds project Names For Side Bar.
   newProjectBtn.addEventListener('click', () => {
     const projectElement = document.createElement('div');
