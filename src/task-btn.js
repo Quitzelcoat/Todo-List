@@ -21,6 +21,7 @@ export const dialogData = () => {
   const newPageBtn = document.querySelector(".newPageBtn");
   const pagesDialog = document.querySelector('.pagesDialog');
   const pageTitle = document.getElementById('pageTitle');
+  const updateBtn = document.querySelector('.updateBtn');
 
   // "Show the dialog" button opens the dialog modally
   showButton.addEventListener("click", () => {
@@ -147,7 +148,10 @@ export const dialogData = () => {
     }
     mainDialog.close();
 
+    
+
     // Edit the task and Update It
+    let isEditingTask = false;
     taskEdit.addEventListener('click', () => {
       mainDialog.showModal();
 
@@ -160,21 +164,29 @@ export const dialogData = () => {
 
       isEditingTask = true; 
     });
-    
-    let isEditingTask = false;
+
     let addTaskListener = () => {
       const title = titleInput.value;
       taskDetailObject.title = title;
       taskElement.textContent = title;
+
+      const description = todoDescription.value;
+      taskDetailObject.description = description;
+      taskDescText.textContent = description;
+
+      const priorityInput = document.querySelector('input[name="priorityTask"]:checked');
+      const priority = priorityInput ? priorityInput.value : 'No priority selected';
+      taskDetailObject.priority = priority;
+      taskPriority.textContent = priority;
+
       mainDialog.close();
       isEditingTask = false;
     };
-    if (taskEdit) {
-      addTaskButton.addEventListener('click', () => {
-        if (isEditingTask) {
-          addTaskListener();
 
-          mainShow.removeChild(removeTask);
+    if (updateBtn) {
+      updateBtn.addEventListener('click', () => {
+        if (isEditingTask) {
+          addTaskListener();          
         }
       });
     }
