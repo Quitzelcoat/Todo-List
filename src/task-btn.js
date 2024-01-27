@@ -22,6 +22,7 @@ export const dialogData = () => {
   const pagesDialog = document.querySelector('.pagesDialog');
   const pageTitle = document.getElementById('pageTitle');
   const updateBtn = document.querySelector('.updateBtn');
+  const pageUpdateBtn = document.querySelector('.pageUpdateBtn');
 
   // "Show the dialog" button opens the dialog modally
   showButton.addEventListener("click", () => {
@@ -133,7 +134,7 @@ export const dialogData = () => {
       taskDetailDailog.close();
     });
     
-    
+    // Remove Tasks
     taskRemove.addEventListener('click', () => {
       if (removeTask) {
         mainShow.removeChild(removeTask);
@@ -147,8 +148,6 @@ export const dialogData = () => {
       });
     }
     mainDialog.close();
-
-    
 
     // Edit the task and Update It
     let isEditingTask = false;
@@ -206,6 +205,8 @@ export const dialogData = () => {
     pageControlCreate();
   });
   
+  const pageDataArray = [];
+
   // Creates new Pages and adds html inside it.
   newPageBtn.addEventListener('click', () => {
     const priorityPage = document.querySelectorAll('input[name="priorityPage"]');
@@ -227,6 +228,10 @@ export const dialogData = () => {
     const pageRemove = document.createElement('div');
     const pageDate = document.createElement('div');
     const removePage = document.createElement('div');
+    const projectBtn = document.querySelector('.projectBtn');
+
+
+    const checkedPriorityPage = Array.from(priorityPage).find(page => page.checked)
 
     newElement.className = 'newElement';
     pageCheck.className = "pageCheck";
@@ -240,22 +245,31 @@ export const dialogData = () => {
     pageCheckInput.className = 'page-CheckInput';
     removePage.className = 'removePage';
 
+    const pageDetailObject = {
+      title: pageTitle.value,
+      description: pagesDescription.value,
+      priority: checkedPriorityPage ? `${checkedPriorityPage.value}` : `You haven't selected any priority`,
+    };
+    
+    pageDataArray.push(pageDetailObject);
+    console.log(pageDataArray);
+
     pageEdit.textContent = "Edit Page";
     pageRemove.textContent = "Delete Page";
     pagePriority.textContent = "Page Priority"
     pageDate.textContent = "Page Date";
     pageDetailBtn.textContent = "Detail";
-    newElement.textContent = pageTitle.value;
-    taskDetailTitle.textContent = pageTitle.value;
-    pageDescText.textContent = pagesDescription.value;
-    taskDetailText.textContent = pagesDescription.value;
+    newElement.textContent = pageDetailObject.title;
+    taskDetailTitle.textContent = pageDetailObject.title;
+    pageDescText.textContent = pageDetailObject.description;
+    taskDetailText.textContent = pageDetailObject.description;
     
     pageDetailBtn.addEventListener('click', () => {
-      taskDetailPriority.textContent = pagePriority.textContent;
+      taskDetailPriority.textContent = pageDetailObject.priority;
     });
     
-    const checkedpriorityPage = Array.from(priorityPage).find(task => task.checked);
-    pagePriority.textContent = checkedpriorityPage ? `${checkedpriorityPage.value}` : `You haven't selected any priority`;
+    // const checkedpriorityPage = Array.from(priorityPage).find(task => task.checked);
+    // pagePriority.textContent = checkedpriorityPage ? `${checkedpriorityPage.value}` : `You haven't selected any priority`;
     const pageInputId = Math.floor(Math.random() * 100);
 
     // Assigning the attributes to created checkbox
@@ -271,14 +285,10 @@ export const dialogData = () => {
     pageTaskPara.appendChild(pageCheckLabel);
     pageTaskPara.appendChild(pageCheckInput);
     pageCheck.appendChild(pageDetailBtn);
-    pageCheck.appendChild(pagePriority);
     pageCheck.appendChild(pageEdit);
     pageCheck.appendChild(pageRemove);
+    pageCheck.appendChild(pagePriority);
     pageCheck.appendChild(pageDate);
-
-    pageTitle.value = '';
-    pagesDescription.value = '';
-    pagesDialog.close();
 
     // Open and show the content on dialog for Pages.
     pageDetailBtn.addEventListener('click', () => {
@@ -295,12 +305,62 @@ export const dialogData = () => {
     detailCloseBtn.addEventListener('click', () => {
       taskDetailDailog.close();
     });
-
+    // Remove page task.
     pageRemove.addEventListener('click', () => {
       if (removePage) {
         pageTaskDiv.removeChild(removePage);
       }
     });
+
+    if(projectBtn) {
+      projectBtn.addEventListener('click', () => {
+        pageTitle.value = '';
+        pagesDescription.value = '';
+      });
+    }
+    pagesDialog.close();
+
+    // Edit the page and Update It
+    let isEditPage = false;
+    pageEdit.addEventListener('click', () => {
+      pagesDialog.showModal();
+
+      pageTitle.value = pageDetailObject.title;
+      pagesDescription.value = pageDetailObject.description;
+      const pagePriorityInput = document.querySelector(`input[name="priorityPage"][value="${pageDetailObject.priority}"]`);
+      if (pagePriorityInput) {
+        pagePriorityInput.checked = true;
+      }
+
+      isEditPage = true;
+    });
+
+    let addPageListener = () => {
+      const title = pageTitle.value;
+      pageDetailObject.title = title;
+      newElement.textContent = title;
+
+      const description = pagesDescription.value;
+      pageDetailObject.description = description;
+      pageDescText.textContent = description;
+
+      const pagePriorityInput = document.querySelector('input[name="priorityPage"]:checked');
+      const priority = pagePriorityInput ? pagePriorityInput.value : 'No priority selected';
+      pageDetailObject.priority = priority;
+      pagePriority.textContent = priority;
+
+      pagesDialog.close();
+      isEditPage = false;
+    };
+
+    if (pageUpdateBtn) {
+      pageUpdateBtn.addEventListener('click', () => {
+        if (isEditPage) {
+          addPageListener();
+        }
+      });
+    }
+
   });
 }
 
