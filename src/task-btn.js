@@ -3,6 +3,7 @@ import { notesPages } from './notes';
 import { today } from './today';
 import { upComing } from './upcoming';
 import { complete } from './complete-task';
+import { compareAsc, format } from "date-fns";
 
 // Add maindata to the pages.
 export const dialogData = () => {
@@ -44,6 +45,7 @@ export const dialogData = () => {
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
     const todoDescription = document.getElementById('todoDescription');
+    const todoTaskDate = document.getElementById('todoTaskDate');
     const taskDetailPriority = document.querySelector('.taskDetailPriority');
     const priorityTask = document.querySelectorAll('input[name="priorityTask"]');
     const taskDetailText = document.querySelector('.taskDetailText');
@@ -86,7 +88,7 @@ export const dialogData = () => {
 
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
-    taskDate.textContent = "Task Date";
+    // taskDate.textContent = "Task Date";
     taskDetailBtn.textContent = "Detail";
     taskElement.textContent = taskDetailObject.title;
     taskDetailTitle.textContent = taskDetailObject.title;
@@ -160,11 +162,15 @@ export const dialogData = () => {
       if (priorityInput) {
         priorityInput.checked = true;
       }
-
+      
       isEditingTask = true; 
     });
 
-    let addTaskListener = () => {
+    if(taskEdit) {
+      mainDialog.removeChild(addTaskButton);
+    }
+
+    const addTaskListener = () => {
       const title = titleInput.value;
       taskDetailObject.title = title;
       taskElement.textContent = title;
@@ -189,6 +195,19 @@ export const dialogData = () => {
         }
       });
     }
+
+    const taskDateFunction = () => {
+      if(todoTaskDate.value) {
+        const chosenTaskDate = new Date(todoTaskDate.value);
+
+        const formateTaskDate = format(chosenTaskDate, 'MMMM d, yyyy')
+
+        taskDate.textContent = `${formateTaskDate}`;
+      } else {
+        displayedDateElement.textContent = 'No date chosen';
+      }
+    };
+    taskDateFunction();
 
   });
   
@@ -268,8 +287,6 @@ export const dialogData = () => {
       taskDetailPriority.textContent = pageDetailObject.priority;
     });
     
-    // const checkedpriorityPage = Array.from(priorityPage).find(task => task.checked);
-    // pagePriority.textContent = checkedpriorityPage ? `${checkedpriorityPage.value}` : `You haven't selected any priority`;
     const pageInputId = Math.floor(Math.random() * 100);
 
     // Assigning the attributes to created checkbox
@@ -278,39 +295,52 @@ export const dialogData = () => {
     pageCheckInput.id = `pageCheckInput${pageInputId}`;
     pageCheckLabel.htmlFor = `pageCheckInput${pageInputId}`;
 
-    pageTaskDiv.appendChild(removePage);
-    removePage.appendChild(pageTaskPara);
-    removePage.appendChild(pageCheck);
-    pageTaskPara.appendChild(newElement);
-    pageTaskPara.appendChild(pageCheckLabel);
-    pageTaskPara.appendChild(pageCheckInput);
-    pageCheck.appendChild(pageDetailBtn);
-    pageCheck.appendChild(pageEdit);
-    pageCheck.appendChild(pageRemove);
-    pageCheck.appendChild(pagePriority);
-    pageCheck.appendChild(pageDate);
+    const pageAppendFunction = () => {
+      pageTaskDiv.appendChild(removePage);
+      removePage.appendChild(pageTaskPara);
+      removePage.appendChild(pageCheck);
+      pageTaskPara.appendChild(newElement);
+      pageTaskPara.appendChild(pageCheckLabel);
+      pageTaskPara.appendChild(pageCheckInput);
+      pageCheck.appendChild(pageDetailBtn);
+      pageCheck.appendChild(pageEdit);
+      pageCheck.appendChild(pageRemove);
+      pageCheck.appendChild(pagePriority);
+      pageCheck.appendChild(pageDate);
+    };
+    pageAppendFunction();
 
     // Open and show the content on dialog for Pages.
-    pageDetailBtn.addEventListener('click', () => {
-      const currentPageTitle = newElement.textContent;
-      const currentPageDescription = pageDescText.textContent;
-
-      taskDetailTitle.textContent = currentPageTitle;
-      taskDetailText.textContent = currentPageDescription;
-      taskDetailDailog.showModal();
-    });
+    function showPageFunction() {
+      pageDetailBtn.addEventListener('click', () => {
+        const currentPageTitle = newElement.textContent;
+        const currentPageDescription = pageDescText.textContent;
+  
+        taskDetailTitle.textContent = currentPageTitle;
+        taskDetailText.textContent = currentPageDescription;
+        taskDetailDailog.showModal();
+      });
+    };
+    showPageFunction();
 
     // Close the dialog for Pages.
-    const detailCloseBtn = document.querySelector('.detailCloseBtn');
-    detailCloseBtn.addEventListener('click', () => {
-      taskDetailDailog.close();
-    });
+    function closePageFunciton() {
+      const detailCloseBtn = document.querySelector('.detailCloseBtn');
+      detailCloseBtn.addEventListener('click', () => {
+        taskDetailDailog.close();
+      });
+    };
+    closePageFunciton();
+
     // Remove page task.
-    pageRemove.addEventListener('click', () => {
-      if (removePage) {
-        pageTaskDiv.removeChild(removePage);
-      }
-    });
+    function removePageFunction() {
+      pageRemove.addEventListener('click', () => {
+        if (removePage) {
+          pageTaskDiv.removeChild(removePage);
+        }
+      });
+    };
+    removePageFunction();
 
     if(projectBtn) {
       projectBtn.addEventListener('click', () => {
@@ -321,45 +351,57 @@ export const dialogData = () => {
     pagesDialog.close();
 
     // Edit the page and Update It
-    let isEditPage = false;
-    pageEdit.addEventListener('click', () => {
-      pagesDialog.showModal();
-
-      pageTitle.value = pageDetailObject.title;
-      pagesDescription.value = pageDetailObject.description;
-      const pagePriorityInput = document.querySelector(`input[name="priorityPage"][value="${pageDetailObject.priority}"]`);
-      if (pagePriorityInput) {
-        pagePriorityInput.checked = true;
-      }
-
-      isEditPage = true;
-    });
-
-    let addPageListener = () => {
-      const title = pageTitle.value;
-      pageDetailObject.title = title;
-      newElement.textContent = title;
-
-      const description = pagesDescription.value;
-      pageDetailObject.description = description;
-      pageDescText.textContent = description;
-
-      const pagePriorityInput = document.querySelector('input[name="priorityPage"]:checked');
-      const priority = pagePriorityInput ? pagePriorityInput.value : 'No priority selected';
-      pageDetailObject.priority = priority;
-      pagePriority.textContent = priority;
-
-      pagesDialog.close();
-      isEditPage = false;
-    };
-
-    if (pageUpdateBtn) {
-      pageUpdateBtn.addEventListener('click', () => {
-        if (isEditPage) {
-          addPageListener();
+    function editPageFunction() {
+      let isEditPage = false;
+      pageEdit.addEventListener('click', () => {
+        pagesDialog.showModal();
+  
+        pageTitle.value = pageDetailObject.title;
+        pagesDescription.value = pageDetailObject.description;
+        const pagePriorityInput = document.querySelector(`input[name="priorityPage"][value="${pageDetailObject.priority}"]`);
+        if (pagePriorityInput) {
+          pagePriorityInput.checked = true;
         }
+  
+        isEditPage = true;
       });
-    }
+  
+      if (pageEdit) {
+        pagesDialog.removeChild(newPageBtn);
+      }
+  
+      const addPageListener = () => {
+        const title = pageTitle.value;
+        pageDetailObject.title = title;
+        newElement.textContent = title;
+  
+        const description = pagesDescription.value;
+        pageDetailObject.description = description;
+        pageDescText.textContent = description;
+  
+        const pagePriorityInput = document.querySelector('input[name="priorityPage"]:checked');
+        const priority = pagePriorityInput ? pagePriorityInput.value : 'No priority selected';
+        pageDetailObject.priority = priority;
+        pagePriority.textContent = priority;
+  
+        pagesDialog.close();
+        isEditPage = false;
+      };
+  
+      if (pageUpdateBtn) {
+        pageUpdateBtn.addEventListener('click', () => {
+          if (isEditPage) {
+            addPageListener();
+          }
+        });
+      }
+    };
+    editPageFunction();
+
+    const pageDateFunction = () => {
+      
+    };
+    pageDateFunction();
 
   });
 }
