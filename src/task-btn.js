@@ -81,6 +81,7 @@ export const dialogData = () => {
       title: titleInput.value,
       description: todoDescription.value,
       priority: checkedPriorityTask ? `${checkedPriorityTask.value}` : `You haven't selected any priority`,
+      date: todoTaskDate.value ? new Date(todoTaskDate.value) : null,
     };
     
     taskDataArray.push(taskDetailObject);
@@ -88,7 +89,6 @@ export const dialogData = () => {
 
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
-    // taskDate.textContent = "Task Date";
     taskDetailBtn.textContent = "Detail";
     taskElement.textContent = taskDetailObject.title;
     taskDetailTitle.textContent = taskDetailObject.title;
@@ -151,25 +151,62 @@ export const dialogData = () => {
     }
     mainDialog.close();
 
+    // Display Date on Task and Description
+    const taskDateFunction = () => {
+      if(taskDetailObject.date) {
+        const formateTaskDate = format(taskDetailObject.date, 'MMMM d, yyyy')
+
+        if(taskDate) {
+          taskDate.textContent = formateTaskDate;
+        }
+
+        const taskDetailDate = document.querySelectorAll(".taskDetailDate");
+        if(taskDetailDate.length > 0) {
+          taskDetailDate.forEach((taskDetailDates) => {
+            taskDetailDates.textContent = formateTaskDate;
+          });
+        };
+
+        taskDetailObject.date = formateTaskDate;
+      } else {
+        taskDate.textContent = "No Date Chosen";
+        const taskDetailDate = document.querySelectorAll(".taskDetailDate");
+        if (taskDetailDate.length > 0) {
+          taskDetailDate.forEach((taskDetailDates) => {
+            taskDetailDates.textContent = 'No date Chosen';
+          });
+        }
+      }
+    };
+    taskDateFunction();
+
     // Edit the task and Update It
     let isEditingTask = false;
-    taskEdit.addEventListener('click', () => {
-      mainDialog.showModal();
+    const taskEditFunciton = () => {
+      taskEdit.addEventListener('click', () => {
+        mainDialog.showModal();
+  
+        titleInput.value = taskDetailObject.title;
+        todoDescription.value = taskDetailObject.description;
 
-      titleInput.value = taskDetailObject.title;
-      todoDescription.value = taskDetailObject.description;
-      const priorityInput = document.querySelector(`input[name="priorityTask"][value="${taskDetailObject.priority}"]`);
-      if (priorityInput) {
-        priorityInput.checked = true;
+        const priorityInput = document.querySelector(`input[name="priorityTask"][value="${taskDetailObject.priority}"]`);
+        if (priorityInput) {
+          priorityInput.checked = true;
+        }
+        
+        const taskDateValue = taskDate.textContent;
+        taskDetailObject.date = new Date(taskDateValue);
+        
+        isEditingTask = true; 
+      });
+  
+      if(taskEdit) {
+        mainDialog.removeChild(addTaskButton);
       }
-      
-      isEditingTask = true; 
-    });
+    };
+    taskEditFunciton();
 
-    if(taskEdit) {
-      mainDialog.removeChild(addTaskButton);
-    }
-
+    // Make the Priority work and Show the Priority.
     const addTaskListener = () => {
       const title = titleInput.value;
       taskDetailObject.title = title;
@@ -196,19 +233,7 @@ export const dialogData = () => {
       });
     }
 
-    const taskDateFunction = () => {
-      if(todoTaskDate.value) {
-        const chosenTaskDate = new Date(todoTaskDate.value);
-
-        const formateTaskDate = format(chosenTaskDate, 'MMMM d, yyyy')
-
-        taskDate.textContent = `${formateTaskDate}`;
-      } else {
-        displayedDateElement.textContent = 'No date chosen';
-      }
-    };
-    taskDateFunction();
-
+    
   });
   
 
