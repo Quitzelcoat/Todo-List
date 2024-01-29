@@ -154,7 +154,7 @@ export const dialogData = () => {
     // Display Date on Task and Description
     const taskDateFunction = () => {
       if(taskDetailObject.date) {
-        const formateTaskDate = format(taskDetailObject.date, 'MMMM d, yyyy')
+        const formateTaskDate = format(taskDetailObject.date, 'yyyy-MM-dd')
 
         if(taskDate) {
           taskDate.textContent = formateTaskDate;
@@ -194,8 +194,8 @@ export const dialogData = () => {
           priorityInput.checked = true;
         }
         
-        const formateTaskDate = format(new Date(taskDetailObject.date), 'MMMM d, yyyy');
-        taskDate.textContent = formateTaskDate;
+        const formateTaskDate = format(new Date(taskDetailObject.date), 'yyyy-MM-dd');
+        todoTaskDate.value = formateTaskDate;
         
         isEditingTask = true; 
       });
@@ -206,7 +206,6 @@ export const dialogData = () => {
     };
     taskEditFunction();
 
-    // Make the Priority work and Show the Priority.
     const addTaskListener = () => {
       const title = titleInput.value;
       taskDetailObject.title = title;
