@@ -182,7 +182,7 @@ export const dialogData = () => {
 
     // Edit the task and Update It
     let isEditingTask = false;
-    const taskEditFunciton = () => {
+    const taskEditFunction = () => {
       taskEdit.addEventListener('click', () => {
         mainDialog.showModal();
   
@@ -204,7 +204,7 @@ export const dialogData = () => {
         mainDialog.removeChild(addTaskButton);
       }
     };
-    taskEditFunciton();
+    taskEditFunction();
 
     // Make the Priority work and Show the Priority.
     const addTaskListener = () => {
@@ -232,8 +232,6 @@ export const dialogData = () => {
         }
       });
     }
-
-    
   });
   
 
