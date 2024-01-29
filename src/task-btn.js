@@ -220,6 +220,12 @@ export const dialogData = () => {
       taskDetailObject.priority = priority;
       taskPriority.textContent = priority;
 
+      const date = new Date (todoTaskDate.value);
+      taskDetailObject.date = date;
+      taskDate.textContent = date;
+
+      taskDateFunction();
+
       mainDialog.close();
       isEditingTask = false;
     };
