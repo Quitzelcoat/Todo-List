@@ -194,8 +194,8 @@ export const dialogData = () => {
           priorityInput.checked = true;
         }
         
-        const taskDateValue = taskDate.textContent;
-        taskDetailObject.date = new Date(taskDateValue);
+        const formateTaskDate = format(new Date(taskDetailObject.date), 'MMMM d, yyyy');
+        taskDate.textContent = formateTaskDate;
         
         isEditingTask = true; 
       });
