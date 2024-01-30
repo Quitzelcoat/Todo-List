@@ -37,12 +37,13 @@ DOM MINIPULATION:
         d. Access the data from the array inside the dialog when click on editBtn.(Done)
         e. And when the add btn is clicked push the edit data from the dialog and update
             the task.(Done)
+    14. Make the calander working so it shows the date selected on the task and inside the description. (Done)
 
-    14. Make the calander working so that it will add to its specific pages according to date
-        and add the date to the task created.
+    15. Now add the date to its specific pages according to date.
         
-    15. Put todo's in the rest of the right pages when created. Also make the check work.
-    16. Do the remaining css and other stuff.
-    17. Finally move to notes and make a dialogue for them to make them working.
+    16. Put todo's in the rest of the right pages when created. Also make the check work.
+    17. Do the remaining css and other stuff.
+    18. Make the data Storage for it working.
+    19. Finally move to notes and make a dialogue for them to make them working.
 
 */
