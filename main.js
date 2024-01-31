@@ -384,8 +384,21 @@ const dialogData = () => {
       });
     }
 
-    // const completeTask = document.querySelector('.completeTask');
-    // completeTask.appendChild(removeTask);
+    // const showTodayPage = () => {
+    //   const completeTask = document.querySelector('.completeTask');
+    //   if (completeTask && removeTask) {
+    //     completeTask.appendChild(removeTask);
+    //   }
+  
+    //   if (mainShow && removeTask) {
+    //     mainShow.appendChild(removeTask.cloneNode(true)); // Use cloneNode to create a copy
+    //   }
+    // };
+    // showTodayPage();
+
+    const anything = document.querySelector('.anything');
+    let something = taskDataArray;
+    anything.textContent = something;
 
   });
   
@@ -701,7 +714,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _complete_task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./complete-task */ "./src/complete-task.js");
 
 
-const today = () => {
+const today = (removeTask) => {
     const mainContainer = document.querySelector(".mainContainer");
     const todayTitle = document.createElement('div');
     const todayPage = document.createElement('div');
