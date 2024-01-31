@@ -383,6 +383,10 @@ const dialogData = () => {
         }
       });
     }
+
+    // const completeTask = document.querySelector('.completeTask');
+    // completeTask.appendChild(removeTask);
+
   });
   
 
@@ -694,19 +698,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   today: () => (/* binding */ today)
 /* harmony export */ });
+/* harmony import */ var _complete_task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./complete-task */ "./src/complete-task.js");
+
+
 const today = () => {
     const mainContainer = document.querySelector(".mainContainer");
+    const todayTitle = document.createElement('div');
     const todayPage = document.createElement('div');
     const todayTasksTitle = document.createElement('h2');
+    const completeTask = document.createElement('div');
 
-    todayPage.classList.add('todayPage');
     todayPage.setAttribute('id', 'mainContent');
+    todayPage.classList.add('todayPage');
+    todayTitle.className = "todayTitle";
     todayTasksTitle.classList.add('todayTasksTitle');
+    completeTask.className = "completeTask";
 
     todayTasksTitle.innerText = "Today Tasks";
 
     mainContainer.prepend(todayPage);
-    todayPage.appendChild(todayTasksTitle);
+    todayPage.appendChild(todayTitle);
+    todayPage.appendChild(completeTask);
+    todayTitle.appendChild(todayTasksTitle);
+
 }
 
 /***/ }),
@@ -4485,7 +4499,10 @@ DOM MINIPULATION:
             the task.(Done)
     14. Make the calander working so it shows the date selected on the task and inside the description. (Done)
 
-    15. Now add the date to its specific pages according to date.
+    15. Now Put todo's tasks in the right pages when created.
+            If chosen date is today's then push the task to today task's else if greater date than today, push
+            to upcoming tasks. Do this for both inbox and for the projects.
+
         
     16. Put todo's in the rest of the right pages when created. Also make the check work.
     17. Do the remaining css and other stuff.

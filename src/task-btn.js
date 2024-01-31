@@ -243,6 +243,10 @@ export const dialogData = () => {
         }
       });
     }
+
+    // const completeTask = document.querySelector('.completeTask');
+    // completeTask.appendChild(removeTask);
+
   });
   
 
