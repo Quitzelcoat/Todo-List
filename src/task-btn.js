@@ -244,8 +244,21 @@ export const dialogData = () => {
       });
     }
 
-    // const completeTask = document.querySelector('.completeTask');
-    // completeTask.appendChild(removeTask);
+    // const showTodayPage = () => {
+    //   const completeTask = document.querySelector('.completeTask');
+    //   if (completeTask && removeTask) {
+    //     completeTask.appendChild(removeTask);
+    //   }
+  
+    //   if (mainShow && removeTask) {
+    //     mainShow.appendChild(removeTask.cloneNode(true)); // Use cloneNode to create a copy
+    //   }
+    // };
+    // showTodayPage();
+
+    const anything = document.querySelector('.anything');
+    let something = taskDataArray;
+    anything.textContent = something;
 
   });
   

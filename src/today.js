@@ -1,6 +1,6 @@
 import { complete } from "./complete-task";
 
-export const today = () => {
+export const today = (removeTask) => {
     const mainContainer = document.querySelector(".mainContainer");
     const todayTitle = document.createElement('div');
     const todayPage = document.createElement('div');
