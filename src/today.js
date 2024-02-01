@@ -1,6 +1,6 @@
 import { complete } from "./complete-task";
 
-export const today = (removeTask) => {
+export const today = () => {
     const mainContainer = document.querySelector(".mainContainer");
     const todayTitle = document.createElement('div');
     const todayPage = document.createElement('div');
@@ -19,5 +19,4 @@ export const today = (removeTask) => {
     todayPage.appendChild(todayTitle);
     todayPage.appendChild(completeTask);
     todayTitle.appendChild(todayTasksTitle);
-
-}
+};

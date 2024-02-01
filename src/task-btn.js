@@ -40,8 +40,9 @@ export const dialogData = () => {
     pageControl.close();
   });
 
+  const completeTaskArray = [];
   const taskDataArray = [];
-
+  
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
     const todoDescription = document.getElementById('todoDescription');
@@ -120,6 +121,9 @@ export const dialogData = () => {
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
 
+    completeTaskArray.push(removeTask);
+    console.log(completeTaskArray);
+
     // Open and show the content on dialog for Main Pages.
     taskDetailBtn.addEventListener('click', () => {
       const currentTaskTitle = taskElement.textContent;
@@ -140,6 +144,18 @@ export const dialogData = () => {
     taskRemove.addEventListener('click', () => {
       if (removeTask) {
         mainShow.removeChild(removeTask);
+
+        // Find the index of the task in the array and remove it
+        const taskIndex = taskDataArray.findIndex(task => task.title === taskDetailObject.title);
+        if (taskIndex !== -1) {
+          taskDataArray.splice(taskIndex, 1);
+        }
+
+        // Find the index of the removeTask in the array and remove it
+        const sendTaskIndex = completeTaskArray.findIndex(task => task.title === taskDetailObject.title);
+        if (sendTaskIndex !== -1) {
+          completeTaskArray.splice(taskIndex, 1);
+        }
       }
     });
     
@@ -243,22 +259,6 @@ export const dialogData = () => {
         }
       });
     }
-
-    // const showTodayPage = () => {
-    //   const completeTask = document.querySelector('.completeTask');
-    //   if (completeTask && removeTask) {
-    //     completeTask.appendChild(removeTask);
-    //   }
-  
-    //   if (mainShow && removeTask) {
-    //     mainShow.appendChild(removeTask.cloneNode(true)); // Use cloneNode to create a copy
-    //   }
-    // };
-    // showTodayPage();
-
-    const anything = document.querySelector('.anything');
-    let something = taskDataArray;
-    anything.textContent = something;
 
   });
   
