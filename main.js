@@ -180,8 +180,9 @@ const dialogData = () => {
     pageControl.close();
   });
 
+  const completeTaskArray = [];
   const taskDataArray = [];
-
+  
   // "Add Task" button adds todo task.
   addTaskButton.addEventListener("click", () => {
     const todoDescription = document.getElementById('todoDescription');
@@ -260,6 +261,9 @@ const dialogData = () => {
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
 
+    completeTaskArray.push(removeTask);
+    console.log(completeTaskArray);
+
     // Open and show the content on dialog for Main Pages.
     taskDetailBtn.addEventListener('click', () => {
       const currentTaskTitle = taskElement.textContent;
@@ -280,6 +284,18 @@ const dialogData = () => {
     taskRemove.addEventListener('click', () => {
       if (removeTask) {
         mainShow.removeChild(removeTask);
+
+        // Find the index of the task in the array and remove it
+        const taskIndex = taskDataArray.findIndex(task => task.title === taskDetailObject.title);
+        if (taskIndex !== -1) {
+          taskDataArray.splice(taskIndex, 1);
+        }
+
+        // Find the index of the removeTask in the array and remove it
+        const sendTaskIndex = completeTaskArray.findIndex(task => task.title === taskDetailObject.title);
+        if (sendTaskIndex !== -1) {
+          completeTaskArray.splice(taskIndex, 1);
+        }
       }
     });
     
@@ -383,22 +399,6 @@ const dialogData = () => {
         }
       });
     }
-
-    // const showTodayPage = () => {
-    //   const completeTask = document.querySelector('.completeTask');
-    //   if (completeTask && removeTask) {
-    //     completeTask.appendChild(removeTask);
-    //   }
-  
-    //   if (mainShow && removeTask) {
-    //     mainShow.appendChild(removeTask.cloneNode(true)); // Use cloneNode to create a copy
-    //   }
-    // };
-    // showTodayPage();
-
-    const anything = document.querySelector('.anything');
-    let something = taskDataArray;
-    anything.textContent = something;
 
   });
   
@@ -714,7 +714,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _complete_task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./complete-task */ "./src/complete-task.js");
 
 
-const today = (removeTask) => {
+const today = () => {
     const mainContainer = document.querySelector(".mainContainer");
     const todayTitle = document.createElement('div');
     const todayPage = document.createElement('div');
@@ -733,8 +733,7 @@ const today = (removeTask) => {
     todayPage.appendChild(todayTitle);
     todayPage.appendChild(completeTask);
     todayTitle.appendChild(todayTasksTitle);
-
-}
+};
 
 /***/ }),
 
