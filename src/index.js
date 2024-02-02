@@ -39,14 +39,11 @@ DOM MINIPULATION:
             the task.(Done)
     14. Make the calander working so it shows the date selected on the task and inside the description. (Done)
 
-    15. Now Put todo's tasks in the right pages when created.
-            If chosen date is today's then push the task to today task's else if greater date than today, push
-            to upcoming tasks. Do this for both inbox and for the projects.
+    15. Make the data Storage for it working.
 
-        
-    16. Put todo's in the rest of the right pages when created. Also make the check work.
-    17. Do the remaining css and other stuff.
-    18. Make the data Storage for it working.
+    16. Now Put todo's tasks in the right pages when created.
+    17. Put todo's in the rest of the right pages when created. Also make the check work.
+    18. Do the remaining css and other stuff.
     19. Finally move to notes and make a dialogue for them to make them working.
 
 */
