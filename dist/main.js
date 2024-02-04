@@ -225,9 +225,6 @@ const dialogData = () => {
       date: todoTaskDate.value ? new Date(todoTaskDate.value) : null,
     };
     
-    taskDataArray.push(taskDetailObject);
-    console.log(taskDataArray);
-
     taskEdit.textContent = "Edit Task";
     taskRemove.textContent = "Delete Task";
     taskDetailBtn.textContent = "Detail";
@@ -248,7 +245,7 @@ const dialogData = () => {
     taskCheckInput.name = "taskCheckInput";
     taskCheckInput.id = `taskCheckInput${taskInputId}`;
     taskCheckLabel.htmlFor = `taskCheckInput${taskInputId}`;
-
+    
     mainShow.appendChild(removeTask);
     removeTask.appendChild(taskTitleDiv);
     removeTask.appendChild(taskCheck);
@@ -260,44 +257,63 @@ const dialogData = () => {
     taskCheck.appendChild(taskRemove);
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
+    
+    const loadDataFromLocalStorage = () => {      
+      taskDataArray.push(taskDetailObject);
+      console.log(taskDataArray);
+      localStorage.setItem('task-object', JSON.stringify(taskDataArray));
 
+      const taskArray = JSON.parse(localStorage.getItem('task-object'));
+      console.log(taskArray);
+    };
+    loadDataFromLocalStorage();
+    
     completeTaskArray.push(removeTask);
     console.log(completeTaskArray);
 
     // Open and show the content on dialog for Main Pages.
-    taskDetailBtn.addEventListener('click', () => {
-      const currentTaskTitle = taskElement.textContent;
-      const currentTaskDescription = taskDescText.textContent;
-
-      taskDetailTitle.textContent = currentTaskTitle;
-      taskDetailText.textContent = currentTaskDescription;
-      taskDetailDailog.showModal();
-    });
+    const taskOpenBtn = () => {
+      taskDetailBtn.addEventListener('click', () => {
+        const currentTaskTitle = taskElement.textContent;
+        const currentTaskDescription = taskDescText.textContent;
+  
+        taskDetailTitle.textContent = currentTaskTitle;
+        taskDetailText.textContent = currentTaskDescription;
+        taskDetailDailog.showModal();
+      });
+    };
+    taskOpenBtn();
 
     // Closes the dialog for Main Pages.
-    const detailCloseBtn = document.querySelector('.detailCloseBtn');
-    detailCloseBtn.addEventListener('click', () => {
-      taskDetailDailog.close();
-    });
+    const closeDetail = () => {
+      const detailCloseBtn = document.querySelector('.detailCloseBtn');
+      detailCloseBtn.addEventListener('click', () => {
+        taskDetailDailog.close();
+      });
+    };
+    closeDetail();
     
     // Remove Tasks
-    taskRemove.addEventListener('click', () => {
-      if (removeTask) {
-        mainShow.removeChild(removeTask);
-
-        // Find the index of the task in the array and remove it
-        const taskIndex = taskDataArray.findIndex(task => task.title === taskDetailObject.title);
-        if (taskIndex !== -1) {
-          taskDataArray.splice(taskIndex, 1);
+    const removeAll = () => {
+      taskRemove.addEventListener('click', () => {
+        if (removeTask) {
+          mainShow.removeChild(removeTask);
+  
+          // Find the index of the task in the array and remove it
+          const taskIndex = taskDataArray.findIndex(task => task.title === taskDetailObject.title);
+          if (taskIndex !== -1) {
+            taskDataArray.splice(taskIndex, 1);
+          }
+  
+          // Find the index of the removeTask in the array and remove it
+          const sendTaskIndex = completeTaskArray.findIndex(task => task.title === taskDetailObject.title);
+          if (sendTaskIndex !== -1) {
+            completeTaskArray.splice(taskIndex, 1);
+          }
         }
-
-        // Find the index of the removeTask in the array and remove it
-        const sendTaskIndex = completeTaskArray.findIndex(task => task.title === taskDetailObject.title);
-        if (sendTaskIndex !== -1) {
-          completeTaskArray.splice(taskIndex, 1);
-        }
-      }
-    });
+      });
+    };
+    removeAll();
     
     if(newTodo) {
       newTodo.addEventListener('click', () => {
@@ -4511,14 +4527,11 @@ DOM MINIPULATION:
             the task.(Done)
     14. Make the calander working so it shows the date selected on the task and inside the description. (Done)
 
-    15. Now Put todo's tasks in the right pages when created.
-            If chosen date is today's then push the task to today task's else if greater date than today, push
-            to upcoming tasks. Do this for both inbox and for the projects.
+    15. Make the data Storage for it working.
 
-        
-    16. Put todo's in the rest of the right pages when created. Also make the check work.
-    17. Do the remaining css and other stuff.
-    18. Make the data Storage for it working.
+    16. Now Put todo's tasks in the right pages when created.
+    17. Put todo's in the rest of the right pages when created. Also make the check work.
+    18. Do the remaining css and other stuff.
     19. Finally move to notes and make a dialogue for them to make them working.
 
 */
