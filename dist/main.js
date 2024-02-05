@@ -264,6 +264,9 @@ const dialogData = () => {
 
       const taskArray = JSON.parse(localStorage.getItem('task-object'));
       console.log(taskArray);
+
+      const something = document.querySelector('.something');
+      something.innerHTML = taskArray.map(obj => obj.title).join(', ');
     };
     loadDataFromLocalStorage();
     
