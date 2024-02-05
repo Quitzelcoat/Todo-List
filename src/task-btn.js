@@ -118,9 +118,8 @@ export const dialogData = () => {
     taskCheck.appendChild(taskPriority);
     taskCheck.appendChild(taskDate);
     
-    const loadDataFromLocalStorage = () => {      
+    const loadDataFromLocalStorage = () => {
       taskDataArray.push(taskDetailObject);
-      console.log(taskDataArray);
       localStorage.setItem('task-object', JSON.stringify(taskDataArray));
 
       const taskArray = JSON.parse(localStorage.getItem('task-object'));
@@ -129,7 +128,7 @@ export const dialogData = () => {
     loadDataFromLocalStorage();
     
     completeTaskArray.push(removeTask);
-    console.log(completeTaskArray);
+    // console.log(completeTaskArray);
 
     // Open and show the content on dialog for Main Pages.
     const taskOpenBtn = () => {
@@ -170,6 +169,9 @@ export const dialogData = () => {
           if (sendTaskIndex !== -1) {
             completeTaskArray.splice(taskIndex, 1);
           }
+          
+          // Update the localStorage
+          localStorage.setItem('task-object', JSON.stringify(taskDataArray));
         }
       });
     };
