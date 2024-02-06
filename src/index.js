@@ -1,8 +1,12 @@
-import { createTodo } from './todo-task-show';
+import { todoManager } from './TodoManager';
 import { project } from './project';
 import { dialogData, pageControlCreate } from './task-btn';
 
-createTodo("na", "Something", "anything to do", "important", "");
+const newTodo = todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
+const nextTodo = todoManager.createTodo(false, "report", " report", "igh", new Date(), "work");
+
+console.log(newTodo);
+console.log(nextTodo);
 project();
 dialogData();
 pageControlCreate();

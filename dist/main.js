@@ -2,6 +2,71 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/TodoManager.js":
+/*!****************************!*\
+  !*** ./src/TodoManager.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   todoManager: () => (/* binding */ todoManager)
+/* harmony export */ });
+const todoManager = (function () {
+    let todoArray = [];
+    let todoCounter = 1;
+
+
+    const createTodo = (finished, title, description, priority, date, project) => {
+        const existingTodo = todoArray.find(todo => todo.title === title && todo.project === project);
+        if (existingTodo) {
+            console.log(`A todo with the title "${title}" already exists in the project "${project}".`);
+            return null;
+        }
+
+        const todo = { id: todoCounter++, finished, title, description, priority, date, project };
+        todoArray.push(todo);
+        return todo;
+    }
+
+    const findTodosByProject = (project) => {
+        return todoArray.filter(todo => todo.project === project);
+    };
+
+    const editTodo = (id, newData) => {
+        const todoIndex = todoArray.findIndex(todo => todo.id === id);
+        if (todoIndex !== -1) {
+            todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };
+            return todoArray[todoIndex];
+        } else {
+            console.log(`Todo with ID "${id}" not found.`);
+            return null;
+        }
+    };
+
+    const deleteTodo = (id) => {
+        const todoIndex = todoArray.findIndex(todo => todo.id === id);
+        if (todoIndex !== -1) {
+            const deletedTodo = todoArray.splice(todoIndex, 1);
+            return deletedTodo[0];
+        } else {
+            console.log(`Todo with ID "${id}" not found.`);
+            return null;
+        }
+    };
+
+    return {
+        todoArray,
+        createTodo,
+        findTodosByProject,
+        editTodo,
+        deleteTodo,
+    };
+})();
+
+
+/***/ }),
+
 /***/ "./src/complete-task.js":
 /*!******************************!*\
   !*** ./src/complete-task.js ***!
@@ -755,27 +820,6 @@ const today = () => {
     todayPage.appendChild(completeTask);
     todayTitle.appendChild(todayTasksTitle);
 };
-
-/***/ }),
-
-/***/ "./src/todo-task-show.js":
-/*!*******************************!*\
-  !*** ./src/todo-task-show.js ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createTodo: () => (/* binding */ createTodo)
-/* harmony export */ });
-let todoArray = [];
-
-const createTodo = (check, title, description, priority, date) => {
-    console.log({check, title, description, priority, date});
-    todoArray.push({check, title, description, priority, date});
-    console.log(todoArray);
-    return { check, title, description, priority, date };
-}
 
 /***/ }),
 
@@ -4488,14 +4532,18 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _todo_task_show__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./todo-task-show */ "./src/todo-task-show.js");
+/* harmony import */ var _TodoManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TodoManager */ "./src/TodoManager.js");
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
 /* harmony import */ var _task_btn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./task-btn */ "./src/task-btn.js");
 
 
 
 
-(0,_todo_task_show__WEBPACK_IMPORTED_MODULE_0__.createTodo)("na", "Something", "anything to do", "important", "");
+const newTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
+const nextTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "report", " report", "igh", new Date(), "work");
+
+console.log(newTodo);
+console.log(nextTodo);
 (0,_project__WEBPACK_IMPORTED_MODULE_1__.project)();
 (0,_task_btn__WEBPACK_IMPORTED_MODULE_2__.dialogData)();
 (0,_task_btn__WEBPACK_IMPORTED_MODULE_2__.pageControlCreate)();
