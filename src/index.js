@@ -1,13 +1,21 @@
 import { todoManager } from './TodoManager';
 import { project } from './project';
+import { dom } from './dom.js';
+
 import { dialogData, pageControlCreate } from './task-btn';
 
+// TodoManager file
 const newTodo = todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
-const nextTodo = todoManager.createTodo(false, "report", " report", "igh", new Date(), "work");
-
 console.log(newTodo);
-console.log(nextTodo);
+
 project();
+
+// dom file
+todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
+todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
+dom.renderTodos(todoManager.findTodosByProject('something'));
+
+// task-btn file
 dialogData();
 pageControlCreate();
 

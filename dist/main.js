@@ -94,6 +94,41 @@ const complete = () => {
 
 /***/ }),
 
+/***/ "./src/dom.js":
+/*!********************!*\
+  !*** ./src/dom.js ***!
+  \********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   dom: () => (/* binding */ dom)
+/* harmony export */ });
+const dom = (function () {
+
+    const createTodoElement = (task) => {
+        const showTask = document.createElement('div');
+        showTask.className = "showTask";
+        showTask.textContent = task;
+        return showTask;
+    };
+
+    const renderTodos = (tasks) => {
+        const mainShow = document.querySelector('.mainShow');
+        tasks.forEach(task => {
+            const showTask = createTodoElement(task);
+            mainShow.appendChild(showTask);
+            // createTodoElement(task);
+        });
+    };
+
+    return {
+        renderTodos,
+    };
+})();
+
+/***/ }),
+
 /***/ "./src/notes.js":
 /*!**********************!*\
   !*** ./src/notes.js ***!
@@ -4534,19 +4569,28 @@ var __webpack_exports__ = {};
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TodoManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TodoManager */ "./src/TodoManager.js");
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _task_btn__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./task-btn */ "./src/task-btn.js");
+/* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
+/* harmony import */ var _task_btn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./task-btn */ "./src/task-btn.js");
 
 
 
 
+
+
+// TodoManager file
 const newTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
-const nextTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "report", " report", "igh", new Date(), "work");
-
 console.log(newTodo);
-console.log(nextTodo);
+
 (0,_project__WEBPACK_IMPORTED_MODULE_1__.project)();
-(0,_task_btn__WEBPACK_IMPORTED_MODULE_2__.dialogData)();
-(0,_task_btn__WEBPACK_IMPORTED_MODULE_2__.pageControlCreate)();
+
+// dom file
+_TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
+_TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
+_dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(_TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.findTodosByProject('something'));
+
+// task-btn file
+(0,_task_btn__WEBPACK_IMPORTED_MODULE_3__.dialogData)();
+(0,_task_btn__WEBPACK_IMPORTED_MODULE_3__.pageControlCreate)();
 
 /*
 1. function to create a todo list. (Done).
