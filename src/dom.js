@@ -3,7 +3,8 @@ export const dom = (function () {
     const createTodoElement = (task) => {
         const showTask = document.createElement('div');
         showTask.className = "showTask";
-        showTask.textContent = task;
+        const allTask = task.title;
+        showTask.textContent = allTask;
         return showTask;
     };
 
