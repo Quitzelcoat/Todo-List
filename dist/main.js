@@ -4702,16 +4702,16 @@ const addTaskDetail = document.querySelector('.addBtn');
 addTaskDetail.addEventListener('click', () => {
     const formData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
 
-    const newTodoElement = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos({
+    const newTodoElement = {
         finished: false,
         title: formData.title,
         description: formData.description,
         priority: formData.priority,
         date: formData.date
-    });
+    };
 
-    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos([newTodo]);
-    
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos([newTodoElement]);
+
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.hideAddTaskForm();
 });
 

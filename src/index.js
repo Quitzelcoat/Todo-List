@@ -42,16 +42,16 @@ const addTaskDetail = document.querySelector('.addBtn');
 addTaskDetail.addEventListener('click', () => {
     const formData = dom.getFormData();
 
-    const newTodoElement = dom.renderTodos({
+    const newTodoElement = {
         finished: false,
         title: formData.title,
         description: formData.description,
         priority: formData.priority,
         date: formData.date
-    });
+    };
 
-    dom.renderTodos([newTodo]);
-    
+    dom.renderTodos([newTodoElement]);
+
     dom.hideAddTaskForm();
 });
 
