@@ -106,6 +106,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 const dom = (function () {
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
+    const todoTypesDialog = document.querySelector('.todoTypesDialog');
+    const mainDialog = document.querySelector('.mainDialog');
 
     const createTodoElement = (task) => {
         const showTask = document.createElement('div');
@@ -160,6 +162,9 @@ const dom = (function () {
         });
     };
 
+    const chooseTaskBtnDailog = () => todoTypesDialog.showModal();
+    const closeTaskBtnDailog = () => todoTypesDialog.close();
+    const showTaskCreateDailog = () => mainDialog.showModal();
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
 
@@ -177,11 +182,13 @@ const dom = (function () {
     };
 
     const showAddTaskForm = () => {
-        addTaskForm.style.display = 'block';
+        const showTask = document.querySelector('.showTask');
+        showTask.style.display = 'block';
     };
 
     const hideAddTaskForm = () => {
-        addTaskForm.style.display = 'none';
+        const showTask = document.querySelector('.showTask');
+        showTask.style.display = 'none';
     };
 
     const getFormData = () => {
@@ -195,6 +202,9 @@ const dom = (function () {
 
     return {
         renderTodos,
+        chooseTaskBtnDailog,
+        closeTaskBtnDailog,
+        showTaskCreateDailog,
         showDetailDailog,
         closeDetailDailog,
         populateDetailDailog,
@@ -4644,30 +4654,77 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TodoManager__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TodoManager */ "./src/TodoManager.js");
+/* harmony import */ var _task_btn__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./task-btn */ "./src/task-btn.js");
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
-/* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
-/* harmony import */ var _task_btn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./task-btn */ "./src/task-btn.js");
+/* harmony import */ var _TodoManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TodoManager */ "./src/TodoManager.js");
+/* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
 
 
+
+
+
+
+// task-btn file
+// dialogData();
+(0,_task_btn__WEBPACK_IMPORTED_MODULE_0__.pageControlCreate)();
+
+// project file
+// project();
 
 
 
 
 // TodoManager file
-const newTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
-console.log(newTodo);
-
-(0,_project__WEBPACK_IMPORTED_MODULE_1__.project)();
+const newCreateTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
+console.log(newCreateTodo);
 
 // dom file
-_TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
-_TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
-_dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(_TodoManager__WEBPACK_IMPORTED_MODULE_0__.todoManager.findTodosByProject('something'));
+_TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
+_TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
+_dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos(_TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.findTodosByProject('something'));
 
-// task-btn file
-(0,_task_btn__WEBPACK_IMPORTED_MODULE_3__.dialogData)();
-(0,_task_btn__WEBPACK_IMPORTED_MODULE_3__.pageControlCreate)();
+const newTaskBtn = document.querySelectorAll('.newTaskBtn');
+newTaskBtn.forEach(newTaskBtns => {
+    newTaskBtns.addEventListener('click', () => {
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.chooseTaskBtnDailog()
+    });
+});
+
+const newTodo = document.querySelectorAll('.newTodo');
+newTodo.forEach(newTodos => {
+    newTodos.addEventListener('click', () => {
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskCreateDailog();
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskBtnDailog();
+    });
+});
+
+const addTaskDetail = document.querySelector('.addBtn');
+addTaskDetail.addEventListener('click', () => {
+    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
+
+    const newTodoElement = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos({
+        finished: false,
+        title: formData.title,
+        description: formData.description,
+        priority: formData.priority,
+        date: formData.date
+    });
+
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos([newTodo]);
+    
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.hideAddTaskForm();
+});
+
+const detailTaskBtn = document.querySelectorAll('.detailTaskBtn');
+detailTaskBtn.forEach(detailTaskBtns => {
+    detailTaskBtns.addEventListener('click', () => _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showDetailDailog());
+});
+
+
+const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
+detailCloseBtn.forEach(detailCloseBtns => {
+    detailCloseBtns.addEventListener('click', () => _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeDetailDailog());
+});
 
 
 
