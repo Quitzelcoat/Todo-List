@@ -1,5 +1,7 @@
 export const dom = (function () {
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
+    const todoTypesDialog = document.querySelector('.todoTypesDialog');
+    const mainDialog = document.querySelector('.mainDialog');
 
     const createTodoElement = (task) => {
         const showTask = document.createElement('div');
@@ -54,6 +56,9 @@ export const dom = (function () {
         });
     };
 
+    const chooseTaskBtnDailog = () => todoTypesDialog.showModal();
+    const closeTaskBtnDailog = () => todoTypesDialog.close();
+    const showTaskCreateDailog = () => mainDialog.showModal();
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
 
@@ -71,11 +76,13 @@ export const dom = (function () {
     };
 
     const showAddTaskForm = () => {
-        addTaskForm.style.display = 'block';
+        const showTask = document.querySelector('.showTask');
+        showTask.style.display = 'block';
     };
 
     const hideAddTaskForm = () => {
-        addTaskForm.style.display = 'none';
+        const showTask = document.querySelector('.showTask');
+        showTask.style.display = 'none';
     };
 
     const getFormData = () => {
@@ -89,6 +96,9 @@ export const dom = (function () {
 
     return {
         renderTodos,
+        chooseTaskBtnDailog,
+        closeTaskBtnDailog,
+        showTaskCreateDailog,
         showDetailDailog,
         closeDetailDailog,
         populateDetailDailog,

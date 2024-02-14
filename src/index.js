@@ -1,23 +1,70 @@
-import { todoManager } from './TodoManager';
+import { dialogData, pageControlCreate } from './task-btn';
 import { project } from './project';
+
+import { todoManager } from './TodoManager';
 import { dom } from './dom.js';
 
-import { dialogData, pageControlCreate } from './task-btn';
+// task-btn file
+// dialogData();
+pageControlCreate();
+
+// project file
+// project();
+
+
+
 
 // TodoManager file
-const newTodo = todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
-console.log(newTodo);
-
-project();
+const newCreateTodo = todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
+console.log(newCreateTodo);
 
 // dom file
 todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
 todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
 dom.renderTodos(todoManager.findTodosByProject('something'));
 
-// task-btn file
-dialogData();
-pageControlCreate();
+const newTaskBtn = document.querySelectorAll('.newTaskBtn');
+newTaskBtn.forEach(newTaskBtns => {
+    newTaskBtns.addEventListener('click', () => {
+        dom.chooseTaskBtnDailog()
+    });
+});
+
+const newTodo = document.querySelectorAll('.newTodo');
+newTodo.forEach(newTodos => {
+    newTodos.addEventListener('click', () => {
+        dom.showTaskCreateDailog();
+        dom.closeTaskBtnDailog();
+    });
+});
+
+const addTaskDetail = document.querySelector('.addBtn');
+addTaskDetail.addEventListener('click', () => {
+    const formData = dom.getFormData();
+
+    const newTodoElement = dom.renderTodos({
+        finished: false,
+        title: formData.title,
+        description: formData.description,
+        priority: formData.priority,
+        date: formData.date
+    });
+
+    dom.renderTodos([newTodo]);
+    
+    dom.hideAddTaskForm();
+});
+
+const detailTaskBtn = document.querySelectorAll('.detailTaskBtn');
+detailTaskBtn.forEach(detailTaskBtns => {
+    detailTaskBtns.addEventListener('click', () => dom.showDetailDailog());
+});
+
+
+const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
+detailCloseBtn.forEach(detailCloseBtns => {
+    detailCloseBtns.addEventListener('click', () => dom.closeDetailDailog());
+});
 
 
 
