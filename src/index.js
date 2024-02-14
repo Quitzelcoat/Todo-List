@@ -19,6 +19,10 @@ dom.renderTodos(todoManager.findTodosByProject('something'));
 dialogData();
 pageControlCreate();
 
+
+
+
+
 /*
 1. function to create a todo list. (Done).
 2. function to create a new project. (Done).

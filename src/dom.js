@@ -1,4 +1,5 @@
 export const dom = (function () {
+    const taskDetailDailog = document.querySelector('.taskDetailDailog');
 
     const createTodoElement = (task) => {
         const showTask = document.createElement('div');
@@ -51,54 +52,48 @@ export const dom = (function () {
             const showTask = createTodoElement(task);
             mainShow.appendChild(showTask);
         });
-
-        detailBtn();
-        editBtn();
-        deleteBtn();
     };
 
-    const detailBtn = () => {
-        const detailTaskBtn = document.querySelectorAll('.detailTaskBtn');
-        const taskDetailDailog = document.querySelector('.taskDetailDailog');
-        const detailCloseBtn = document.querySelector('.detailCloseBtn');
+    const showDetailDailog = () => taskDetailDailog.showModal();
+    const closeDetailDailog = () => taskDetailDailog.close();
 
-        detailTaskBtn.forEach(detailTaskBtns => {
-            detailTaskBtns.addEventListener ('click', () => {
-                populateDetailDialog();
-                taskDetailDailog.showModal();
-            });
-        });
-
-        detailCloseBtn.addEventListener('click', () => {
-            taskDetailDailog.close();
-        });
-    };
-
-    const editBtn = () => {
-        const editTaskBtn = document.querySelectorAll('.editTaskBtn');
-        editTaskBtn.forEach(editTaskBtns => {
-            editTaskBtns.addEventListener('click', () => {
-                
-            });
-        });
-    }
-
-    const deleteBtn = () => {
-        const deleteTaskBtn = document.querySelectorAll('.deleteTaskBtn');
-        deleteTaskBtn.forEach(deleteTaskBtns => {
-            deleteTaskBtns.addEventListener('click', () => {
-                
-            });
-        });
-    }
-
-    const populateDetailDialog = (title, description, priority, date) => {
+    const populateDetailDailog = (title, description, priority, date) => {
         const taskDetailTitle = document.querySelector('.taskDetailTitle');
+        const taskDetailText = document.querySelector('.taskDetailText');
+        const taskDetailPriority = document.querySelector('.taskDetailPriority');
+        const taskDetailDate = document.querySelector('.taskDetailDate');
 
         taskDetailTitle.textContent = title;
+        taskDetailText.textContent = description;
+        taskDetailPriority.textContent = priority;
+        taskDetailDate.textContent = date;
+
+    };
+
+    const showAddTaskForm = () => {
+        addTaskForm.style.display = 'block';
+    };
+
+    const hideAddTaskForm = () => {
+        addTaskForm.style.display = 'none';
+    };
+
+    const getFormData = () => {
+        const title = document.getElementById('todoTitle').value;
+        const description = document.getElementById('todoDescription').value;
+        const priority = document.querySelector('.priorityTask').value;
+        const date = document.getElementById('todoTaskDate').value;
+
+        return { title, description, priority, date };
     };
 
     return {
         renderTodos,
+        showDetailDailog,
+        closeDetailDailog,
+        populateDetailDailog,
+        showAddTaskForm,
+        hideAddTaskForm,
+        getFormData,
     };
 })();
