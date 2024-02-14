@@ -165,6 +165,7 @@ const dom = (function () {
     const chooseTaskBtnDailog = () => todoTypesDialog.showModal();
     const closeTaskBtnDailog = () => todoTypesDialog.close();
     const showTaskCreateDailog = () => mainDialog.showModal();
+    const closeTaskCreateDailog = () => mainDialog.close();
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
 
@@ -194,10 +195,26 @@ const dom = (function () {
     const getFormData = () => {
         const title = document.getElementById('todoTitle').value;
         const description = document.getElementById('todoDescription').value;
-        const priority = document.querySelector('.priorityTask').value;
+        const priority = document.querySelectorAll('.priorityTask');
+        const checkedPriorityTask = Array.from(priority).find(task => task.checked);
         const date = document.getElementById('todoTaskDate').value;
+    
+        const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
+    
+        return {
+            title: title,
+            description: description,
+            priority: selectedPriority,
+            date: date,
+        };
+    };
 
-        return { title, description, priority, date };
+    const clearDailogData = () => {
+        document.getElementById('todoTitle').value = '';
+        document.getElementById('todoDescription').value = '';
+        const priorityTasks = document.querySelectorAll('.priorityTask');
+        priorityTasks.forEach(task => task.checked = false);
+        document.getElementById('todoTaskDate').value = '';
     };
 
     return {
@@ -205,12 +222,14 @@ const dom = (function () {
         chooseTaskBtnDailog,
         closeTaskBtnDailog,
         showTaskCreateDailog,
+        closeTaskCreateDailog,
         showDetailDailog,
         closeDetailDailog,
         populateDetailDailog,
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        clearDailogData,
     };
 })();
 
@@ -4710,9 +4729,22 @@ addTaskDetail.addEventListener('click', () => {
         date: formData.date
     };
 
-    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos([newTodoElement]);
+    const storedTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(
+        newTodoElement.finished, 
+        newTodoElement.title, 
+        newTodoElement.description, 
+        newTodoElement.priority, 
+        newTodoElement.date
+    );
 
+    if (storedTodo) {
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos([storedTodo]);
+        console.log(storedTodo);
+    }
+    
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.hideAddTaskForm();
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.clearDailogData();
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskCreateDailog();
 });
 
 const detailTaskBtn = document.querySelectorAll('.detailTaskBtn');

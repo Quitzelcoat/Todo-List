@@ -50,9 +50,22 @@ addTaskDetail.addEventListener('click', () => {
         date: formData.date
     };
 
-    dom.renderTodos([newTodoElement]);
+    const storedTodo = todoManager.createTodo(
+        newTodoElement.finished, 
+        newTodoElement.title, 
+        newTodoElement.description, 
+        newTodoElement.priority, 
+        newTodoElement.date
+    );
 
+    if (storedTodo) {
+        dom.renderTodos([storedTodo]);
+        console.log(storedTodo);
+    }
+    
     dom.hideAddTaskForm();
+    dom.clearDailogData();
+    dom.closeTaskCreateDailog();
 });
 
 const detailTaskBtn = document.querySelectorAll('.detailTaskBtn');

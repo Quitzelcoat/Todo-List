@@ -59,6 +59,7 @@ export const dom = (function () {
     const chooseTaskBtnDailog = () => todoTypesDialog.showModal();
     const closeTaskBtnDailog = () => todoTypesDialog.close();
     const showTaskCreateDailog = () => mainDialog.showModal();
+    const closeTaskCreateDailog = () => mainDialog.close();
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
 
@@ -88,10 +89,26 @@ export const dom = (function () {
     const getFormData = () => {
         const title = document.getElementById('todoTitle').value;
         const description = document.getElementById('todoDescription').value;
-        const priority = document.querySelector('.priorityTask').value;
+        const priority = document.querySelectorAll('.priorityTask');
+        const checkedPriorityTask = Array.from(priority).find(task => task.checked);
         const date = document.getElementById('todoTaskDate').value;
+    
+        const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
+    
+        return {
+            title: title,
+            description: description,
+            priority: selectedPriority,
+            date: date,
+        };
+    };
 
-        return { title, description, priority, date };
+    const clearDailogData = () => {
+        document.getElementById('todoTitle').value = '';
+        document.getElementById('todoDescription').value = '';
+        const priorityTasks = document.querySelectorAll('.priorityTask');
+        priorityTasks.forEach(task => task.checked = false);
+        document.getElementById('todoTaskDate').value = '';
     };
 
     return {
@@ -99,11 +116,13 @@ export const dom = (function () {
         chooseTaskBtnDailog,
         closeTaskBtnDailog,
         showTaskCreateDailog,
+        closeTaskCreateDailog,
         showDetailDailog,
         closeDetailDailog,
         populateDetailDailog,
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        clearDailogData,
     };
 })();
