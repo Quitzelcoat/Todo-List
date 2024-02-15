@@ -130,9 +130,6 @@ const dom = (function () {
         editTaskBtn.className = "editTaskBtn";
         deleteTaskBtn.className = "deleteTaskBtn";
 
-        // const allTask = `${task.finished} ${task.title} ${task.description} ${task.priority} ${task.date}`;
-        // showTask.textContent = allTask;
-        
         finishedTask.textContent = task.finished;
         titleTask.textContent = task.title;
         descriptionTask.textContent = task.description;
@@ -4693,14 +4690,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 // TodoManager file
 const newCreateTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
 console.log(newCreateTodo);
 
 // dom file
-_TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
-_TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
-_dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos(_TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.findTodosByProject('something'));
+// todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
+// todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
+// dom.renderTodos(todoManager.findTodosByProject('something'));
 
 const newTaskBtn = document.querySelectorAll('.newTaskBtn');
 newTaskBtn.forEach(newTaskBtns => {
@@ -4717,8 +4716,8 @@ newTodo.forEach(newTodos => {
     });
 });
 
-const addTaskDetail = document.querySelector('.addBtn');
-addTaskDetail.addEventListener('click', () => {
+const addNewTask = document.querySelector('.addBtn');
+addNewTask.addEventListener('click', () => {
     const formData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
 
     const newTodoElement = {
@@ -4741,17 +4740,28 @@ addTaskDetail.addEventListener('click', () => {
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.renderTodos([storedTodo]);
         console.log(storedTodo);
     }
-    
-    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.hideAddTaskForm();
+        
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.clearDailogData();
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskCreateDailog();
 });
 
-const detailTaskBtn = document.querySelectorAll('.detailTaskBtn');
-detailTaskBtn.forEach(detailTaskBtns => {
-    detailTaskBtns.addEventListener('click', () => _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showDetailDailog());
-});
+const handleSubmit = () => {
+    const returnFormData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.populateDetailDailog(
+        returnFormData.title,
+        returnFormData.description,
+        returnFormData.priority,
+        returnFormData.date
+    );
+};
 
+const mainShow = document.querySelector('.mainShow');
+mainShow.addEventListener('click', (event) => {
+    if (event.target.classList.contains('detailTaskBtn')) {
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showDetailDailog();
+        handleSubmit();
+    }
+});
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
 detailCloseBtn.forEach(detailCloseBtns => {
