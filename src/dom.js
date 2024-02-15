@@ -24,9 +24,6 @@ export const dom = (function () {
         editTaskBtn.className = "editTaskBtn";
         deleteTaskBtn.className = "deleteTaskBtn";
 
-        // const allTask = `${task.finished} ${task.title} ${task.description} ${task.priority} ${task.date}`;
-        // showTask.textContent = allTask;
-        
         finishedTask.textContent = task.finished;
         titleTask.textContent = task.title;
         descriptionTask.textContent = task.description;
