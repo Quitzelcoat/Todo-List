@@ -35,6 +35,7 @@ newTaskBtn.forEach(newTaskBtns => {
 const newTodo = document.querySelectorAll('.newTodo');
 newTodo.forEach(newTodos => {
     newTodos.addEventListener('click', () => {
+        dom.showTaskForm();
         dom.showTaskCreateDailog();
         dom.closeTaskBtnDailog();
     });
@@ -72,13 +73,27 @@ addNewTask.addEventListener('click', () => {
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
     if (event.target.classList.contains('detailTaskBtn')) {
-        const taskData = dom.gettingTaskData(event.target); // Pass the clicked button to the function
+        const taskData = dom.gettingTaskData(event.target);
         if (taskData) {
             dom.showDetailDailog();
             dom.populateDetailDailog(taskData.title, taskData.description, taskData.priority, taskData.date);
         }
     }
 });
+
+
+
+// const editTaskBtn = document.querySelectorAll('.editTaskBtn');
+mainShow.addEventListener('click', (event) => {
+    const clickedElement = event.target;
+    if (clickedElement.classList.contains('editTaskBtn')) {
+        dom.showTaskForm(false);
+        console.log("working");
+        dom.editTasksDetail();
+    }
+});
+
+
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
 detailCloseBtn.forEach(detailCloseBtns => {

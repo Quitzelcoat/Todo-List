@@ -1,3 +1,5 @@
+import { add } from "date-fns";
+
 export const dom = (function () {
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
     const todoTypesDialog = document.querySelector('.todoTypesDialog');
@@ -61,7 +63,6 @@ export const dom = (function () {
     const closeDetailDailog = () => taskDetailDailog.close();
 
     const populateDetailDailog = (title, description, priority, date) => {
-        console.log('Received data:', title, description, priority, date);
 
         const taskDetailTitle = document.querySelector('.taskDetailTitle');
         const taskDetailText = document.querySelector('.taskDetailText');
@@ -117,12 +118,28 @@ export const dom = (function () {
         };
     };
 
+    const editTasksDetail = () => {
+        if(mainDialog) {
+            mainDialog.showModal();
+        }
+    };
+
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
         document.getElementById('todoDescription').value = '';
         const priorityTasks = document.querySelectorAll('.priorityTask');
         priorityTasks.forEach(task => task.checked = false);
         document.getElementById('todoTaskDate').value = '';
+    };
+
+    
+    const showTaskForm = (showCreateButton = true) => {
+
+        // Conditionally show or hide the create task button
+        const createTaskBtn = document.querySelector('.addBtn');
+        if (createTaskBtn) {
+            createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
+        }
     };
 
     return {
@@ -138,6 +155,8 @@ export const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        editTasksDetail,
         clearDailogData,
+        showTaskForm,
     };
 })();
