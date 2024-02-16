@@ -61,6 +61,8 @@ export const dom = (function () {
     const closeDetailDailog = () => taskDetailDailog.close();
 
     const populateDetailDailog = (title, description, priority, date) => {
+        console.log('Received data:', title, description, priority, date);
+
         const taskDetailTitle = document.querySelector('.taskDetailTitle');
         const taskDetailText = document.querySelector('.taskDetailText');
         const taskDetailPriority = document.querySelector('.taskDetailPriority');
@@ -71,6 +73,21 @@ export const dom = (function () {
         taskDetailPriority.textContent = priority;
         taskDetailDate.textContent = date;
 
+    };
+
+    const gettingTaskData = (button) => {
+        const showTask = button.closest('.showTask');
+        if (showTask) {
+            return {
+                title: showTask.querySelector('.titleTask').textContent,
+                description: showTask.querySelector('.descriptionTask').textContent,
+                priority: showTask.querySelector('.priorityTask').textContent,
+                date: showTask.querySelector('.dateTask').textContent,
+            };
+        } else {
+            console.error('No parent task found for the clicked button');
+            return null;
+        }
     };
 
     const showAddTaskForm = () => {
@@ -117,6 +134,7 @@ export const dom = (function () {
         showDetailDailog,
         closeDetailDailog,
         populateDetailDailog,
+        gettingTaskData,
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,

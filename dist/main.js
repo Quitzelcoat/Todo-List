@@ -167,6 +167,8 @@ const dom = (function () {
     const closeDetailDailog = () => taskDetailDailog.close();
 
     const populateDetailDailog = (title, description, priority, date) => {
+        console.log('Received data:', title, description, priority, date);
+
         const taskDetailTitle = document.querySelector('.taskDetailTitle');
         const taskDetailText = document.querySelector('.taskDetailText');
         const taskDetailPriority = document.querySelector('.taskDetailPriority');
@@ -177,6 +179,21 @@ const dom = (function () {
         taskDetailPriority.textContent = priority;
         taskDetailDate.textContent = date;
 
+    };
+
+    const gettingTaskData = (button) => {
+        const showTask = button.closest('.showTask');
+        if (showTask) {
+            return {
+                title: showTask.querySelector('.titleTask').textContent,
+                description: showTask.querySelector('.descriptionTask').textContent,
+                priority: showTask.querySelector('.priorityTask').textContent,
+                date: showTask.querySelector('.dateTask').textContent,
+            };
+        } else {
+            console.error('No parent task found for the clicked button');
+            return null;
+        }
     };
 
     const showAddTaskForm = () => {
@@ -223,6 +240,7 @@ const dom = (function () {
         showDetailDailog,
         closeDetailDailog,
         populateDetailDailog,
+        gettingTaskData,
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
@@ -4745,21 +4763,14 @@ addNewTask.addEventListener('click', () => {
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskCreateDailog();
 });
 
-const handleSubmit = () => {
-    const returnFormData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
-    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.populateDetailDailog(
-        returnFormData.title,
-        returnFormData.description,
-        returnFormData.priority,
-        returnFormData.date
-    );
-};
-
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
     if (event.target.classList.contains('detailTaskBtn')) {
-        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showDetailDailog();
-        handleSubmit();
+        const taskData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.gettingTaskData(event.target); // Pass the clicked button to the function
+        if (taskData) {
+            _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showDetailDailog();
+            _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.populateDetailDailog(taskData.title, taskData.description, taskData.priority, taskData.date);
+        }
     }
 });
 

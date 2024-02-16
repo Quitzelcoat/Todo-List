@@ -69,21 +69,14 @@ addNewTask.addEventListener('click', () => {
     dom.closeTaskCreateDailog();
 });
 
-const handleSubmit = () => {
-    const returnFormData = dom.getFormData();
-    dom.populateDetailDailog(
-        returnFormData.title,
-        returnFormData.description,
-        returnFormData.priority,
-        returnFormData.date
-    );
-};
-
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
     if (event.target.classList.contains('detailTaskBtn')) {
-        dom.showDetailDailog();
-        handleSubmit();
+        const taskData = dom.gettingTaskData(event.target); // Pass the clicked button to the function
+        if (taskData) {
+            dom.showDetailDailog();
+            dom.populateDetailDailog(taskData.title, taskData.description, taskData.priority, taskData.date);
+        }
     }
 });
 
