@@ -104,6 +104,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   dom: () => (/* binding */ dom)
 /* harmony export */ });
+
+
 const dom = (function () {
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
     const todoTypesDialog = document.querySelector('.todoTypesDialog');
@@ -167,7 +169,6 @@ const dom = (function () {
     const closeDetailDailog = () => taskDetailDailog.close();
 
     const populateDetailDailog = (title, description, priority, date) => {
-        console.log('Received data:', title, description, priority, date);
 
         const taskDetailTitle = document.querySelector('.taskDetailTitle');
         const taskDetailText = document.querySelector('.taskDetailText');
@@ -223,12 +224,28 @@ const dom = (function () {
         };
     };
 
+    const editTasksDetail = () => {
+        if(mainDialog) {
+            mainDialog.showModal();
+        }
+    };
+
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
         document.getElementById('todoDescription').value = '';
         const priorityTasks = document.querySelectorAll('.priorityTask');
         priorityTasks.forEach(task => task.checked = false);
         document.getElementById('todoTaskDate').value = '';
+    };
+
+    
+    const showTaskForm = (showCreateButton = true) => {
+
+        // Conditionally show or hide the create task button
+        const createTaskBtn = document.querySelector('.addBtn');
+        if (createTaskBtn) {
+            createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
+        }
     };
 
     return {
@@ -244,7 +261,9 @@ const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        editTasksDetail,
         clearDailogData,
+        showTaskForm,
     };
 })();
 
@@ -4729,6 +4748,7 @@ newTaskBtn.forEach(newTaskBtns => {
 const newTodo = document.querySelectorAll('.newTodo');
 newTodo.forEach(newTodos => {
     newTodos.addEventListener('click', () => {
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskForm();
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskCreateDailog();
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskBtnDailog();
     });
@@ -4766,13 +4786,27 @@ addNewTask.addEventListener('click', () => {
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
     if (event.target.classList.contains('detailTaskBtn')) {
-        const taskData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.gettingTaskData(event.target); // Pass the clicked button to the function
+        const taskData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.gettingTaskData(event.target);
         if (taskData) {
             _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showDetailDailog();
             _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.populateDetailDailog(taskData.title, taskData.description, taskData.priority, taskData.date);
         }
     }
 });
+
+
+
+// const editTaskBtn = document.querySelectorAll('.editTaskBtn');
+mainShow.addEventListener('click', (event) => {
+    const clickedElement = event.target;
+    if (clickedElement.classList.contains('editTaskBtn')) {
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskForm(false);
+        console.log("working");
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.editTasksDetail();
+    }
+});
+
+
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
 detailCloseBtn.forEach(detailCloseBtns => {
