@@ -81,8 +81,6 @@ mainShow.addEventListener('click', (event) => {
     }
 });
 
-
-
 // const editTaskBtn = document.querySelectorAll('.editTaskBtn');
 mainShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
