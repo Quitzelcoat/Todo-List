@@ -229,6 +229,22 @@ const dom = (function () {
             mainDialog.showModal();
         }
     };
+    
+
+
+    const showTaskForm = (showCreateButton = true) => {
+        // Conditionally show or hide the create task button
+        const createTaskBtn = document.querySelector('.addBtn');
+        if (createTaskBtn) {
+            createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
+        }
+    };
+
+
+    const taskEditFunction = () => {
+        
+    };
+
 
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
@@ -236,16 +252,6 @@ const dom = (function () {
         const priorityTasks = document.querySelectorAll('.priorityTask');
         priorityTasks.forEach(task => task.checked = false);
         document.getElementById('todoTaskDate').value = '';
-    };
-
-    
-    const showTaskForm = (showCreateButton = true) => {
-
-        // Conditionally show or hide the create task button
-        const createTaskBtn = document.querySelector('.addBtn');
-        if (createTaskBtn) {
-            createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
-        }
     };
 
     return {
@@ -4793,8 +4799,6 @@ mainShow.addEventListener('click', (event) => {
         }
     }
 });
-
-
 
 // const editTaskBtn = document.querySelectorAll('.editTaskBtn');
 mainShow.addEventListener('click', (event) => {
