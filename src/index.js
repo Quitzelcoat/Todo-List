@@ -80,56 +80,39 @@ mainShow.addEventListener('click', (event) => {
             dom.populateDetailDailog(taskData.title, taskData.description, taskData.priority, taskData.date);
         }
     }
-});
 
-function editTaskBtnClick () {
-    dom.showTaskForm(false);
-    const captureData = dom.gettingTaskData(event.target);
-    if (captureData) {
-        dom.showEditTask();
-        dom.taskEditFunction(captureData.title, captureData.description, captureData.priority, captureData.date);
-    }
-};
-
-function updateTaskBtnClick() {
-    const updateBtns = document.querySelectorAll('.updateBtn');
-    updateBtns.forEach(updateBtn => {
-        updateBtn.addEventListener('click', () => {
-            console.log("Update button clicked");
-
-            const formData = dom.getFormData();
-
-            const newTodo = todoManager.createTodo(
-                false,
-                formData.title,
-                formData.description,
-                formData.priority,
-                formData.date
-            );
-
-            if (newTodo) {
-                dom.EditTodoTasksChanges([newTodo]);
-                dom.closeEditTask();
-            } else {
-                console.error("Todo creation failed or duplicate todo found.");
-            }
-        });
-    });
-}
-
-// Adding event listener for the edit button of each task
-mainShow.addEventListener('click', (event) => {
+    // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
-        editTaskBtnClick(event);
+        dom.showTaskForm(false);
+        const captureData = dom.gettingTaskData(event.target);
+        if (captureData) {
+            dom.showEditTask();
+            dom.populateMainDetailDailogForm(captureData.title, captureData.description, captureData.priority, captureData.date);
+        }
     }
-
-    if (updateTaskBtnClick()) {
-        updateTaskBtnClick();
-    }
-
 });
 
+const updateBtn = document.querySelector('.updateBtn');
+updateBtn.addEventListener('click', () => {
+    console.log("Update button clicked");
+
+    const formData = dom.getFormData();
+
+    const newTodo = {
+        title: formData.title,
+        description: formData.description,
+        priority: formData.priority,
+        date: formData.date
+    };
+
+    if (newTodo) {
+        const { title, description, priority, date } = newTodo;
+
+        dom.EditTodoTasksChanges(title, description, priority, date);
+        dom.closeEditTask();
+    }
+});
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
 detailCloseBtn.forEach(detailCloseBtns => {

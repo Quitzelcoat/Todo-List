@@ -15,8 +15,9 @@ export const dom = (function () {
         const detailTaskBtn = document.createElement('button');
         const editTaskBtn = document.createElement('button');
         const deleteTaskBtn = document.createElement('button');
-
+    
         showTask.className = "showTask";
+        showTask.dataset.id = task.id; // Add the ID as a data attribute
         finishedTask.className = "finishedTask";
         titleTask.className = "titleTask";
         descriptionTask.className = "descriptionTask";
@@ -25,7 +26,7 @@ export const dom = (function () {
         detailTaskBtn.className = "detailTaskBtn";
         editTaskBtn.className = "editTaskBtn";
         deleteTaskBtn.className = "deleteTaskBtn";
-
+    
         finishedTask.textContent = task.finished;
         titleTask.textContent = task.title;
         descriptionTask.textContent = task.description;
@@ -34,7 +35,7 @@ export const dom = (function () {
         detailTaskBtn.textContent = "Task Detail";
         editTaskBtn.textContent = "Edit";
         deleteTaskBtn.textContent = "Delete";
-
+    
         showTask.appendChild(finishedTask);
         showTask.appendChild(titleTask);
         showTask.appendChild(descriptionTask);
@@ -43,7 +44,7 @@ export const dom = (function () {
         showTask.appendChild(detailTaskBtn);
         showTask.appendChild(editTaskBtn);
         showTask.appendChild(deleteTaskBtn);
-
+    
         return showTask;
     };
     
@@ -130,7 +131,7 @@ export const dom = (function () {
     };
 
 
-    const taskEditFunction = (title, description, priority, date) => {
+    const populateMainDetailDailogForm = (title, description, priority, date) => {
         const todoTitle = document.getElementById('todoTitle');
         const todoDescription = document.getElementById('todoDescription');
         const priorityTask = document.querySelectorAll('.priorityTask');
@@ -148,27 +149,20 @@ export const dom = (function () {
     };
 
     const EditTodoTasksChanges = (title, description, priority, date) => {
-        const titleElements = document.querySelectorAll('.titleTask');
-        titleElements.forEach(element => {
-            element.textContent = title;
-        });
+        const titleElement = document.querySelector('.titleTask');
+        titleElement.textContent = title;
 
-        const descriptionElements = document.querySelectorAll('.descriptionTask');
-        descriptionElements.forEach(element => {
-            element.textContent = description;
-        });
+        const descriptionElement = document.querySelector('.descriptionTask');
+        descriptionElement.textContent = description;
 
-        const priorityElements = document.querySelectorAll('.priorityTask');
-        priorityElements.forEach(element => {
-            element.textContent = priority;
-        });
+        const priorityElement = document.querySelector('.priorityTask');
+        priorityElement.textContent = priority;
 
-        const dateElements = document.querySelectorAll('.dateTask');
-        dateElements.forEach(element => {
-            element.textContent = date;
-        });
+        const dateElement = document.querySelector('.dateTask');
+        dateElement.textContent = date;
+
     };
-    
+
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
         document.getElementById('todoDescription').value = '';
@@ -192,7 +186,7 @@ export const dom = (function () {
         getFormData,
         showEditTask,
         closeEditTask,
-        taskEditFunction,
+        populateMainDetailDailogForm,
         EditTodoTasksChanges,
         clearDailogData,
         showTaskForm,
