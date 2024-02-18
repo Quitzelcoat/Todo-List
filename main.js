@@ -167,7 +167,9 @@ const dom = (function () {
     const closeTaskCreateDailog = () => mainDialog.close();
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
-
+    const showEditTask = () => { if(mainDialog) {mainDialog.showModal();} };
+    const closeEditTask = () => { if(mainDialog) {mainDialog.close();} };
+    
     const populateDetailDailog = (title, description, priority, date) => {
 
         const taskDetailTitle = document.querySelector('.taskDetailTitle');
@@ -224,13 +226,6 @@ const dom = (function () {
         };
     };
 
-    const editTasksDetail = () => {
-        if(mainDialog) {
-            mainDialog.showModal();
-        }
-    };
-    
-
 
     const showTaskForm = (showCreateButton = true) => {
         // Conditionally show or hide the create task button
@@ -241,11 +236,45 @@ const dom = (function () {
     };
 
 
-    const taskEditFunction = () => {
+    const taskEditFunction = (title, description, priority, date) => {
+        const todoTitle = document.getElementById('todoTitle');
+        const todoDescription = document.getElementById('todoDescription');
+        const priorityTask = document.querySelectorAll('.priorityTask');
+        const todoTaskDate = document.getElementById('todoTaskDate');
         
+        todoTitle.value = title;
+        todoDescription.value = description;
+        const checkedPriorityTask = Array.from(priorityTask).find(task => task.value === priority);
+        if (checkedPriorityTask) {
+            checkedPriorityTask.checked = true;
+        } else {
+            console.error('Invalid priority:', priority);
+        }
+        todoTaskDate.value = date;
     };
 
+    const EditTodoTasksChanges = (title, description, priority, date) => {
+        const titleElements = document.querySelectorAll('.titleTask');
+        titleElements.forEach(element => {
+            element.textContent = title;
+        });
 
+        const descriptionElements = document.querySelectorAll('.descriptionTask');
+        descriptionElements.forEach(element => {
+            element.textContent = description;
+        });
+
+        const priorityElements = document.querySelectorAll('.priorityTask');
+        priorityElements.forEach(element => {
+            element.textContent = priority;
+        });
+
+        const dateElements = document.querySelectorAll('.dateTask');
+        dateElements.forEach(element => {
+            element.textContent = date;
+        });
+    };
+    
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
         document.getElementById('todoDescription').value = '';
@@ -267,7 +296,10 @@ const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
-        editTasksDetail,
+        showEditTask,
+        closeEditTask,
+        taskEditFunction,
+        EditTodoTasksChanges,
         clearDailogData,
         showTaskForm,
     };
@@ -4757,6 +4789,7 @@ newTodo.forEach(newTodos => {
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskForm();
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskCreateDailog();
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskBtnDailog();
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.clearDailogData();
     });
 });
 
@@ -4800,16 +4833,53 @@ mainShow.addEventListener('click', (event) => {
     }
 });
 
-// const editTaskBtn = document.querySelectorAll('.editTaskBtn');
+function editTaskBtnClick () {
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskForm(false);
+    const captureData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.gettingTaskData(event.target);
+    if (captureData) {
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showEditTask();
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.taskEditFunction(captureData.title, captureData.description, captureData.priority, captureData.date);
+    }
+};
+
+function updateTaskBtnClick() {
+    const updateBtns = document.querySelectorAll('.updateBtn');
+    updateBtns.forEach(updateBtn => {
+        updateBtn.addEventListener('click', () => {
+            console.log("Update button clicked");
+
+            const formData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
+
+            const newTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(
+                false,
+                formData.title,
+                formData.description,
+                formData.priority,
+                formData.date
+            );
+
+            if (newTodo) {
+                _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.EditTodoTasksChanges([newTodo]);
+                _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeEditTask();
+            } else {
+                console.error("Todo creation failed or duplicate todo found.");
+            }
+        });
+    });
+}
+
+// Adding event listener for the edit button of each task
 mainShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
-        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskForm(false);
-        console.log("working");
-        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.editTasksDetail();
+        editTaskBtnClick(event);
     }
-});
 
+    if (updateTaskBtnClick()) {
+        updateTaskBtnClick();
+    }
+
+});
 
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
