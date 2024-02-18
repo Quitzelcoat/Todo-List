@@ -38,6 +38,7 @@ newTodo.forEach(newTodos => {
         dom.showTaskForm();
         dom.showTaskCreateDailog();
         dom.closeTaskBtnDailog();
+        dom.clearDailogData();
     });
 });
 
@@ -81,16 +82,53 @@ mainShow.addEventListener('click', (event) => {
     }
 });
 
-// const editTaskBtn = document.querySelectorAll('.editTaskBtn');
+function editTaskBtnClick () {
+    dom.showTaskForm(false);
+    const captureData = dom.gettingTaskData(event.target);
+    if (captureData) {
+        dom.showEditTask();
+        dom.taskEditFunction(captureData.title, captureData.description, captureData.priority, captureData.date);
+    }
+};
+
+function updateTaskBtnClick() {
+    const updateBtns = document.querySelectorAll('.updateBtn');
+    updateBtns.forEach(updateBtn => {
+        updateBtn.addEventListener('click', () => {
+            console.log("Update button clicked");
+
+            const formData = dom.getFormData();
+
+            const newTodo = todoManager.createTodo(
+                false,
+                formData.title,
+                formData.description,
+                formData.priority,
+                formData.date
+            );
+
+            if (newTodo) {
+                dom.EditTodoTasksChanges([newTodo]);
+                dom.closeEditTask();
+            } else {
+                console.error("Todo creation failed or duplicate todo found.");
+            }
+        });
+    });
+}
+
+// Adding event listener for the edit button of each task
 mainShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
-        dom.showTaskForm(false);
-        console.log("working");
-        dom.editTasksDetail();
+        editTaskBtnClick(event);
     }
-});
 
+    if (updateTaskBtnClick()) {
+        updateTaskBtnClick();
+    }
+
+});
 
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');

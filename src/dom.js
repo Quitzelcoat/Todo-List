@@ -61,7 +61,9 @@ export const dom = (function () {
     const closeTaskCreateDailog = () => mainDialog.close();
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
-
+    const showEditTask = () => { if(mainDialog) {mainDialog.showModal();} };
+    const closeEditTask = () => { if(mainDialog) {mainDialog.close();} };
+    
     const populateDetailDailog = (title, description, priority, date) => {
 
         const taskDetailTitle = document.querySelector('.taskDetailTitle');
@@ -118,13 +120,6 @@ export const dom = (function () {
         };
     };
 
-    const editTasksDetail = () => {
-        if(mainDialog) {
-            mainDialog.showModal();
-        }
-    };
-    
-
 
     const showTaskForm = (showCreateButton = true) => {
         // Conditionally show or hide the create task button
@@ -135,11 +130,45 @@ export const dom = (function () {
     };
 
 
-    const taskEditFunction = () => {
+    const taskEditFunction = (title, description, priority, date) => {
+        const todoTitle = document.getElementById('todoTitle');
+        const todoDescription = document.getElementById('todoDescription');
+        const priorityTask = document.querySelectorAll('.priorityTask');
+        const todoTaskDate = document.getElementById('todoTaskDate');
         
+        todoTitle.value = title;
+        todoDescription.value = description;
+        const checkedPriorityTask = Array.from(priorityTask).find(task => task.value === priority);
+        if (checkedPriorityTask) {
+            checkedPriorityTask.checked = true;
+        } else {
+            console.error('Invalid priority:', priority);
+        }
+        todoTaskDate.value = date;
     };
 
+    const EditTodoTasksChanges = (title, description, priority, date) => {
+        const titleElements = document.querySelectorAll('.titleTask');
+        titleElements.forEach(element => {
+            element.textContent = title;
+        });
 
+        const descriptionElements = document.querySelectorAll('.descriptionTask');
+        descriptionElements.forEach(element => {
+            element.textContent = description;
+        });
+
+        const priorityElements = document.querySelectorAll('.priorityTask');
+        priorityElements.forEach(element => {
+            element.textContent = priority;
+        });
+
+        const dateElements = document.querySelectorAll('.dateTask');
+        dateElements.forEach(element => {
+            element.textContent = date;
+        });
+    };
+    
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
         document.getElementById('todoDescription').value = '';
@@ -161,7 +190,10 @@ export const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
-        editTasksDetail,
+        showEditTask,
+        closeEditTask,
+        taskEditFunction,
+        EditTodoTasksChanges,
         clearDailogData,
         showTaskForm,
     };
