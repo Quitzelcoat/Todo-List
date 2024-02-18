@@ -55,10 +55,10 @@ addNewTask.addEventListener('click', () => {
     };
 
     const storedTodo = todoManager.createTodo(
-        newTodoElement.finished, 
-        newTodoElement.title, 
-        newTodoElement.description, 
-        newTodoElement.priority, 
+        newTodoElement.finished,
+        newTodoElement.title,
+        newTodoElement.description,
+        newTodoElement.priority,
         newTodoElement.date
     );
 
@@ -97,21 +97,10 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
-    const formData = dom.getFormData();
+    console.log(dom.populateMainDetailDailogForm());
 
-    const newTodo = {
-        title: formData.title,
-        description: formData.description,
-        priority: formData.priority,
-        date: formData.date
-    };
+    dom.closeEditTask();
 
-    if (newTodo) {
-        const { title, description, priority, date } = newTodo;
-
-        dom.EditTodoTasksChanges(title, description, priority, date);
-        dom.closeEditTask();
-    }
 });
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
