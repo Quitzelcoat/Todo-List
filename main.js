@@ -123,7 +123,7 @@ const dom = (function () {
         const deleteTaskBtn = document.createElement('button');
     
         showTask.className = "showTask";
-        showTask.dataset.id = task.id; // Add the ID as a data attribute
+        showTask.dataset.id = task.id;
         finishedTask.className = "finishedTask";
         titleTask.className = "titleTask";
         descriptionTask.className = "descriptionTask";
@@ -254,19 +254,30 @@ const dom = (function () {
         todoTaskDate.value = date;
     };
 
-    const EditTodoTasksChanges = (title, description, priority, date) => {
-        const titleElement = document.querySelector('.titleTask');
-        titleElement.textContent = title;
-
-        const descriptionElement = document.querySelector('.descriptionTask');
-        descriptionElement.textContent = description;
-
-        const priorityElement = document.querySelector('.priorityTask');
-        priorityElement.textContent = priority;
-
-        const dateElement = document.querySelector('.dateTask');
-        dateElement.textContent = date;
-
+    const EditTodoTasksChanges = (taskId, title, description, priority, date) => {
+        // Construct the selector based on the taskId
+        const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
+        if (taskElement) {
+            const titleElement = taskElement.querySelector('.titleTask');
+            if (titleElement) {
+                titleElement.textContent = title;
+            }
+    
+            const descriptionElement = taskElement.querySelector('.descriptionTask');
+            if (descriptionElement) {
+                descriptionElement.textContent = description;
+            }
+    
+            const priorityElement = taskElement.querySelector('.priorityTask');
+            if (priorityElement) {
+                priorityElement.textContent = priority;
+            }
+    
+            const dateElement = taskElement.querySelector('.dateTask');
+            if (dateElement) {
+                dateElement.textContent = date;
+            }
+        }
     };
 
     const clearDailogData = () => {
@@ -4800,10 +4811,10 @@ addNewTask.addEventListener('click', () => {
     };
 
     const storedTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_2__.todoManager.createTodo(
-        newTodoElement.finished, 
-        newTodoElement.title, 
-        newTodoElement.description, 
-        newTodoElement.priority, 
+        newTodoElement.finished,
+        newTodoElement.title,
+        newTodoElement.description,
+        newTodoElement.priority,
         newTodoElement.date
     );
 
@@ -4842,21 +4853,10 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
-    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
+    console.log(_dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.populateMainDetailDailogForm());
 
-    const newTodo = {
-        title: formData.title,
-        description: formData.description,
-        priority: formData.priority,
-        date: formData.date
-    };
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeEditTask();
 
-    if (newTodo) {
-        const { title, description, priority, date } = newTodo;
-
-        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.EditTodoTasksChanges(title, description, priority, date);
-        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeEditTask();
-    }
 });
 
 const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
