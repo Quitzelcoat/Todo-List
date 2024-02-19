@@ -148,31 +148,36 @@ export const dom = (function () {
         todoTaskDate.value = date;
     };
 
-    const EditTodoTasksChanges = (taskId, title, description, priority, date) => {
+    const updateTaskDetails = (taskId, updateTitle, updateDescription, updatePriority, updateDate) => {
         // Construct the selector based on the taskId
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
         if (taskElement) {
             const titleElement = taskElement.querySelector('.titleTask');
             if (titleElement) {
-                titleElement.textContent = title;
+                titleElement.textContent = updateTitle;
+                console.log(`Updated title: ${updateTitle}`);
             }
     
             const descriptionElement = taskElement.querySelector('.descriptionTask');
             if (descriptionElement) {
-                descriptionElement.textContent = description;
+                descriptionElement.textContent = updateDescription;
+                console.log(`Updated description: ${updateDescription}`);
             }
     
             const priorityElement = taskElement.querySelector('.priorityTask');
             if (priorityElement) {
-                priorityElement.textContent = priority;
+                priorityElement.textContent = updatePriority;
+                console.log(`Updated priority: ${updatePriority}`);
             }
     
             const dateElement = taskElement.querySelector('.dateTask');
             if (dateElement) {
-                dateElement.textContent = date;
+                dateElement.textContent = updateDate;
+                console.log(`Updated date: ${updateDate}`);
             }
         }
     };
+    
 
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
@@ -198,7 +203,7 @@ export const dom = (function () {
         showEditTask,
         closeEditTask,
         populateMainDetailDailogForm,
-        EditTodoTasksChanges,
+        updateTaskDetails,
         clearDailogData,
         showTaskForm,
     };

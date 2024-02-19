@@ -97,7 +97,17 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
-    console.log(dom.populateMainDetailDailogForm());
+    const somet = dom.getFormData();
+
+    console.log(somet);
+
+    dom.updateTaskDetails(
+        "example-task-id",
+        somet.title,
+        somet.description,
+        somet.priority,
+        somet.date
+    );
 
     dom.closeEditTask();
 
