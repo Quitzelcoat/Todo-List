@@ -254,31 +254,36 @@ const dom = (function () {
         todoTaskDate.value = date;
     };
 
-    const EditTodoTasksChanges = (taskId, title, description, priority, date) => {
+    const updateTaskDetails = (taskId, updateTitle, updateDescription, updatePriority, updateDate) => {
         // Construct the selector based on the taskId
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
         if (taskElement) {
             const titleElement = taskElement.querySelector('.titleTask');
             if (titleElement) {
-                titleElement.textContent = title;
+                titleElement.textContent = updateTitle;
+                console.log(`Updated title: ${updateTitle}`);
             }
     
             const descriptionElement = taskElement.querySelector('.descriptionTask');
             if (descriptionElement) {
-                descriptionElement.textContent = description;
+                descriptionElement.textContent = updateDescription;
+                console.log(`Updated description: ${updateDescription}`);
             }
     
             const priorityElement = taskElement.querySelector('.priorityTask');
             if (priorityElement) {
-                priorityElement.textContent = priority;
+                priorityElement.textContent = updatePriority;
+                console.log(`Updated priority: ${updatePriority}`);
             }
     
             const dateElement = taskElement.querySelector('.dateTask');
             if (dateElement) {
-                dateElement.textContent = date;
+                dateElement.textContent = updateDate;
+                console.log(`Updated date: ${updateDate}`);
             }
         }
     };
+    
 
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
@@ -304,7 +309,7 @@ const dom = (function () {
         showEditTask,
         closeEditTask,
         populateMainDetailDailogForm,
-        EditTodoTasksChanges,
+        updateTaskDetails,
         clearDailogData,
         showTaskForm,
     };
@@ -4853,7 +4858,17 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
-    console.log(_dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.populateMainDetailDailogForm());
+    const somet = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
+
+    console.log(somet);
+
+    _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.updateTaskDetails(
+        "example-task-id",
+        somet.title,
+        somet.description,
+        somet.priority,
+        somet.date
+    );
 
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeEditTask();
 
