@@ -97,16 +97,16 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
-    const somet = dom.getFormData();
+    const taskValue = dom.getFormData();
 
-    console.log(somet);
+    console.log(taskValue);
 
     dom.updateTaskDetails(
         "example-task-id",
-        somet.title,
-        somet.description,
-        somet.priority,
-        somet.date
+        taskValue.title,
+        taskValue.description,
+        taskValue.priority,
+        taskValue.date
     );
 
     dom.closeEditTask();
