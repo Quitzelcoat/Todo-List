@@ -188,7 +188,9 @@ const dom = (function () {
     const gettingTaskData = (button) => {
         const showTask = button.closest('.showTask');
         if (showTask) {
+            const taskId = showTask.dataset.id;
             return {
+                taskId: taskId,
                 title: showTask.querySelector('.titleTask').textContent,
                 description: showTask.querySelector('.descriptionTask').textContent,
                 priority: showTask.querySelector('.priorityTask').textContent,
@@ -227,15 +229,19 @@ const dom = (function () {
         };
     };
 
-
     const showTaskForm = (showCreateButton = true) => {
-        // Conditionally show or hide the create task button
         const createTaskBtn = document.querySelector('.addBtn');
         if (createTaskBtn) {
             createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
         }
     };
 
+    const removeEditBtn = (closeEditBtn = true) => {
+        const updateBtn = document.querySelector('.updateBtn');
+        if(updateBtn) {
+            updateBtn.style.display = closeEditBtn ? 'inline' : 'none';
+        }
+    };
 
     const populateMainDetailDailogForm = (title, description, priority, date) => {
         const todoTitle = document.getElementById('todoTitle');
@@ -256,50 +262,41 @@ const dom = (function () {
 
     const updateTaskDetails = (taskId, updateTitle, updateDescription, updatePriority, updateDate) => {
         // Construct the selector based on the taskId
-
-        console.log("Updating task details...");
-        console.log("Task ID:", taskId);
-        console.log("Updated title:", updateTitle);
-        console.log("Updated description:", updateDescription);
-        console.log("Updated priority:", updatePriority);
-        console.log("Updated date:", updateDate);
-
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
-        console.log("Task element:", taskElement);
     
         if (taskElement) {
             const titleElement = taskElement.querySelector('.titleTask');
-            console.log("Title element:", titleElement);
             if (titleElement) {
                 titleElement.textContent = updateTitle;
-                console.log(`Updated title: ${updateTitle}`);
             }
 
             const descriptionElement = taskElement.querySelector('.descriptionTask');
             console.log("Description element:", descriptionElement);
             if (descriptionElement) {
                 descriptionElement.textContent = updateDescription;
-                console.log(`Updated description: ${updateDescription}`);
             }
 
             const priorityElement = taskElement.querySelector('.priorityTask');
             console.log("Priority element:", priorityElement);
             if (priorityElement) {
                 priorityElement.textContent = updatePriority;
-                console.log(`Updated priority: ${updatePriority}`);
             }
 
             const dateElement = taskElement.querySelector('.dateTask');
             console.log("Date element:", dateElement);
             if (dateElement) {
                 dateElement.textContent = updateDate;
-                console.log(`Updated date: ${updateDate}`);
             }
         } else {
             console.log("Task element not found.");
         }
     };
-    
+
+    const deleteTaskDetail = () => {
+        const mainShow = document.querySelector('.mainShow');
+        const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
+        mainShow.removeChild(taskElement);
+    };
 
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
@@ -322,12 +319,14 @@ const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        showTaskForm,
         showEditTask,
+        removeEditBtn,
         closeEditTask,
         populateMainDetailDailogForm,
         updateTaskDetails,
+        deleteTaskDetail,
         clearDailogData,
-        showTaskForm,
     };
 })();
 
@@ -4813,6 +4812,7 @@ const newTodo = document.querySelectorAll('.newTodo');
 newTodo.forEach(newTodos => {
     newTodos.addEventListener('click', () => {
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskForm();
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.removeEditBtn(false);
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskCreateDailog();
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskBtnDailog();
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.clearDailogData();
@@ -4848,6 +4848,8 @@ addNewTask.addEventListener('click', () => {
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeTaskCreateDailog();
 });
 
+let selectedTaskId = null;
+
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
     if (event.target.classList.contains('detailTaskBtn')) {
@@ -4861,6 +4863,9 @@ mainShow.addEventListener('click', (event) => {
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
+
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
         _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.showTaskForm(false);
         const captureData = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.gettingTaskData(event.target);
         if (captureData) {
@@ -4874,15 +4879,12 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
-    const taskElement = document.querySelector('.showTask');
-    const taskId = taskElement.dataset.id;
-
     const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
 
     console.log(taskValue);
 
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.updateTaskDetails(
-        taskId,
+        selectedTaskId,
         taskValue.title,
         taskValue.description,
         taskValue.priority,
@@ -4899,7 +4901,15 @@ detailCloseBtn.forEach(detailCloseBtns => {
 });
 
 
+const deleteTaskBtn = document.querySelector('.deleteTaskBtn');
+// deleteTaskBtn.forEach(deleteTaskBtns => {
+    deleteTaskBtn.addEventListener('click', () => {
+        console.log('something');
 
+        // selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+        // dom.deleteTaskDetail();
+    });
+// });
 
 
 /*

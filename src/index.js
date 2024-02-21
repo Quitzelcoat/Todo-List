@@ -36,6 +36,7 @@ const newTodo = document.querySelectorAll('.newTodo');
 newTodo.forEach(newTodos => {
     newTodos.addEventListener('click', () => {
         dom.showTaskForm();
+        dom.removeEditBtn(false);
         dom.showTaskCreateDailog();
         dom.closeTaskBtnDailog();
         dom.clearDailogData();
@@ -71,6 +72,8 @@ addNewTask.addEventListener('click', () => {
     dom.closeTaskCreateDailog();
 });
 
+let selectedTaskId = null;
+
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
     if (event.target.classList.contains('detailTaskBtn')) {
@@ -84,6 +87,9 @@ mainShow.addEventListener('click', (event) => {
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
+
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
         dom.showTaskForm(false);
         const captureData = dom.gettingTaskData(event.target);
         if (captureData) {
@@ -97,15 +103,12 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
-    const taskElement = document.querySelector('.showTask');
-    const taskId = taskElement.dataset.id;
-
     const taskValue = dom.getFormData();
 
     console.log(taskValue);
 
     dom.updateTaskDetails(
-        taskId,
+        selectedTaskId,
         taskValue.title,
         taskValue.description,
         taskValue.priority,
@@ -122,7 +125,15 @@ detailCloseBtn.forEach(detailCloseBtns => {
 });
 
 
+const deleteTaskBtn = document.querySelector('.deleteTaskBtn');
+// deleteTaskBtn.forEach(deleteTaskBtns => {
+    deleteTaskBtn.addEventListener('click', () => {
+        console.log('something');
 
+        // selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+        // dom.deleteTaskDetail();
+    });
+// });
 
 
 /*

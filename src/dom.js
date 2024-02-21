@@ -82,7 +82,9 @@ export const dom = (function () {
     const gettingTaskData = (button) => {
         const showTask = button.closest('.showTask');
         if (showTask) {
+            const taskId = showTask.dataset.id;
             return {
+                taskId: taskId,
                 title: showTask.querySelector('.titleTask').textContent,
                 description: showTask.querySelector('.descriptionTask').textContent,
                 priority: showTask.querySelector('.priorityTask').textContent,
@@ -121,15 +123,19 @@ export const dom = (function () {
         };
     };
 
-
     const showTaskForm = (showCreateButton = true) => {
-        // Conditionally show or hide the create task button
         const createTaskBtn = document.querySelector('.addBtn');
         if (createTaskBtn) {
             createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
         }
     };
 
+    const removeEditBtn = (closeEditBtn = true) => {
+        const updateBtn = document.querySelector('.updateBtn');
+        if(updateBtn) {
+            updateBtn.style.display = closeEditBtn ? 'inline' : 'none';
+        }
+    };
 
     const populateMainDetailDailogForm = (title, description, priority, date) => {
         const todoTitle = document.getElementById('todoTitle');
@@ -150,50 +156,41 @@ export const dom = (function () {
 
     const updateTaskDetails = (taskId, updateTitle, updateDescription, updatePriority, updateDate) => {
         // Construct the selector based on the taskId
-
-        console.log("Updating task details...");
-        console.log("Task ID:", taskId);
-        console.log("Updated title:", updateTitle);
-        console.log("Updated description:", updateDescription);
-        console.log("Updated priority:", updatePriority);
-        console.log("Updated date:", updateDate);
-
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
-        console.log("Task element:", taskElement);
     
         if (taskElement) {
             const titleElement = taskElement.querySelector('.titleTask');
-            console.log("Title element:", titleElement);
             if (titleElement) {
                 titleElement.textContent = updateTitle;
-                console.log(`Updated title: ${updateTitle}`);
             }
 
             const descriptionElement = taskElement.querySelector('.descriptionTask');
             console.log("Description element:", descriptionElement);
             if (descriptionElement) {
                 descriptionElement.textContent = updateDescription;
-                console.log(`Updated description: ${updateDescription}`);
             }
 
             const priorityElement = taskElement.querySelector('.priorityTask');
             console.log("Priority element:", priorityElement);
             if (priorityElement) {
                 priorityElement.textContent = updatePriority;
-                console.log(`Updated priority: ${updatePriority}`);
             }
 
             const dateElement = taskElement.querySelector('.dateTask');
             console.log("Date element:", dateElement);
             if (dateElement) {
                 dateElement.textContent = updateDate;
-                console.log(`Updated date: ${updateDate}`);
             }
         } else {
             console.log("Task element not found.");
         }
     };
-    
+
+    const deleteTaskDetail = () => {
+        const mainShow = document.querySelector('.mainShow');
+        const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
+        mainShow.removeChild(taskElement);
+    };
 
     const clearDailogData = () => {
         document.getElementById('todoTitle').value = '';
@@ -216,11 +213,13 @@ export const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        showTaskForm,
         showEditTask,
+        removeEditBtn,
         closeEditTask,
         populateMainDetailDailogForm,
         updateTaskDetails,
+        deleteTaskDetail,
         clearDailogData,
-        showTaskForm,
     };
 })();
