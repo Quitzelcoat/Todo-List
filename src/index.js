@@ -97,12 +97,15 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
+    const taskElement = document.querySelector('.showTask');
+    const taskId = taskElement.dataset.id;
+
     const taskValue = dom.getFormData();
 
     console.log(taskValue);
 
     dom.updateTaskDetails(
-        "example-task-id",
+        taskId,
         taskValue.title,
         taskValue.description,
         taskValue.priority,

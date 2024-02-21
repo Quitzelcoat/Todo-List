@@ -4874,12 +4874,15 @@ const updateBtn = document.querySelector('.updateBtn');
 updateBtn.addEventListener('click', () => {
     console.log("Update button clicked");
 
+    const taskElement = document.querySelector('.showTask');
+    const taskId = taskElement.dataset.id;
+
     const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.getFormData();
 
     console.log(taskValue);
 
     _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.updateTaskDetails(
-        "example-task-id",
+        taskId,
         taskValue.title,
         taskValue.description,
         taskValue.priority,
