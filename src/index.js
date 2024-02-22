@@ -3,10 +3,11 @@ import { project } from './project';
 
 import { todoManager } from './TodoManager';
 import { dom } from './dom.js';
+import { today } from './today.js';
 
 // task-btn file
 // dialogData();
-pageControlCreate();
+// pageControlCreate();
 
 // project file
 // project();
@@ -130,6 +131,48 @@ detailCloseBtn.forEach(detailCloseBtns => {
     detailCloseBtns.addEventListener('click', () => dom.closeDetailDailog());
 });
 
+const sideInbox = document.querySelectorAll('.sideInbox');
+sideInbox.forEach(sideInboxs => {
+    sideInboxs.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllMainPage(true);
+    });
+});
+
+const sideToday = document.querySelectorAll('.sideToday');
+sideToday.forEach(sideTodays => {
+    sideTodays.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllTodayPage(true);
+    });
+});
+
+const sideFuture = document.querySelectorAll('.sideFuture');
+sideFuture.forEach(sideFutures => {
+    sideFutures.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllUpcomingPage(true);
+    });
+});
+
+const completeSide = document.querySelectorAll('.completeSide');
+completeSide.forEach(completeSides => {
+    completeSides.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllCompletePage(true);
+    });
+});
+
+
+
+
+const sideNotes = document.querySelectorAll('.sideNotes');
+sideNotes.forEach(sideNotess => {
+    sideNotess.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllNotesPage(true);
+    });
+});
 
 /*
 1. function to create a todo list. (Done).

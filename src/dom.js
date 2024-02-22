@@ -200,6 +200,79 @@ export const dom = (function () {
         document.getElementById('todoTaskDate').value = '';
     };
 
+    const controllMainPage = (hideMainPage = true) => {
+        const mainPage = document.querySelector('.mainPage');
+        if(mainPage) {
+            mainPage.style.display = hideMainPage ? 'inline' : 'none';
+        }
+    }
+
+    const controllTodayPage = (hideTodayPage = true) => {
+        const todayPage = document.querySelector('.todayPage');
+        if(todayPage) {
+            todayPage.style.display = hideTodayPage ? 'inline' : 'none';
+        }
+    }
+
+    const controllUpcomingPage = (hideUpcomingPage = true) => {
+        const upcomingPage = document.querySelector('.upcomingPage');
+        if(upcomingPage) {
+            upcomingPage.style.display = hideUpcomingPage ? 'inline' : 'none';
+        } 
+    }
+
+    const controllCompletePage = (hideCompletePage = true) => {
+        const completePage = document.querySelector('.completePage');
+        if(completePage) {
+            completePage.style.display = hideCompletePage ? 'inline' : 'none';
+        } 
+    }
+
+    const controllProjectPage = (hideProjectPages = true) => {
+        const projectPage = document.querySelector('.projectPage');
+        if(projectPage) {
+            projectPage.style.display = hideProjectPages ? 'inline' : 'none';
+        }
+    }
+
+    const controllNotesPage = (hideNotesPages = true) => {
+        const notesPage = document.querySelector('.notesPage');
+        if(notesPage) {
+            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
+        }
+    }
+
+    const controllAllPages = (hideInboxPages = true) => {
+        const mainPage = document.querySelector('.mainPage');
+        const todayPage = document.querySelector('.todayPage');
+        const upcomingTasks = document.querySelector('.upcomingPage');
+        const completeTasks = document.querySelector('.completePage');
+        const projectPage = document.querySelector('.projectPage');
+        const notesPage = document.querySelector('.notesPage');
+        if(mainPage) {
+            mainPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (todayPage) {
+            todayPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (upcomingTasks) {
+            upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+        if (completeTasks) {
+            completeTasks.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (projectPage) {
+            projectPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (notesPage) {
+            notesPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+    };
+
     return {
         renderTodos,
         chooseTaskBtnDailog,
@@ -221,5 +294,12 @@ export const dom = (function () {
         updateTaskDetails,
         deleteTaskDetail,
         clearDailogData,
+        controllMainPage,
+        controllTodayPage,
+        controllUpcomingPage,
+        controllCompletePage,
+        controllProjectPage,
+        controllNotesPage,
+        controllAllPages,
     };
 })();

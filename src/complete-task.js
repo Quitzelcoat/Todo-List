@@ -3,7 +3,7 @@ export const complete = () => {
     const completePage = document.createElement('div');
     const completeTitle = document.createElement('h2');
 
-    completePage.classList.add('todayPage');
+    completePage.classList.add('completeTasks');
     completePage.setAttribute('id', 'mainContent');
     completeTitle.classList.add('todayTasksTitle');
 

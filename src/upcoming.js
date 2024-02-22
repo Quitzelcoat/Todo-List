@@ -3,7 +3,7 @@ export const upComing = () => {
     const futurePage = document.createElement('div');
     const futureTitle = document.createElement('h2');
 
-    futurePage.classList.add('todayPage');
+    futurePage.classList.add('upcomingTasks');
     futurePage.setAttribute('id', 'mainContent');
     futureTitle.classList.add('todayTasksTitle');
 
