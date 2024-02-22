@@ -39,3 +39,7 @@ h2, h3 {
 .showTask {
     padding-bottom: 10px;
 }
+
+.allPages {
+    display: none;
+}

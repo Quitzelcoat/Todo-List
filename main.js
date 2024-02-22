@@ -82,7 +82,7 @@ const complete = () => {
     const completePage = document.createElement('div');
     const completeTitle = document.createElement('h2');
 
-    completePage.classList.add('todayPage');
+    completePage.classList.add('completeTasks');
     completePage.setAttribute('id', 'mainContent');
     completeTitle.classList.add('todayTasksTitle');
 
@@ -306,6 +306,79 @@ const dom = (function () {
         document.getElementById('todoTaskDate').value = '';
     };
 
+    const controllMainPage = (hideMainPage = true) => {
+        const mainPage = document.querySelector('.mainPage');
+        if(mainPage) {
+            mainPage.style.display = hideMainPage ? 'inline' : 'none';
+        }
+    }
+
+    const controllTodayPage = (hideTodayPage = true) => {
+        const todayPage = document.querySelector('.todayPage');
+        if(todayPage) {
+            todayPage.style.display = hideTodayPage ? 'inline' : 'none';
+        }
+    }
+
+    const controllUpcomingPage = (hideUpcomingPage = true) => {
+        const upcomingPage = document.querySelector('.upcomingPage');
+        if(upcomingPage) {
+            upcomingPage.style.display = hideUpcomingPage ? 'inline' : 'none';
+        } 
+    }
+
+    const controllCompletePage = (hideCompletePage = true) => {
+        const completePage = document.querySelector('.completePage');
+        if(completePage) {
+            completePage.style.display = hideCompletePage ? 'inline' : 'none';
+        } 
+    }
+
+    const controllProjectPage = (hideProjectPages = true) => {
+        const projectPage = document.querySelector('.projectPage');
+        if(projectPage) {
+            projectPage.style.display = hideProjectPages ? 'inline' : 'none';
+        }
+    }
+
+    const controllNotesPage = (hideNotesPages = true) => {
+        const notesPage = document.querySelector('.notesPage');
+        if(notesPage) {
+            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
+        }
+    }
+
+    const controllAllPages = (hideInboxPages = true) => {
+        const mainPage = document.querySelector('.mainPage');
+        const todayPage = document.querySelector('.todayPage');
+        const upcomingTasks = document.querySelector('.upcomingPage');
+        const completeTasks = document.querySelector('.completePage');
+        const projectPage = document.querySelector('.projectPage');
+        const notesPage = document.querySelector('.notesPage');
+        if(mainPage) {
+            mainPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (todayPage) {
+            todayPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (upcomingTasks) {
+            upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+        if (completeTasks) {
+            completeTasks.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (projectPage) {
+            projectPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+
+        if (notesPage) {
+            notesPage.style.display = hideInboxPages ? 'inline' : 'none';
+        }
+    };
+
     return {
         renderTodos,
         chooseTaskBtnDailog,
@@ -327,6 +400,13 @@ const dom = (function () {
         updateTaskDetails,
         deleteTaskDetail,
         clearDailogData,
+        controllMainPage,
+        controllTodayPage,
+        controllUpcomingPage,
+        controllCompletePage,
+        controllProjectPage,
+        controllNotesPage,
+        controllAllPages,
     };
 })();
 
@@ -1035,9 +1115,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   today: () => (/* binding */ today)
 /* harmony export */ });
-/* harmony import */ var _complete_task__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./complete-task */ "./src/complete-task.js");
-
-
 const today = () => {
     const mainContainer = document.querySelector(".mainContainer");
     const todayTitle = document.createElement('div');
@@ -1076,7 +1153,7 @@ const upComing = () => {
     const futurePage = document.createElement('div');
     const futureTitle = document.createElement('h2');
 
-    futurePage.classList.add('todayPage');
+    futurePage.classList.add('upcomingTasks');
     futurePage.setAttribute('id', 'mainContent');
     futureTitle.classList.add('todayTasksTitle');
 
@@ -4774,6 +4851,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ "./src/project.js");
 /* harmony import */ var _TodoManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TodoManager */ "./src/TodoManager.js");
 /* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
+/* harmony import */ var _today_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./today.js */ "./src/today.js");
+
 
 
 
@@ -4782,7 +4861,7 @@ __webpack_require__.r(__webpack_exports__);
 
 // task-btn file
 // dialogData();
-(0,_task_btn__WEBPACK_IMPORTED_MODULE_0__.pageControlCreate)();
+// pageControlCreate();
 
 // project file
 // project();
@@ -4906,6 +4985,48 @@ detailCloseBtn.forEach(detailCloseBtns => {
     detailCloseBtns.addEventListener('click', () => _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeDetailDailog());
 });
 
+const sideInbox = document.querySelectorAll('.sideInbox');
+sideInbox.forEach(sideInboxs => {
+    sideInboxs.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllMainPage(true);
+    });
+});
+
+const sideToday = document.querySelectorAll('.sideToday');
+sideToday.forEach(sideTodays => {
+    sideTodays.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllTodayPage(true);
+    });
+});
+
+const sideFuture = document.querySelectorAll('.sideFuture');
+sideFuture.forEach(sideFutures => {
+    sideFutures.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllUpcomingPage(true);
+    });
+});
+
+const completeSide = document.querySelectorAll('.completeSide');
+completeSide.forEach(completeSides => {
+    completeSides.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllCompletePage(true);
+    });
+});
+
+
+
+
+const sideNotes = document.querySelectorAll('.sideNotes');
+sideNotes.forEach(sideNotess => {
+    sideNotess.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.controllNotesPage(true);
+    });
+});
 
 /*
 1. function to create a todo list. (Done).
