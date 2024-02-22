@@ -97,6 +97,12 @@ mainShow.addEventListener('click', (event) => {
             dom.populateMainDetailDailogForm(captureData.title, captureData.description, captureData.priority, captureData.date);
         }
     }
+
+    if(clickedElement.classList.contains('deleteTaskBtn')) {
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
+        dom.deleteTaskDetail(selectedTaskId);
+    }
 });
 
 const updateBtn = document.querySelector('.updateBtn');
@@ -123,17 +129,6 @@ const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
 detailCloseBtn.forEach(detailCloseBtns => {
     detailCloseBtns.addEventListener('click', () => dom.closeDetailDailog());
 });
-
-
-const deleteTaskBtn = document.querySelector('.deleteTaskBtn');
-// deleteTaskBtn.forEach(deleteTaskBtns => {
-    deleteTaskBtn.addEventListener('click', () => {
-        console.log('something');
-
-        // selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-        // dom.deleteTaskDetail();
-    });
-// });
 
 
 /*

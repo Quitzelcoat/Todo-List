@@ -186,7 +186,7 @@ export const dom = (function () {
         }
     };
 
-    const deleteTaskDetail = () => {
+    const deleteTaskDetail = (taskId) => {
         const mainShow = document.querySelector('.mainShow');
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
         mainShow.removeChild(taskElement);
