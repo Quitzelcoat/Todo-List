@@ -292,7 +292,7 @@ const dom = (function () {
         }
     };
 
-    const deleteTaskDetail = () => {
+    const deleteTaskDetail = (taskId) => {
         const mainShow = document.querySelector('.mainShow');
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
         mainShow.removeChild(taskElement);
@@ -4873,6 +4873,12 @@ mainShow.addEventListener('click', (event) => {
             _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.populateMainDetailDailogForm(captureData.title, captureData.description, captureData.priority, captureData.date);
         }
     }
+
+    if(clickedElement.classList.contains('deleteTaskBtn')) {
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
+        _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.deleteTaskDetail(selectedTaskId);
+    }
 });
 
 const updateBtn = document.querySelector('.updateBtn');
@@ -4899,17 +4905,6 @@ const detailCloseBtn = document.querySelectorAll('.detailCloseBtn');
 detailCloseBtn.forEach(detailCloseBtns => {
     detailCloseBtns.addEventListener('click', () => _dom_js__WEBPACK_IMPORTED_MODULE_3__.dom.closeDetailDailog());
 });
-
-
-const deleteTaskBtn = document.querySelector('.deleteTaskBtn');
-// deleteTaskBtn.forEach(deleteTaskBtns => {
-    deleteTaskBtn.addEventListener('click', () => {
-        console.log('something');
-
-        // selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-        // dom.deleteTaskDetail();
-    });
-// });
 
 
 /*
