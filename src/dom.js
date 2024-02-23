@@ -3,6 +3,7 @@ import { add } from "date-fns";
 export const dom = (function () {
     const taskDetailDailog = document.querySelector('.taskDetailDailog');
     const todoTypesDialog = document.querySelector('.todoTypesDialog');
+    const projectDialog = document.querySelector('.projectDialog');
     const mainDialog = document.querySelector('.mainDialog');
 
     const createTodoElement = (task) => {
@@ -62,6 +63,8 @@ export const dom = (function () {
     const closeTaskCreateDailog = () => mainDialog.close();
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
+    const showProjectPages = () => projectDialog.showModal();
+    const closeProjectPages = () => projectDialog.close();
     const showEditTask = () => { if(mainDialog) {mainDialog.showModal();} };
     const closeEditTask = () => { if(mainDialog) {mainDialog.close();} };
     
@@ -228,17 +231,10 @@ export const dom = (function () {
         } 
     }
 
-    const controllProjectPage = (hideProjectPages = true) => {
+    const controllProjectPage = (controllProjectPages = true) => {
         const projectPage = document.querySelector('.projectPage');
         if(projectPage) {
-            projectPage.style.display = hideProjectPages ? 'inline' : 'none';
-        }
-    }
-
-    const controllNotesPage = (hideNotesPages = true) => {
-        const notesPage = document.querySelector('.notesPage');
-        if(notesPage) {
-            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
+            projectPage.style.display = controllProjectPages ? 'inline' : 'none';
         }
     }
 
@@ -249,28 +245,40 @@ export const dom = (function () {
         const completeTasks = document.querySelector('.completePage');
         const projectPage = document.querySelector('.projectPage');
         const notesPage = document.querySelector('.notesPage');
-        if(mainPage) {
-            mainPage.style.display = hideInboxPages ? 'inline' : 'none';
-        }
 
-        if (todayPage) {
-            todayPage.style.display = hideInboxPages ? 'inline' : 'none';
-        }
+        if (mainPage) { mainPage.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (todayPage) { todayPage.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (upcomingTasks) { upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (completeTasks) { completeTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (notesPage) { notesPage.style.display = hideInboxPages ? 'inline' : 'none'; }
+    };
+    
+    const sidePageDivs = () => {
+        const projectTtile = document.getElementById('projectTtile').value;
+        const projectNames = document.querySelector('.projectNames');
+        const newProjectPages = document.createElement('li');
 
-        if (upcomingTasks) {
-            upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none';
-        }
-        if (completeTasks) {
-            completeTasks.style.display = hideInboxPages ? 'inline' : 'none';
-        }
+        newProjectPages.className = "newProjectPages";
 
-        if (projectPage) {
-            projectPage.style.display = hideInboxPages ? 'inline' : 'none';
+        newProjectPages.textContent = projectTtile;
+        
+        projectNames.appendChild(newProjectPages);
+        
+    };
+    
+    const controllNotesPage = (hideNotesPages = true) => {
+        const notesPage = document.querySelector('.notesPage');
+        if(notesPage) {
+            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
         }
+    }
 
-        if (notesPage) {
-            notesPage.style.display = hideInboxPages ? 'inline' : 'none';
-        }
+    const hideProjectPages = () => {
+        const projectDiv = document.querySelectorAll('.projectDiv');
+        projectDiv.forEach(projectDivs => {
+            projectDivs.style.display = 'none';
+        });
     };
 
     return {
@@ -281,6 +289,8 @@ export const dom = (function () {
         closeTaskCreateDailog,
         showDetailDailog,
         closeDetailDailog,
+        showProjectPages,
+        closeProjectPages,
         populateDetailDailog,
         gettingTaskData,
         showAddTaskForm,
@@ -301,5 +311,7 @@ export const dom = (function () {
         controllProjectPage,
         controllNotesPage,
         controllAllPages,
+        sidePageDivs,
+        hideProjectPages,
     };
 })();

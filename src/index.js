@@ -1,31 +1,12 @@
-import { dialogData, pageControlCreate } from './task-btn';
-import { project } from './project';
-
+import{ handleProjectClick } from './projectPage.js'
 import { todoManager } from './TodoManager';
 import { dom } from './dom.js';
-import { today } from './today.js';
-
-// task-btn file
-// dialogData();
-// pageControlCreate();
-
-// project file
-// project();
-
-
-
-
-
 
 // TodoManager file
 const newCreateTodo = todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
 console.log(newCreateTodo);
 
 // dom file
-// todoManager.createTodo(false, "Task 1", "Do something", "High", "2024-02-11", "something");
-// todoManager.createTodo(false, "Task 2", "Do anything", "Medium", "2024-02-12", "something");
-// dom.renderTodos(todoManager.findTodosByProject('something'));
-
 const newTaskBtn = document.querySelectorAll('.newTaskBtn');
 newTaskBtn.forEach(newTaskBtns => {
     newTaskBtns.addEventListener('click', () => {
@@ -95,6 +76,7 @@ mainShow.addEventListener('click', (event) => {
         const captureData = dom.gettingTaskData(event.target);
         if (captureData) {
             dom.showEditTask();
+            dom.removeEditBtn(true);
             dom.populateMainDetailDailogForm(captureData.title, captureData.description, captureData.priority, captureData.date);
         }
     }
@@ -163,6 +145,40 @@ completeSide.forEach(completeSides => {
     });
 });
 
+const createNewProject = document.querySelectorAll('.createNewProject');
+createNewProject.forEach(createNewProjects => {
+    createNewProjects.addEventListener('click', () => {
+        dom.showProjectPages();
+        dom.closeTaskBtnDailog();
+    });
+});
+
+const newProjectBtn = document.querySelectorAll('.newProjectBtn');
+newProjectBtn.forEach(newProjectBtns => {
+    newProjectBtns.addEventListener('click', () => {
+
+        dom.sidePageDivs();
+
+        document.getElementById('projectTtile').value = '';
+
+        dom.closeProjectPages();
+    });
+});
+
+
+
+const projectNames = document.querySelector('.projectNames');
+projectNames.addEventListener('click', (event) => {
+
+    const clickedElement = event.target;
+    if(clickedElement.classList.contains('newProjectPages')) {
+        dom.controllAllPages(false);
+        dom.controllProjectPage(true);
+        dom.hideProjectPages();
+        handleProjectClick(clickedElement);
+    }
+
+});
 
 
 

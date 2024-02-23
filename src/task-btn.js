@@ -1,8 +1,3 @@
-import { projectPages } from './project';
-import { notesPages } from './notes';
-import { today } from './today';
-import { upComing } from './upcoming';
-import { complete } from './complete-task';
 import { format, isValid } from 'date-fns';
 
 // Add maindata to the pages.
