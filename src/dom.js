@@ -267,19 +267,19 @@ export const dom = (function () {
         
     };
     
-    const controllNotesPage = (hideNotesPages = true) => {
-        const notesPage = document.querySelector('.notesPage');
-        if(notesPage) {
-            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
-        }
-    }
-
     const hideProjectPages = () => {
         const projectDiv = document.querySelectorAll('.projectDiv');
         projectDiv.forEach(projectDivs => {
             projectDivs.style.display = 'none';
         });
     };
+
+    const controllNotesPage = (hideNotesPages = true) => {
+        const notesPage = document.querySelector('.notesPage');
+        if(notesPage) {
+            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
+        }
+    }
 
     return {
         renderTodos,
@@ -309,9 +309,9 @@ export const dom = (function () {
         controllUpcomingPage,
         controllCompletePage,
         controllProjectPage,
-        controllNotesPage,
         controllAllPages,
         sidePageDivs,
         hideProjectPages,
+        controllNotesPage,
     };
 })();

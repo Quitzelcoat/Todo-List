@@ -180,7 +180,13 @@ projectNames.addEventListener('click', (event) => {
 
 });
 
-
+const projectsTasksShow = document.querySelector('.projectsTasksShow');
+projectsTasksShow.addEventListener('click', (event) => {
+    const clickedElement = event.target;
+    if(clickedElement.classList.contains('projectBtn')) {
+        dom.showTaskCreateDailog();
+    }
+});
 
 const sideNotes = document.querySelectorAll('.sideNotes');
 sideNotes.forEach(sideNotess => {
