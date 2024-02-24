@@ -346,19 +346,19 @@ const dom = (function () {
         
     };
     
-    const controllNotesPage = (hideNotesPages = true) => {
-        const notesPage = document.querySelector('.notesPage');
-        if(notesPage) {
-            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
-        }
-    }
-
     const hideProjectPages = () => {
         const projectDiv = document.querySelectorAll('.projectDiv');
         projectDiv.forEach(projectDivs => {
             projectDivs.style.display = 'none';
         });
     };
+
+    const controllNotesPage = (hideNotesPages = true) => {
+        const notesPage = document.querySelector('.notesPage');
+        if(notesPage) {
+            notesPage.style.display = hideNotesPages ? 'inline' : 'none';
+        }
+    }
 
     return {
         renderTodos,
@@ -388,10 +388,10 @@ const dom = (function () {
         controllUpcomingPage,
         controllCompletePage,
         controllProjectPage,
-        controllNotesPage,
         controllAllPages,
         sidePageDivs,
         hideProjectPages,
+        controllNotesPage,
     };
 })();
 
@@ -417,10 +417,21 @@ const handleProjectClick = (clickedElement) => {
     if (!projectDiv) {
         const projectsTasksShow = document.querySelector('.projectsTasksShow');
         projectDiv = document.createElement('div');
+        const projectBtn = document.createElement('button');
+        const removeProject = document.createElement('button');
+
+
         projectDiv.id = projectName;
         projectDiv.className = 'projectDiv';
-        projectDiv.textContent = projectName;
+        projectBtn.className = 'projectBtn';
+        removeProject.className = 'removeProject';
+
+        projectBtn.textContent = "Create Task";
+        removeProject.textContent = "Delete Project";
+
         projectsTasksShow.appendChild(projectDiv);
+        projectDiv.appendChild(projectBtn);
+        projectDiv.appendChild(removeProject);
     }
     
     const selectedProjectDiv = document.querySelectorAll(`#${projectName}`);
@@ -679,7 +690,13 @@ projectNames.addEventListener('click', (event) => {
 
 });
 
-
+const projectsTasksShow = document.querySelector('.projectsTasksShow');
+projectsTasksShow.addEventListener('click', (event) => {
+    const clickedElement = event.target;
+    if(clickedElement.classList.contains('projectBtn')) {
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskCreateDailog();
+    }
+});
 
 const sideNotes = document.querySelectorAll('.sideNotes');
 sideNotes.forEach(sideNotess => {
