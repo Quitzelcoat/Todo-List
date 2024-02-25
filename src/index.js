@@ -25,10 +25,8 @@ newTodo.forEach(newTodos => {
     });
 });
 
-const addNewTask = document.querySelector('.addBtn');
-addNewTask.addEventListener('click', () => {
+const inboxTaskdata = () => {
     const formData = dom.getFormData();
-
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -49,7 +47,12 @@ addNewTask.addEventListener('click', () => {
         dom.renderTodos([storedTodo]);
         console.log(storedTodo);
     }
-        
+};
+
+const addNewTask = document.querySelector('.addBtn');
+addNewTask.addEventListener('click', () => {
+
+    inboxTaskdata();
     dom.clearDailogData();
     dom.closeTaskCreateDailog();
 });
@@ -184,8 +187,41 @@ const projectsTasksShow = document.querySelector('.projectsTasksShow');
 projectsTasksShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
     if(clickedElement.classList.contains('projectBtn')) {
-        dom.showTaskCreateDailog();
+        dom.showTaskPageDailog();
+        console.log('the dom is next in working for this and that');
     }
+});
+
+const pageTaskdata = () => {
+    const formData = dom.getFormData();
+    const newTodoElement = {
+        finished: false,
+        title: formData.title,
+        description: formData.description,
+        priority: formData.priority,
+        date: formData.date
+    };
+
+    const storedTodo = todoManager.createTodo(
+        newTodoElement.finished,
+        newTodoElement.title,
+        newTodoElement.description,
+        newTodoElement.priority,
+        newTodoElement.date
+    );
+
+    if (storedTodo) {
+        dom.renderPageTodos([storedTodo]);
+        console.log(storedTodo);
+    }
+};
+
+const newPageBtn = document.querySelector('.newPageBtn');
+newPageBtn.addEventListener('click', () => {
+
+    pageTaskdata();
+    dom.clearDailogData();
+    dom.closeTaskPageDailog();
 });
 
 const sideNotes = document.querySelectorAll('.sideNotes');

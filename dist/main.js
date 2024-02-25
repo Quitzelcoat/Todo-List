@@ -84,6 +84,7 @@ const dom = (function () {
     const todoTypesDialog = document.querySelector('.todoTypesDialog');
     const projectDialog = document.querySelector('.projectDialog');
     const mainDialog = document.querySelector('.mainDialog');
+    const pagesDialog = document.querySelector('.pagesDialog');
 
     const createTodoElement = (task) => {
         const showTask = document.createElement('div');
@@ -136,10 +137,22 @@ const dom = (function () {
         });
     };
 
+    const renderPageTodos = (tasks) => {
+        const projectPage = document.querySelector('.projectPage');
+        tasks.forEach(task => {
+            const showTask = createTodoElement(task);
+            projectPage.appendChild(showTask);
+        });
+    };
+
     const chooseTaskBtnDailog = () => todoTypesDialog.showModal();
     const closeTaskBtnDailog = () => todoTypesDialog.close();
     const showTaskCreateDailog = () => mainDialog.showModal();
     const closeTaskCreateDailog = () => mainDialog.close();
+
+    const showTaskPageDailog = () => pagesDialog.showModal();
+    const closeTaskPageDailog = () => pagesDialog.close();
+
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
     const showProjectPages = () => projectDialog.showModal();
@@ -362,10 +375,13 @@ const dom = (function () {
 
     return {
         renderTodos,
+        renderPageTodos,
         chooseTaskBtnDailog,
         closeTaskBtnDailog,
         showTaskCreateDailog,
         closeTaskCreateDailog,
+        showTaskPageDailog,
+        closeTaskPageDailog,
         showDetailDailog,
         closeDetailDailog,
         showProjectPages,
@@ -535,10 +551,8 @@ newTodo.forEach(newTodos => {
     });
 });
 
-const addNewTask = document.querySelector('.addBtn');
-addNewTask.addEventListener('click', () => {
+const inboxTaskdata = () => {
     const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData();
-
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -559,7 +573,12 @@ addNewTask.addEventListener('click', () => {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTodo]);
         console.log(storedTodo);
     }
-        
+};
+
+const addNewTask = document.querySelector('.addBtn');
+addNewTask.addEventListener('click', () => {
+
+    inboxTaskdata();
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearDailogData();
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskCreateDailog();
 });
@@ -694,8 +713,41 @@ const projectsTasksShow = document.querySelector('.projectsTasksShow');
 projectsTasksShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
     if(clickedElement.classList.contains('projectBtn')) {
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskCreateDailog();
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskPageDailog();
+        console.log('the dom is next in working for this and that');
     }
+});
+
+const pageTaskdata = () => {
+    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData();
+    const newTodoElement = {
+        finished: false,
+        title: formData.title,
+        description: formData.description,
+        priority: formData.priority,
+        date: formData.date
+    };
+
+    const storedTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.createTodo(
+        newTodoElement.finished,
+        newTodoElement.title,
+        newTodoElement.description,
+        newTodoElement.priority,
+        newTodoElement.date
+    );
+
+    if (storedTodo) {
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderPageTodos([storedTodo]);
+        console.log(storedTodo);
+    }
+};
+
+const newPageBtn = document.querySelector('.newPageBtn');
+newPageBtn.addEventListener('click', () => {
+
+    pageTaskdata();
+    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearDailogData();
+    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
 });
 
 const sideNotes = document.querySelectorAll('.sideNotes');

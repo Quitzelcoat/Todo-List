@@ -147,33 +147,35 @@
             <dialog class="pagesDialog">
                 <form>
                     <div class="title">
-                        <label for="pageTitle">Create Project</label>
-                        <input type="text" name="pageTitle" id="pageTitle">
+                        <label class="todo-title" for="todoTitle">Task Name</label>
+                        <input type="text" name="todoTitle" id="todoTitle">
                     </div>
                     <div class="description">
-                        <label for="pagesDescription">Task Description</label>
-                        <input type="text" name="pagesDescription" id="pagesDescription">
+                        <label for="todoDescription">Task Description</label>
+                        <input type="text" name="todoDescription" id="todoDescription" required>
                     </div>
+
                     <fieldset class="priority">
                         <legend>Task Priority</legend>
                         <div>
-                            <input type="radio" id="redPages" name="priorityPage" value="Heigh"/>
-                            <label for="redPages">Heigh</label>
-                            <input type="radio" id="yellowPages" name="priorityPage" value="Medium" />
-                            <label for="yellowPages">Medium</label>
-                            <input type="radio" id="greenPages" name="priorityPage" value="Low" />
-                            <label for="greenPages">Low</label>
-                            <input type="radio" id="greyPages" name="priorityPage" value="none" checked />
-                            <label for="greyPages">none</label>
+                            <input type="radio" id="redTodo" class="priorityTask" name="priorityTask" value="High" checked />
+                            <label class="priority-task" for="redTodo">Heigh</label>
+                            <input type="radio" id="yellowTodo" class="priorityTask" name="priorityTask" value="Medium" />
+                            <label class="priority-task" for="yellowTodo">Medium</label>
+                            <input type="radio" id="greenTodo" class="priorityTask" name="priorityTask" value="Low" />
+                            <label class="priority-task" for="greenTodo">Low</label>
+                            <input type="radio" id="greyTodo" class="priorityTask" name="priorityTask" value="none" />
+                            <label class="priority-task" for="greyTodo">none</label>
                         </div>
                     </fieldset>
+
                     <div class="date">
-                        <label for="pagesTaskDate">Select Date</label>
-                        <input type="date" name="pagesTaskDate" id="pagesTaskDate">
+                        <label for="todoTaskDate">Select Date</label>
+                        <input type="date" name="todoTaskDate" id="todoTaskDate">
                     </div>
                 </form>
                 <button class="newPageBtn" autofocus>Create Task</button>
-                <button class="pageUpdateBtn" autofocus>Edit Task</button>
+                <button class="updateBtn" autofocus>Edit Task</button>
             </dialog>
             <!-- Pages Task Creation Dialog -->
 

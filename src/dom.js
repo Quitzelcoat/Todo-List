@@ -5,6 +5,7 @@ export const dom = (function () {
     const todoTypesDialog = document.querySelector('.todoTypesDialog');
     const projectDialog = document.querySelector('.projectDialog');
     const mainDialog = document.querySelector('.mainDialog');
+    const pagesDialog = document.querySelector('.pagesDialog');
 
     const createTodoElement = (task) => {
         const showTask = document.createElement('div');
@@ -57,10 +58,22 @@ export const dom = (function () {
         });
     };
 
+    const renderPageTodos = (tasks) => {
+        const projectPage = document.querySelector('.projectPage');
+        tasks.forEach(task => {
+            const showTask = createTodoElement(task);
+            projectPage.appendChild(showTask);
+        });
+    };
+
     const chooseTaskBtnDailog = () => todoTypesDialog.showModal();
     const closeTaskBtnDailog = () => todoTypesDialog.close();
     const showTaskCreateDailog = () => mainDialog.showModal();
     const closeTaskCreateDailog = () => mainDialog.close();
+
+    const showTaskPageDailog = () => pagesDialog.showModal();
+    const closeTaskPageDailog = () => pagesDialog.close();
+
     const showDetailDailog = () => taskDetailDailog.showModal();
     const closeDetailDailog = () => taskDetailDailog.close();
     const showProjectPages = () => projectDialog.showModal();
@@ -283,10 +296,13 @@ export const dom = (function () {
 
     return {
         renderTodos,
+        renderPageTodos,
         chooseTaskBtnDailog,
         closeTaskBtnDailog,
         showTaskCreateDailog,
         closeTaskCreateDailog,
+        showTaskPageDailog,
+        closeTaskPageDailog,
         showDetailDailog,
         closeDetailDailog,
         showProjectPages,
