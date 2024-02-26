@@ -209,7 +209,7 @@ const pageTaskdata = () => {
         newTodoElement.priority,
         newTodoElement.date
     );
-
+    
     if (storedTodo) {
         dom.renderPageTodos([storedTodo]);
         console.log(storedTodo);
