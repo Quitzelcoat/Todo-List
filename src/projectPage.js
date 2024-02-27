@@ -1,32 +1,93 @@
-export const handleProjectClick = (clickedElement) => {
-    const projectTasksTitle = document.querySelector('.projectTasksTitle');
+const projectManager = (function () {
+    let projects = [];
+    let projectCounter = 1;
 
-    const projectName = clickedElement.textContent;
-    projectTasksTitle.textContent = projectName;
+    // store created project tasks
+    const createProjectTasks = (finished, title, description, priority, date, project) => {
+        // const project = findProjectByName(projectName);
+        if (!project) {
+            // console.log(`Project "${projectName}" not found.`);
+            return null;
+        }
 
-    let projectDiv = document.getElementById(projectName);
-    if (!projectDiv) {
-        const projectsTasksShow = document.querySelector('.projectsTasksShow');
-        projectDiv = document.createElement('div');
-        const projectBtn = document.createElement('button');
-        const removeProject = document.createElement('button');
-
-
-        projectDiv.id = projectName;
-        projectDiv.className = 'projectDiv';
-        projectBtn.className = 'projectBtn';
-        removeProject.className = 'removeProject';
-
-        projectBtn.textContent = "Create Task";
-        removeProject.textContent = "Delete Project";
-
-        projectsTasksShow.appendChild(projectDiv);
-        projectDiv.appendChild(projectBtn);
-        projectDiv.appendChild(removeProject);
+        const newTask = { id: projectCounter++, finished, title, description, priority, date };
+        project.tasks.push(newTask);
+        return newTask
     }
-    
-    const selectedProjectDiv = document.querySelectorAll(`#${projectName}`);
-    selectedProjectDiv.forEach(selectedProjectDivs => {
-        selectedProjectDivs.style.display = 'inline';
-    });
-}
+
+    // store created project pages
+    const createProject = (name) => {
+        const existingProject = projects.find(project => project.name === name);
+        if (existingProject) {
+            console.log(`A project with the name "${name}" already exists.`);
+            return null;
+        }
+        const newProject = { 
+            name, 
+            tasks: [],
+            pages: [] // Add a property to store page data
+        };
+        projects.push(newProject);
+        return newProject;
+    };
+
+    // get project created names.
+    const findProjectByName = (name) => {
+        return projects.find(project => project.name === name);
+    };
+
+    // edit project tasks
+    const editProjectTask = (projectName, taskId, newData) => {
+        const project = findProjectByName(projectName);
+        if (!project) {
+            console.log(`Project "${projectName}" not found.`);
+            return null;
+        }
+        const task = project.tasks.find(task => task.id === taskId);
+        if (!task) {
+            console.log(`Task with ID "${taskId}" not found in project "${projectName}".`);
+            return null;
+        }
+        Object.assign(task, newData);
+        return task;
+    };
+
+    // Delete projects.
+    const deleteProject = (name) => {
+        const projectIndex = projects.findIndex(project => project.name === name);
+        if (projectIndex !== -1) {
+            const deletedProject = projects.splice(projectIndex, 1);
+            return deletedProject[0];
+        } else {
+            console.log(`Project "${name}" not found.`);
+            return null;
+        }
+    };
+
+    // Delete project Tasks
+    const deleteTask = (projectName, taskId) => {
+        const project = findProjectByName(projectName);
+        if (!project) {
+            console.log(`Project "${projectName}" not found.`);
+            return null;
+        }
+        const taskIndex = project.tasks.findIndex(task => task.id === taskId);
+        if (taskIndex !== -1) {
+            const deletedTask = project.tasks.splice(taskIndex, 1);
+            return deletedTask[0];
+        } else {
+            console.log(`Task with ID "${taskId}" not found in project "${projectName}".`);
+            return null;
+        }
+    };
+
+    return {
+        projects,
+        createProjectTasks,
+        createProject,
+        findProjectByName,
+        editProjectTask,
+        deleteProject,
+        deleteTask,
+    };
+})();

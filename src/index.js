@@ -1,4 +1,4 @@
-import{ handleProjectClick } from './projectPage.js'
+import{ projectManager } from './projectPage.js'
 import { todoManager } from './TodoManager';
 import { dom } from './dom.js';
 
@@ -148,6 +148,8 @@ completeSide.forEach(completeSides => {
     });
 });
 
+
+
 const createNewProject = document.querySelectorAll('.createNewProject');
 createNewProject.forEach(createNewProjects => {
     createNewProjects.addEventListener('click', () => {
@@ -159,26 +161,39 @@ createNewProject.forEach(createNewProjects => {
 const newProjectBtn = document.querySelectorAll('.newProjectBtn');
 newProjectBtn.forEach(newProjectBtns => {
     newProjectBtns.addEventListener('click', () => {
-
         dom.sidePageDivs();
-
         document.getElementById('projectTtile').value = '';
-
         dom.closeProjectPages();
     });
 });
 
+let selectedProjectName = "";
 
+const projectPagesData = () => {
+
+    const pageFormData = dom.ProjectPageDom();
+    const pageData = {
+        title: 
+        PageTasks: 
+    };
+
+    const project = projectManager.findProjectByName(selectedProjectName) || projectManager.createProject(selectedProjectName);
+        
+    project.pages.push(/* Add your page data here */);
+
+    console.log("Project:", project);
+};
 
 const projectNames = document.querySelector('.projectNames');
 projectNames.addEventListener('click', (event) => {
-
     const clickedElement = event.target;
     if(clickedElement.classList.contains('newProjectPages')) {
         dom.controllAllPages(false);
         dom.controllProjectPage(true);
         dom.hideProjectPages();
-        handleProjectClick(clickedElement);
+        dom.ProjectPageDom(clickedElement);
+
+        selectedProjectName = clickedElement.innerText;
     }
 
 });
@@ -202,26 +217,28 @@ const pageTaskdata = () => {
         date: formData.date
     };
 
-    const storedTodo = todoManager.createTodo(
+    const storedTask = projectManager.createProjectTasks(
         newTodoElement.finished,
         newTodoElement.title,
         newTodoElement.description,
         newTodoElement.priority,
         newTodoElement.date
     );
-    
-    if (storedTodo) {
-        dom.renderPageTodos([storedTodo]);
-        console.log(storedTodo);
+
+    if (storedTask) {
+        dom.renderPageTodos([storedTask]);
+        console.log(storedTask);
     }
 };
 
-const newPageBtn = document.querySelector('.newPageBtn');
-newPageBtn.addEventListener('click', () => {
-
-    pageTaskdata();
-    dom.clearDailogData();
-    dom.closeTaskPageDailog();
+const newPageBtn = document.querySelectorAll('.newPageBtn');
+newPageBtn.forEach(newPageBtns => {
+    newPageBtns.addEventListener('click', () => {
+    
+        pageTaskdata();
+        dom.clearDailogData();
+        dom.closeTaskPageDailog();
+    });
 });
 
 const sideNotes = document.querySelectorAll('.sideNotes');
