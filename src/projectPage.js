@@ -4,9 +4,8 @@ const projectManager = (function () {
 
     // store created project tasks
     const createProjectTasks = (finished, title, description, priority, date, project) => {
-        // const project = findProjectByName(projectName);
         if (!project) {
-            // console.log(`Project "${projectName}" not found.`);
+            console.log(`Project "${projectName}" not found.`);
             return null;
         }
 
@@ -33,7 +32,7 @@ const projectManager = (function () {
 
     // get project created names.
     const findProjectByName = (name) => {
-        return projects.find(project => project.name === name);
+        return this.projects.find(project => project.name === name);
     };
 
     // edit project tasks

@@ -317,6 +317,8 @@ export const dom = (function () {
         selectedProjectDiv.forEach(selectedProjectDivs => {
             selectedProjectDivs.style.display = 'inline';
         });
+
+        return projectName;
     };
 
     const controllNotesPage = (hideNotesPages = true) => {

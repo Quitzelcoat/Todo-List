@@ -169,17 +169,17 @@ newProjectBtn.forEach(newProjectBtns => {
 
 let selectedProjectName = "";
 
-const projectPagesData = () => {
+const projectPagesData = (clickedElement) => {
+    const pageFormData = dom.ProjectPageDom(clickedElement);
 
-    const pageFormData = dom.ProjectPageDom();
     const pageData = {
-        title: 
-        PageTasks: 
+        title: pageFormData,
+        // PageTasks: 
     };
 
     const project = projectManager.findProjectByName(selectedProjectName) || projectManager.createProject(selectedProjectName);
         
-    project.pages.push(/* Add your page data here */);
+    project.pages.push(pageData);
 
     console.log("Project:", project);
 };
@@ -192,6 +192,7 @@ projectNames.addEventListener('click', (event) => {
         dom.controllProjectPage(true);
         dom.hideProjectPages();
         dom.ProjectPageDom(clickedElement);
+        projectPagesData(clickedElement);
 
         selectedProjectName = clickedElement.innerText;
     }
