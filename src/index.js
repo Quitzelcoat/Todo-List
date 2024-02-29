@@ -167,8 +167,10 @@ newProjectBtn.forEach(newProjectBtns => {
     });
 });
 
-let selectedProjectName = "";
+// select the page by the project page name for task
 
+/*
+let selectedProjectName = "";
 const projectPagesData = (clickedElement) => {
     const pageFormData = dom.ProjectPageDom(clickedElement);
 
@@ -178,11 +180,10 @@ const projectPagesData = (clickedElement) => {
     };
 
     const project = projectManager.findProjectByName(selectedProjectName) || projectManager.createProject(selectedProjectName);
-        
     project.pages.push(pageData);
-
     console.log("Project:", project);
 };
+*/
 
 const projectNames = document.querySelector('.projectNames');
 projectNames.addEventListener('click', (event) => {
@@ -192,9 +193,8 @@ projectNames.addEventListener('click', (event) => {
         dom.controllProjectPage(true);
         dom.hideProjectPages();
         dom.ProjectPageDom(clickedElement);
-        projectPagesData(clickedElement);
-
-        selectedProjectName = clickedElement.innerText;
+        // selectedProjectName = clickedElement.innerText;
+        // projectPagesData(clickedElement);
     }
 
 });
@@ -223,7 +223,7 @@ const pageTaskdata = () => {
         newTodoElement.title,
         newTodoElement.description,
         newTodoElement.priority,
-        newTodoElement.date
+        newTodoElement.date 
     );
 
     if (storedTask) {

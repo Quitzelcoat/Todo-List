@@ -321,6 +321,7 @@ export const dom = (function () {
         return projectName;
     };
 
+
     const controllNotesPage = (hideNotesPages = true) => {
         const notesPage = document.querySelector('.notesPage');
         if(notesPage) {

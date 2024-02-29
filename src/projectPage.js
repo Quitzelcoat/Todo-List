@@ -1,38 +1,39 @@
 const projectManager = (function () {
-    let projects = [];
+    let projectsArray = [];
     let projectCounter = 1;
 
     // store created project tasks
     const createProjectTasks = (finished, title, description, priority, date, project) => {
-        if (!project) {
+        const existingTodo = projectsArray.find(todo => todo.title === title && todo.project === project);
+        if (existingTodo) {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
 
         const newTask = { id: projectCounter++, finished, title, description, priority, date };
-        project.tasks.push(newTask);
+        projectsArray.tasks.push(newTask);
         return newTask
     }
 
     // store created project pages
     const createProject = (name) => {
-        const existingProject = projects.find(project => project.name === name);
+        const existingProject = projectsArray.find(project => project.name === name);
         if (existingProject) {
             console.log(`A project with the name "${name}" already exists.`);
             return null;
         }
-        const newProject = { 
+        const newProject = {
             name, 
             tasks: [],
             pages: [] // Add a property to store page data
         };
-        projects.push(newProject);
+        projectsArray.push(newProject);
         return newProject;
     };
 
     // get project created names.
-    const findProjectByName = (name) => {
-        return this.projects.find(project => project.name === name);
+    const findProjectByName = (name, projectsArray) => {
+        return projectsArray.find(project => project.name === name);
     };
 
     // edit project tasks
@@ -51,11 +52,11 @@ const projectManager = (function () {
         return task;
     };
 
-    // Delete projects.
+    // Delete projectsArray.
     const deleteProject = (name) => {
-        const projectIndex = projects.findIndex(project => project.name === name);
+        const projectIndex = projectsArray.findIndex(project => project.name === name);
         if (projectIndex !== -1) {
-            const deletedProject = projects.splice(projectIndex, 1);
+            const deletedProject = projectsArray.splice(projectIndex, 1);
             return deletedProject[0];
         } else {
             console.log(`Project "${name}" not found.`);
@@ -81,7 +82,7 @@ const projectManager = (function () {
     };
 
     return {
-        projects,
+        projectsArray,
         createProjectTasks,
         createProject,
         findProjectByName,
