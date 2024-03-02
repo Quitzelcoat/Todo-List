@@ -235,9 +235,7 @@ const pageTaskdata = () => {
 const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
-    
-
-        
+     
         pageTaskdata();
         dom.clearDailogData();
         dom.closeTaskPageDailog();
