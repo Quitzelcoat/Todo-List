@@ -169,7 +169,6 @@ newProjectBtn.forEach(newProjectBtns => {
 
 // select the page by the project page name for task
 
-/*
 let selectedProjectName = "";
 const projectPagesData = (clickedElement) => {
     const pageFormData = dom.ProjectPageDom(clickedElement);
@@ -179,30 +178,34 @@ const projectPagesData = (clickedElement) => {
         // PageTasks: 
     };
 
-    const project = projectManager.findProjectByName(selectedProjectName) || projectManager.createProject(selectedProjectName);
-    project.pages.push(pageData);
-    console.log("Project:", project);
+    const projectName = clickedElement.innerText;
+    const project = projectManager.findProjectByName(projectName) || projectManager.createProject(projectName);
+    const existingPage = project.pages.find(page => page.title === pageData.title);
+    if (!existingPage) {
+        project.pages.push(pageData);
+        console.log("Project:", project);
+    } else {
+        console.log("Page data already exists in the project:", project);
+    }
 };
-*/
 
 const projectNames = document.querySelector('.projectNames');
 projectNames.addEventListener('click', (event) => {
     const clickedElement = event.target;
-    if(clickedElement.classList.contains('newProjectPages')) {
+    if (clickedElement.classList.contains('newProjectPages')) {
         dom.controllAllPages(false);
         dom.controllProjectPage(true);
         dom.hideProjectPages();
         dom.ProjectPageDom(clickedElement);
-        // selectedProjectName = clickedElement.innerText;
-        // projectPagesData(clickedElement);
+        selectedProjectName = clickedElement.innerText;
+        projectPagesData(clickedElement);
     }
-
 });
 
 const projectsTasksShow = document.querySelector('.projectsTasksShow');
 projectsTasksShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
-    if(clickedElement.classList.contains('projectBtn')) {
+    if (clickedElement.classList.contains('projectBtn')) {
         dom.showTaskPageDailog();
         console.log('the dom is next in working for this and that');
     }
@@ -223,7 +226,8 @@ const pageTaskdata = () => {
         newTodoElement.title,
         newTodoElement.description,
         newTodoElement.priority,
-        newTodoElement.date 
+        newTodoElement.date,
+        selectedProjectName
     );
 
     if (storedTask) {
@@ -235,12 +239,12 @@ const pageTaskdata = () => {
 const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
-     
         pageTaskdata();
         dom.clearDailogData();
         dom.closeTaskPageDailog();
     });
 });
+
 
 const sideNotes = document.querySelectorAll('.sideNotes');
 sideNotes.forEach(sideNotess => {

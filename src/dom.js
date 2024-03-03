@@ -58,11 +58,11 @@ export const dom = (function () {
         });
     };
 
-    const renderPageTodos = (tasks) => {
-        const projectPage = document.querySelector('.projectPage');
-        tasks.forEach(task => {
-            const showTask = createTodoElement(task);
-            projectPage.appendChild(showTask);
+    const renderPageTodos = (projectTasks) => {
+        const projectsTasksShow = document.querySelector('.projectsTasksShow');
+        projectTasks.forEach(projectTask => {
+            const showTask = createTodoElement(projectTask);
+            projectsTasksShow.appendChild(showTask);
         });
     };
 
