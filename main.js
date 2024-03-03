@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/TodoManager.js":
@@ -7,7 +8,6 @@
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   todoManager: () => (/* binding */ todoManager)
@@ -73,7 +73,6 @@ const todoManager = (function () {
   \********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   dom: () => (/* binding */ dom)
@@ -138,11 +137,11 @@ const dom = (function () {
         });
     };
 
-    const renderPageTodos = (tasks) => {
-        const projectPage = document.querySelector('.projectPage');
-        tasks.forEach(task => {
-            const showTask = createTodoElement(task);
-            projectPage.appendChild(showTask);
+    const renderPageTodos = (projectTasks) => {
+        const projectsTasksShow = document.querySelector('.projectsTasksShow');
+        projectTasks.forEach(projectTask => {
+            const showTask = createTodoElement(projectTask);
+            projectsTasksShow.appendChild(showTask);
         });
     };
 
@@ -454,24 +453,28 @@ const dom = (function () {
 /*!****************************!*\
   !*** ./src/projectPage.js ***!
   \****************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   projectManager: () => (/* binding */ projectManager)
+/* harmony export */ });
 const projectManager = (function () {
     let projectsArray = [];
     let projectCounter = 1;
 
     // store created project tasks
     const createProjectTasks = (finished, title, description, priority, date, project) => {
-        const existingTodo = projectsArray.find(todo => todo.title === title && todo.project === project);
-        if (existingTodo) {
-            console.log(`Project "${projectName}" not found.`);
+        const existingTask = projectsArray.find(task => task.title === title && task.project === project);
+        if (existingTask) {
+            console.log(`A task with the title "${title}" already exists in the project "${project}".`);
             return null;
         }
 
-        const newTask = { id: projectCounter++, finished, title, description, priority, date };
-        projectsArray.tasks.push(newTask);
-        return newTask
-    }
+        const newTask = { id: projectCounter++, finished, title, description, priority, date, project };
+        projectsArray.push(newTask);
+        return newTask;
+    };
 
     // store created project pages
     const createProject = (name) => {
@@ -483,14 +486,14 @@ const projectManager = (function () {
         const newProject = {
             name, 
             tasks: [],
-            pages: [] // Add a property to store page data
+            pages: []
         };
         projectsArray.push(newProject);
         return newProject;
     };
 
     // get project created names.
-    const findProjectByName = (name, projectsArray) => {
+    const findProjectByName = (name) => {
         return projectsArray.find(project => project.name === name);
     };
 
@@ -550,6 +553,7 @@ const projectManager = (function () {
     };
 })();
 
+
 /***/ })
 
 /******/ 	});
@@ -579,18 +583,6 @@ const projectManager = (function () {
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -621,15 +613,13 @@ const projectManager = (function () {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
 (() => {
-"use strict";
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _projectPage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./projectPage.js */ "./src/projectPage.js");
-/* harmony import */ var _projectPage_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _TodoManager__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TodoManager */ "./src/TodoManager.js");
 /* harmony import */ var _dom_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dom.js */ "./src/dom.js");
 
@@ -803,40 +793,43 @@ newProjectBtn.forEach(newProjectBtns => {
 
 // select the page by the project page name for task
 
-/*
 let selectedProjectName = "";
 const projectPagesData = (clickedElement) => {
-    const pageFormData = dom.ProjectPageDom(clickedElement);
+    const pageFormData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.ProjectPageDom(clickedElement);
 
     const pageData = {
         title: pageFormData,
         // PageTasks: 
     };
 
-    const project = projectManager.findProjectByName(selectedProjectName) || projectManager.createProject(selectedProjectName);
-    project.pages.push(pageData);
-    console.log("Project:", project);
+    const projectName = clickedElement.innerText;
+    const project = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.findProjectByName(projectName) || _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.createProject(projectName);
+    const existingPage = project.pages.find(page => page.title === pageData.title);
+    if (!existingPage) {
+        project.pages.push(pageData);
+        console.log("Project:", project);
+    } else {
+        console.log("Page data already exists in the project:", project);
+    }
 };
-*/
 
 const projectNames = document.querySelector('.projectNames');
 projectNames.addEventListener('click', (event) => {
     const clickedElement = event.target;
-    if(clickedElement.classList.contains('newProjectPages')) {
+    if (clickedElement.classList.contains('newProjectPages')) {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllProjectPage(true);
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.hideProjectPages();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.ProjectPageDom(clickedElement);
-        // selectedProjectName = clickedElement.innerText;
-        // projectPagesData(clickedElement);
+        selectedProjectName = clickedElement.innerText;
+        projectPagesData(clickedElement);
     }
-
 });
 
 const projectsTasksShow = document.querySelector('.projectsTasksShow');
 projectsTasksShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
-    if(clickedElement.classList.contains('projectBtn')) {
+    if (clickedElement.classList.contains('projectBtn')) {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskPageDailog();
         console.log('the dom is next in working for this and that');
     }
@@ -857,7 +850,8 @@ const pageTaskdata = () => {
         newTodoElement.title,
         newTodoElement.description,
         newTodoElement.priority,
-        newTodoElement.date 
+        newTodoElement.date,
+        selectedProjectName
     );
 
     if (storedTask) {
@@ -869,12 +863,12 @@ const pageTaskdata = () => {
 const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
-    
         pageTaskdata();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearDailogData();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
     });
 });
+
 
 const sideNotes = document.querySelectorAll('.sideNotes');
 sideNotes.forEach(sideNotess => {
