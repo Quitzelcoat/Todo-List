@@ -137,11 +137,17 @@ const dom = (function () {
         });
     };
 
-    const renderPageTodos = (projectTasks) => {
-        const projectsTasksShow = document.querySelector('.projectsTasksShow');
+    const renderPageTodos = (projectTasks, projectName) => {
+        const projectContainer = document.getElementById(projectName);
+        if (!projectContainer) {
+            console.error(`Container for project ${projectName} not found.`);
+            return;
+        }
+
+        // Append new tasks
         projectTasks.forEach(projectTask => {
             const showTask = createTodoElement(projectTask);
-            projectsTasksShow.appendChild(showTask);
+            projectContainer.appendChild(showTask);
         });
     };
 
@@ -855,7 +861,7 @@ const pageTaskdata = () => {
     );
 
     if (storedTask) {
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderPageTodos([storedTask]);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderPageTodos([storedTask], selectedProjectName);
         console.log(storedTask);
     }
 };
