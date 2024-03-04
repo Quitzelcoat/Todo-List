@@ -231,7 +231,7 @@ const pageTaskdata = () => {
     );
 
     if (storedTask) {
-        dom.renderPageTodos([storedTask]);
+        dom.renderPageTodos([storedTask], selectedProjectName);
         console.log(storedTask);
     }
 };

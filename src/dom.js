@@ -58,11 +58,17 @@ export const dom = (function () {
         });
     };
 
-    const renderPageTodos = (projectTasks) => {
-        const projectsTasksShow = document.querySelector('.projectsTasksShow');
+    const renderPageTodos = (projectTasks, projectName) => {
+        const projectContainer = document.getElementById(projectName);
+        if (!projectContainer) {
+            console.error(`Container for project ${projectName} not found.`);
+            return;
+        }
+
+        // Append new tasks
         projectTasks.forEach(projectTask => {
             const showTask = createTodoElement(projectTask);
-            projectsTasksShow.appendChild(showTask);
+            projectContainer.appendChild(showTask);
         });
     };
 
