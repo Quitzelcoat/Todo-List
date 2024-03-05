@@ -168,7 +168,6 @@ newProjectBtn.forEach(newProjectBtns => {
 });
 
 // select the page by the project page name for task
-
 let selectedProjectName = "";
 const projectPagesData = (clickedElement) => {
     const pageFormData = dom.ProjectPageDom(clickedElement);
@@ -244,7 +243,6 @@ newPageBtn.forEach(newPageBtns => {
         dom.closeTaskPageDailog();
     });
 });
-
 
 const sideNotes = document.querySelectorAll('.sideNotes');
 sideNotes.forEach(sideNotess => {
