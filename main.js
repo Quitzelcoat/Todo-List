@@ -798,7 +798,6 @@ newProjectBtn.forEach(newProjectBtns => {
 });
 
 // select the page by the project page name for task
-
 let selectedProjectName = "";
 const projectPagesData = (clickedElement) => {
     const pageFormData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.ProjectPageDom(clickedElement);
@@ -874,7 +873,6 @@ newPageBtn.forEach(newPageBtns => {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
     });
 });
-
 
 const sideNotes = document.querySelectorAll('.sideNotes');
 sideNotes.forEach(sideNotess => {
