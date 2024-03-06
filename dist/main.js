@@ -128,26 +128,12 @@ const dom = (function () {
     
         return showTask;
     };
-    
-    const renderTodos = (tasks) => {
-        const mainShow = document.querySelector('.mainShow');
+
+    // Function to render tasks onto the page
+    const renderTodos = (tasks, container) => {
         tasks.forEach(task => {
             const showTask = createTodoElement(task);
-            mainShow.appendChild(showTask);
-        });
-    };
-
-    const renderPageTodos = (projectTasks, projectName) => {
-        const projectContainer = document.getElementById(projectName);
-        if (!projectContainer) {
-            console.error(`Container for project ${projectName} not found.`);
-            return;
-        }
-
-        // Append new tasks
-        projectTasks.forEach(projectTask => {
-            const showTask = createTodoElement(projectTask);
-            projectContainer.appendChild(showTask);
+            container.appendChild(showTask);
         });
     };
 
@@ -416,7 +402,6 @@ const dom = (function () {
 
     return {
         renderTodos,
-        renderPageTodos,
         chooseTaskBtnDailog,
         closeTaskBtnDailog,
         showTaskCreateDailog,
@@ -656,7 +641,7 @@ newTodo.forEach(newTodos => {
 });
 
 const inboxTaskdata = () => {
-    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData();
+    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.mainDialog');
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -674,7 +659,7 @@ const inboxTaskdata = () => {
     );
 
     if (storedTodo) {
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTodo]);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTodo], document.querySelector('.mainShow'));
         console.log(storedTodo);
     }
 };
@@ -841,7 +826,7 @@ projectsTasksShow.addEventListener('click', (event) => {
 });
 
 const pageTaskdata = () => {
-    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData();
+    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -860,7 +845,7 @@ const pageTaskdata = () => {
     );
 
     if (storedTask) {
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderPageTodos([storedTask], selectedProjectName);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
         console.log(storedTask);
     }
 };

@@ -49,26 +49,12 @@ export const dom = (function () {
     
         return showTask;
     };
-    
-    const renderTodos = (tasks) => {
-        const mainShow = document.querySelector('.mainShow');
+
+    // Function to render tasks onto the page
+    const renderTodos = (tasks, container) => {
         tasks.forEach(task => {
             const showTask = createTodoElement(task);
-            mainShow.appendChild(showTask);
-        });
-    };
-
-    const renderPageTodos = (projectTasks, projectName) => {
-        const projectContainer = document.getElementById(projectName);
-        if (!projectContainer) {
-            console.error(`Container for project ${projectName} not found.`);
-            return;
-        }
-
-        // Append new tasks
-        projectTasks.forEach(projectTask => {
-            const showTask = createTodoElement(projectTask);
-            projectContainer.appendChild(showTask);
+            container.appendChild(showTask);
         });
     };
 
@@ -337,7 +323,6 @@ export const dom = (function () {
 
     return {
         renderTodos,
-        renderPageTodos,
         chooseTaskBtnDailog,
         closeTaskBtnDailog,
         showTaskCreateDailog,

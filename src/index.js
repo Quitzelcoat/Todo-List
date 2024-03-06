@@ -26,7 +26,7 @@ newTodo.forEach(newTodos => {
 });
 
 const inboxTaskdata = () => {
-    const formData = dom.getFormData();
+    const formData = dom.getFormData('.mainDialog');
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -44,7 +44,7 @@ const inboxTaskdata = () => {
     );
 
     if (storedTodo) {
-        dom.renderTodos([storedTodo]);
+        dom.renderTodos([storedTodo], document.querySelector('.mainShow'));
         console.log(storedTodo);
     }
 };
@@ -211,7 +211,7 @@ projectsTasksShow.addEventListener('click', (event) => {
 });
 
 const pageTaskdata = () => {
-    const formData = dom.getFormData();
+    const formData = dom.getFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -230,7 +230,7 @@ const pageTaskdata = () => {
     );
 
     if (storedTask) {
-        dom.renderPageTodos([storedTask], selectedProjectName);
+        dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
         console.log(storedTask);
     }
 };
