@@ -114,7 +114,8 @@ export const dom = (function () {
         showTask.style.display = 'none';
     };
 
-    const getFormData = () => {
+    const getFormData = (dialogClass) => {
+        const dialog = document.querySelector(dialogClass);
         const title = document.getElementById('todoTitle').value;
         const description = document.getElementById('todoDescription').value;
         const priority = document.querySelectorAll('.priorityTask');
@@ -130,6 +131,26 @@ export const dom = (function () {
             date: date,
         };
     };
+
+
+    const getPagesFormData = (dialogClass) => {
+        const dialog = document.querySelector(dialogClass);
+        const title = document.getElementById('todoPagesTitle').value;
+        const description = document.getElementById('todoPagesDescription').value;
+        const priority = document.querySelectorAll('.priorityPageTask');
+        const checkedPriorityTask = Array.from(priority).find(task => task.checked);
+        const date = document.getElementById('todoPagesDate').value;
+    
+        const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
+    
+        return {
+            title: title,
+            description: description,
+            priority: selectedPriority,
+            date: date,
+        };
+    };
+
 
     const showTaskForm = (showCreateButton = true) => {
         const createTaskBtn = document.querySelector('.addBtn');
@@ -156,8 +177,6 @@ export const dom = (function () {
         const checkedPriorityTask = Array.from(priorityTask).find(task => task.value === priority);
         if (checkedPriorityTask) {
             checkedPriorityTask.checked = true;
-        } else {
-            console.error('Invalid priority:', priority);
         }
         todoTaskDate.value = date;
     };
@@ -194,18 +213,26 @@ export const dom = (function () {
         }
     };
 
-    const deleteTaskDetail = (taskId) => {
-        const mainShow = document.querySelector('.mainShow');
+    const deleteTaskDetail = (taskId, containerSelector) => {
+        const container = document.querySelector(containerSelector);
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
-        mainShow.removeChild(taskElement);
+        container.removeChild(taskElement);
     };
 
-    const clearDailogData = () => {
-        document.getElementById('todoTitle').value = '';
-        document.getElementById('todoDescription').value = '';
-        const priorityTasks = document.querySelectorAll('.priorityTask');
+    const clearFormData = (titleId, descriptionId, priorityClass, dateId) => {
+        document.getElementById(titleId).value = '';
+        document.getElementById(descriptionId).value = '';
+        const priorityTasks = document.querySelectorAll(priorityClass);
         priorityTasks.forEach(task => task.checked = false);
-        document.getElementById('todoTaskDate').value = '';
+        document.getElementById(dateId).value = '';
+    };
+    
+    const clearDailogData = () => {
+        clearFormData('todoTitle', 'todoDescription', '.priorityTask', 'todoTaskDate');
+    };
+    
+    const clearPagesData = () => {
+        clearFormData('todoPagesTitle', 'todoPagesDescription', '.priorityPageTask', 'todoPagesDate');
     };
 
     const controllMainPage = (hideMainPage = true) => {
@@ -338,6 +365,7 @@ export const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        getPagesFormData,
         showTaskForm,
         showEditTask,
         removeEditBtn,
@@ -346,6 +374,7 @@ export const dom = (function () {
         updateTaskDetails,
         deleteTaskDetail,
         clearDailogData,
+        clearPagesData,
         controllMainPage,
         controllTodayPage,
         controllUpcomingPage,

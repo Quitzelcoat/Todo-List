@@ -26,6 +26,7 @@ const todoManager = (function () {
 
         const todo = { id: todoCounter++, finished, title, description, priority, date, project };
         todoArray.push(todo);
+        console.log(todoArray);
         return todo;
     }
 
@@ -48,7 +49,7 @@ const todoManager = (function () {
         const todoIndex = todoArray.findIndex(todo => todo.id === id);
         if (todoIndex !== -1) {
             const deletedTodo = todoArray.splice(todoIndex, 1);
-            return deletedTodo[0];
+            return deletedTodo;
         } else {
             console.log(`Todo with ID "${id}" not found.`);
             return null;
@@ -193,7 +194,8 @@ const dom = (function () {
         showTask.style.display = 'none';
     };
 
-    const getFormData = () => {
+    const getFormData = (dialogClass) => {
+        const dialog = document.querySelector(dialogClass);
         const title = document.getElementById('todoTitle').value;
         const description = document.getElementById('todoDescription').value;
         const priority = document.querySelectorAll('.priorityTask');
@@ -209,6 +211,26 @@ const dom = (function () {
             date: date,
         };
     };
+
+
+    const getPagesFormData = (dialogClass) => {
+        const dialog = document.querySelector(dialogClass);
+        const title = document.getElementById('todoPagesTitle').value;
+        const description = document.getElementById('todoPagesDescription').value;
+        const priority = document.querySelectorAll('.priorityPageTask');
+        const checkedPriorityTask = Array.from(priority).find(task => task.checked);
+        const date = document.getElementById('todoPagesDate').value;
+    
+        const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
+    
+        return {
+            title: title,
+            description: description,
+            priority: selectedPriority,
+            date: date,
+        };
+    };
+
 
     const showTaskForm = (showCreateButton = true) => {
         const createTaskBtn = document.querySelector('.addBtn');
@@ -235,8 +257,6 @@ const dom = (function () {
         const checkedPriorityTask = Array.from(priorityTask).find(task => task.value === priority);
         if (checkedPriorityTask) {
             checkedPriorityTask.checked = true;
-        } else {
-            console.error('Invalid priority:', priority);
         }
         todoTaskDate.value = date;
     };
@@ -273,18 +293,26 @@ const dom = (function () {
         }
     };
 
-    const deleteTaskDetail = (taskId) => {
-        const mainShow = document.querySelector('.mainShow');
+    const deleteTaskDetail = (taskId, containerSelector) => {
+        const container = document.querySelector(containerSelector);
         const taskElement = document.querySelector(`.showTask[data-id="${taskId}"]`);
-        mainShow.removeChild(taskElement);
+        container.removeChild(taskElement);
     };
 
-    const clearDailogData = () => {
-        document.getElementById('todoTitle').value = '';
-        document.getElementById('todoDescription').value = '';
-        const priorityTasks = document.querySelectorAll('.priorityTask');
+    const clearFormData = (titleId, descriptionId, priorityClass, dateId) => {
+        document.getElementById(titleId).value = '';
+        document.getElementById(descriptionId).value = '';
+        const priorityTasks = document.querySelectorAll(priorityClass);
         priorityTasks.forEach(task => task.checked = false);
-        document.getElementById('todoTaskDate').value = '';
+        document.getElementById(dateId).value = '';
+    };
+    
+    const clearDailogData = () => {
+        clearFormData('todoTitle', 'todoDescription', '.priorityTask', 'todoTaskDate');
+    };
+    
+    const clearPagesData = () => {
+        clearFormData('todoPagesTitle', 'todoPagesDescription', '.priorityPageTask', 'todoPagesDate');
     };
 
     const controllMainPage = (hideMainPage = true) => {
@@ -417,6 +445,7 @@ const dom = (function () {
         showAddTaskForm,
         hideAddTaskForm,
         getFormData,
+        getPagesFormData,
         showTaskForm,
         showEditTask,
         removeEditBtn,
@@ -425,6 +454,7 @@ const dom = (function () {
         updateTaskDetails,
         deleteTaskDetail,
         clearDailogData,
+        clearPagesData,
         controllMainPage,
         controllTodayPage,
         controllUpcomingPage,
@@ -674,8 +704,7 @@ addNewTask.addEventListener('click', () => {
 
 let selectedTaskId = null;
 
-const mainShow = document.querySelector('.mainShow');
-mainShow.addEventListener('click', (event) => {
+const handleTaskButtons = (event, containerSelector) => {
     if (event.target.classList.contains('detailTaskBtn')) {
         const taskData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.gettingTaskData(event.target);
         if (taskData) {
@@ -687,23 +716,38 @@ mainShow.addEventListener('click', (event) => {
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
-
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
         const captureData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.gettingTaskData(event.target);
         if (captureData) {
+
+            document.getElementById('todoTitle').value = captureData.title;
+            document.getElementById('todoDescription').value = captureData.description;
+            const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
+            if (priorityRadio) {
+                priorityRadio.checked = true;
+            }
+            document.getElementById('todoTaskDate').value = captureData.date;
+
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showEditTask();
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(true);
-            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.populateMainDetailDailogForm(captureData.title, captureData.description, captureData.priority, captureData.date);
         }
     }
 
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+        console.log("Selected Task ID to delete:", selectedTaskId);
+        _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.deleteTodo(selectedTaskId);
 
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId, containerSelector);
     }
+}
+
+const mainShow = document.querySelector('.mainShow');
+mainShow.addEventListener('click', (event) => {
+    
+    handleTaskButtons(event, '.mainShow');
 });
 
 const updateBtn = document.querySelector('.updateBtn');
@@ -826,7 +870,7 @@ projectsTasksShow.addEventListener('click', (event) => {
 });
 
 const pageTaskdata = () => {
-    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.pagesDialog');
+    const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -854,9 +898,14 @@ const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
         pageTaskdata();
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearDailogData();
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearPagesData();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
     });
+});
+
+const projectDivs = document.querySelector('.projectsTasksShow');
+projectDivs.addEventListener('click', (event) => {
+    handleTaskButtons(event, `#${selectedProjectName}`);
 });
 
 const sideNotes = document.querySelectorAll('.sideNotes');

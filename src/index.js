@@ -59,8 +59,7 @@ addNewTask.addEventListener('click', () => {
 
 let selectedTaskId = null;
 
-const mainShow = document.querySelector('.mainShow');
-mainShow.addEventListener('click', (event) => {
+const handleTaskButtons = (event, containerSelector) => {
     if (event.target.classList.contains('detailTaskBtn')) {
         const taskData = dom.gettingTaskData(event.target);
         if (taskData) {
@@ -72,23 +71,38 @@ mainShow.addEventListener('click', (event) => {
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
-
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
-        dom.showTaskForm(false);
         const captureData = dom.gettingTaskData(event.target);
         if (captureData) {
+
+            document.getElementById('todoTitle').value = captureData.title;
+            document.getElementById('todoDescription').value = captureData.description;
+            const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
+            if (priorityRadio) {
+                priorityRadio.checked = true;
+            }
+            document.getElementById('todoTaskDate').value = captureData.date;
+
+            dom.showTaskForm(false);
             dom.showEditTask();
             dom.removeEditBtn(true);
-            dom.populateMainDetailDailogForm(captureData.title, captureData.description, captureData.priority, captureData.date);
         }
     }
 
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+        console.log("Selected Task ID to delete:", selectedTaskId);
+        todoManager.deleteTodo(selectedTaskId);
 
-        dom.deleteTaskDetail(selectedTaskId);
+        dom.deleteTaskDetail(selectedTaskId, containerSelector);
     }
+}
+
+const mainShow = document.querySelector('.mainShow');
+mainShow.addEventListener('click', (event) => {
+    
+    handleTaskButtons(event, '.mainShow');
 });
 
 const updateBtn = document.querySelector('.updateBtn');
@@ -211,7 +225,7 @@ projectsTasksShow.addEventListener('click', (event) => {
 });
 
 const pageTaskdata = () => {
-    const formData = dom.getFormData('.pagesDialog');
+    const formData = dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
         title: formData.title,
@@ -239,9 +253,14 @@ const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
         pageTaskdata();
-        dom.clearDailogData();
+        dom.clearPagesData();
         dom.closeTaskPageDailog();
     });
+});
+
+const projectDivs = document.querySelector('.projectsTasksShow');
+projectDivs.addEventListener('click', (event) => {
+    handleTaskButtons(event, `#${selectedProjectName}`);
 });
 
 const sideNotes = document.querySelectorAll('.sideNotes');

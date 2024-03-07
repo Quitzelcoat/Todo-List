@@ -12,6 +12,7 @@ export const todoManager = (function () {
 
         const todo = { id: todoCounter++, finished, title, description, priority, date, project };
         todoArray.push(todo);
+        console.log(todoArray);
         return todo;
     }
 
@@ -34,7 +35,7 @@ export const todoManager = (function () {
         const todoIndex = todoArray.findIndex(todo => todo.id === id);
         if (todoIndex !== -1) {
             const deletedTodo = todoArray.splice(todoIndex, 1);
-            return deletedTodo[0];
+            return deletedTodo;
         } else {
             console.log(`Todo with ID "${id}" not found.`);
             return null;
