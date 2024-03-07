@@ -35,7 +35,7 @@ const todoManager = (function () {
     };
 
     const editTodo = (id, newData) => {
-        const todoIndex = todoArray.findIndex(todo => todo.id === id);
+        const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };
             return todoArray[todoIndex];
@@ -46,7 +46,7 @@ const todoManager = (function () {
     };
 
     const deleteTodo = (id) => {
-        const todoIndex = todoArray.findIndex(todo => todo.id === id);
+        const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             const deletedTodo = todoArray.splice(todoIndex, 1);
             return deletedTodo;
@@ -525,7 +525,7 @@ const projectManager = (function () {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const task = project.tasks.find(task => task.id === taskId);
+        const task = project.tasks.find(task => task.id.toString() === taskId);
         if (!task) {
             console.log(`Task with ID "${taskId}" not found in project "${projectName}".`);
             return null;
@@ -553,7 +553,7 @@ const projectManager = (function () {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const taskIndex = project.tasks.findIndex(task => task.id === taskId);
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === taskId);
         if (taskIndex !== -1) {
             const deletedTask = project.tasks.splice(taskIndex, 1);
             return deletedTask[0];
