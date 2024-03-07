@@ -21,7 +21,7 @@ export const todoManager = (function () {
     };
 
     const editTodo = (id, newData) => {
-        const todoIndex = todoArray.findIndex(todo => todo.id === id);
+        const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };
             return todoArray[todoIndex];
@@ -32,7 +32,7 @@ export const todoManager = (function () {
     };
 
     const deleteTodo = (id) => {
-        const todoIndex = todoArray.findIndex(todo => todo.id === id);
+        const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             const deletedTodo = todoArray.splice(todoIndex, 1);
             return deletedTodo;
