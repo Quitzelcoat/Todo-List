@@ -571,7 +571,6 @@ const projectManager = (function () {
         editProjectTask,
         deleteProject,
         deleteTask,
-        deleteProjectTask,
     };
 })();
 
