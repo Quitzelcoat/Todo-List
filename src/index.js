@@ -87,18 +87,29 @@ const handleTaskButtons = (event, containerSelector) => {
             dom.showTaskForm(false);
             dom.showEditTask();
             dom.removeEditBtn(true);
+
+            todoManager.editTodo(selectedTaskId, {
+                title: captureData.title,
+                description: captureData.description,
+                priority: captureData.priority,
+                date: captureData.date
+            });
+
+            // projectManager.editProjectTask(selectedTaskId, selectedProjectName, {
+            //     title: captureData.title,
+            //     description: captureData.description,
+            //     priority: captureData.priority,
+            //     date: captureData.date
+            // });
+
         }
     }
 
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-        console.log("Selected Task ID to delete:", selectedTaskId);
 
         const todoTasks = todoManager.deleteTodo(selectedTaskId);
-        console.log("Todo tasks after deletion:", todoTasks);
-
         const projectTasks = projectManager.deleteTask(selectedTaskId, selectedProjectName);
-        console.log("Project tasks after deletion:", projectTasks);
 
         if(todoTasks || projectTasks) {
             dom.deleteTaskDetail(selectedTaskId, containerSelector);

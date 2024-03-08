@@ -20,7 +20,7 @@ export const todoManager = (function () {
         return todoArray.filter(todo => todo.project === project);
     };
 
-    const editTodo = (id, newData) => {
+    const editTodo = (id, {newData}) => {
         const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };

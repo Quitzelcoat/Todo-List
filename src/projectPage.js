@@ -3,15 +3,21 @@ export const projectManager = (function () {
     let projectCounter = 1;
 
     // store created project tasks
-    const createProjectTasks = (finished, title, description, priority, date, project) => {
-        const existingTask = projectsArray.find(task => task.title === title && task.project === project);
-        if (existingTask) {
-            console.log(`A task with the title "${title}" already exists in the project "${project}".`);
+    const createProjectTasks = (finished, title, description, priority, date, projectName) => {
+        const project = findProjectByName(projectName);
+        if (!project) {
+            console.log(`Project "${projectName}" not found.`);
             return null;
         }
-
-        const newTask = { id: projectCounter++, finished, title, description, priority, date, project };
-        projectsArray.push(newTask);
+    
+        const existingTask = project.tasks.find(task => task.title === title);
+        if (existingTask) {
+            console.log(`A task with the title "${title}" already exists in the project "${projectName}".`);
+            return null;
+        }
+    
+        const newTask = { id: projectCounter++, finished, title, description, priority, date, project: projectName };
+        project.tasks.push(newTask);
         return newTask;
     };
 
@@ -37,7 +43,7 @@ export const projectManager = (function () {
     };
 
     // edit project tasks
-    const editProjectTask = (projectName, id, newData) => {
+    const editProjectTask = (id, projectName, newData) => {
         const project = findProjectByName(projectName);
         if (!project) {
             console.log(`Project "${projectName}" not found.`);
