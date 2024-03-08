@@ -97,7 +97,7 @@ const handleTaskButtons = (event, containerSelector) => {
         const todoTasks = todoManager.deleteTodo(selectedTaskId);
         console.log("Todo tasks after deletion:", todoTasks);
 
-        const projectTasks = projectManager.deleteProjectTask(selectedTaskId);
+        const projectTasks = projectManager.deleteTask(selectedTaskId, selectedProjectName);
         console.log("Project tasks after deletion:", projectTasks);
 
         if(todoTasks || projectTasks) {

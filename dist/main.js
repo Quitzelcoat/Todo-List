@@ -742,7 +742,7 @@ const handleTaskButtons = (event, containerSelector) => {
         const todoTasks = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.deleteTodo(selectedTaskId);
         console.log("Todo tasks after deletion:", todoTasks);
 
-        const projectTasks = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.deleteProjectTask(selectedTaskId);
+        const projectTasks = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.deleteTask(selectedTaskId, selectedProjectName);
         console.log("Project tasks after deletion:", projectTasks);
 
         if(todoTasks || projectTasks) {
