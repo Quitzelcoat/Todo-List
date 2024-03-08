@@ -37,15 +37,15 @@ export const projectManager = (function () {
     };
 
     // edit project tasks
-    const editProjectTask = (projectName, taskId, newData) => {
+    const editProjectTask = (projectName, id, newData) => {
         const project = findProjectByName(projectName);
         if (!project) {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const task = project.tasks.find(task => task.id.toString() === taskId);
+        const task = project.tasks.find(task => task.id.toString() === id);
         if (!task) {
-            console.log(`Task with ID "${taskId}" not found in project "${projectName}".`);
+            console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
         }
         Object.assign(task, newData);
@@ -65,18 +65,18 @@ export const projectManager = (function () {
     };
 
     // Delete project Tasks
-    const deleteTask = (projectName, taskId) => {
+    const deleteTask = (id, projectName) => {
         const project = findProjectByName(projectName);
         if (!project) {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const taskIndex = project.tasks.findIndex(task => task.id.toString() === taskId);
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
         if (taskIndex !== -1) {
             const deletedTask = project.tasks.splice(taskIndex, 1);
-            return deletedTask[0];
+            return deletedTask;
         } else {
-            console.log(`Task with ID "${taskId}" not found in project "${projectName}".`);
+            console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
         }
     };
@@ -89,5 +89,6 @@ export const projectManager = (function () {
         editProjectTask,
         deleteProject,
         deleteTask,
+        deleteProjectTask,
     };
 })();

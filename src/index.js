@@ -93,9 +93,16 @@ const handleTaskButtons = (event, containerSelector) => {
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
         console.log("Selected Task ID to delete:", selectedTaskId);
-        todoManager.deleteTodo(selectedTaskId);
 
-        dom.deleteTaskDetail(selectedTaskId, containerSelector);
+        const todoTasks = todoManager.deleteTodo(selectedTaskId);
+        console.log("Todo tasks after deletion:", todoTasks);
+
+        const projectTasks = projectManager.deleteProjectTask(selectedTaskId);
+        console.log("Project tasks after deletion:", projectTasks);
+
+        if(todoTasks || projectTasks) {
+            dom.deleteTaskDetail(selectedTaskId, containerSelector);
+        };
     }
 }
 
