@@ -71,7 +71,7 @@ export const projectManager = (function () {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const taskIndex = project.tasks.findIndex(task => task.id === id);
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
         if (taskIndex !== -1) {
             const deletedTask = project.tasks.splice(taskIndex, 1);
             return deletedTask;
