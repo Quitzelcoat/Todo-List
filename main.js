@@ -519,15 +519,15 @@ const projectManager = (function () {
     };
 
     // edit project tasks
-    const editProjectTask = (projectName, taskId, newData) => {
+    const editProjectTask = (projectName, id, newData) => {
         const project = findProjectByName(projectName);
         if (!project) {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const task = project.tasks.find(task => task.id.toString() === taskId);
+        const task = project.tasks.find(task => task.id.toString() === id);
         if (!task) {
-            console.log(`Task with ID "${taskId}" not found in project "${projectName}".`);
+            console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
         }
         Object.assign(task, newData);
@@ -547,18 +547,18 @@ const projectManager = (function () {
     };
 
     // Delete project Tasks
-    const deleteTask = (projectName, taskId) => {
+    const deleteTask = (id, projectName) => {
         const project = findProjectByName(projectName);
         if (!project) {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const taskIndex = project.tasks.findIndex(task => task.id.toString() === taskId);
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
         if (taskIndex !== -1) {
             const deletedTask = project.tasks.splice(taskIndex, 1);
-            return deletedTask[0];
+            return deletedTask;
         } else {
-            console.log(`Task with ID "${taskId}" not found in project "${projectName}".`);
+            console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
         }
     };
@@ -571,6 +571,7 @@ const projectManager = (function () {
         editProjectTask,
         deleteProject,
         deleteTask,
+        deleteProjectTask,
     };
 })();
 
@@ -738,9 +739,16 @@ const handleTaskButtons = (event, containerSelector) => {
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
         console.log("Selected Task ID to delete:", selectedTaskId);
-        _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.deleteTodo(selectedTaskId);
 
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId, containerSelector);
+        const todoTasks = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.deleteTodo(selectedTaskId);
+        console.log("Todo tasks after deletion:", todoTasks);
+
+        const projectTasks = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.deleteProjectTask(selectedTaskId);
+        console.log("Project tasks after deletion:", projectTasks);
+
+        if(todoTasks || projectTasks) {
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId, containerSelector);
+        };
     }
 }
 
