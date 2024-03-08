@@ -34,7 +34,7 @@ const todoManager = (function () {
         return todoArray.filter(todo => todo.project === project);
     };
 
-    const editTodo = (id, newData) => {
+    const editTodo = (id, {newData}) => {
         const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };
@@ -485,15 +485,21 @@ const projectManager = (function () {
     let projectCounter = 1;
 
     // store created project tasks
-    const createProjectTasks = (finished, title, description, priority, date, project) => {
-        const existingTask = projectsArray.find(task => task.title === title && task.project === project);
-        if (existingTask) {
-            console.log(`A task with the title "${title}" already exists in the project "${project}".`);
+    const createProjectTasks = (finished, title, description, priority, date, projectName) => {
+        const project = findProjectByName(projectName);
+        if (!project) {
+            console.log(`Project "${projectName}" not found.`);
             return null;
         }
-
-        const newTask = { id: projectCounter++, finished, title, description, priority, date, project };
-        projectsArray.push(newTask);
+    
+        const existingTask = project.tasks.find(task => task.title === title);
+        if (existingTask) {
+            console.log(`A task with the title "${title}" already exists in the project "${projectName}".`);
+            return null;
+        }
+    
+        const newTask = { id: projectCounter++, finished, title, description, priority, date, project: projectName };
+        project.tasks.push(newTask);
         return newTask;
     };
 
@@ -519,7 +525,7 @@ const projectManager = (function () {
     };
 
     // edit project tasks
-    const editProjectTask = (projectName, id, newData) => {
+    const editProjectTask = (id, projectName, newData) => {
         const project = findProjectByName(projectName);
         if (!project) {
             console.log(`Project "${projectName}" not found.`);
@@ -732,18 +738,29 @@ const handleTaskButtons = (event, containerSelector) => {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showEditTask();
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(true);
+
+            _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.editTodo(selectedTaskId, {
+                title: captureData.title,
+                description: captureData.description,
+                priority: captureData.priority,
+                date: captureData.date
+            });
+
+            // projectManager.editProjectTask(selectedTaskId, selectedProjectName, {
+            //     title: captureData.title,
+            //     description: captureData.description,
+            //     priority: captureData.priority,
+            //     date: captureData.date
+            // });
+
         }
     }
 
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-        console.log("Selected Task ID to delete:", selectedTaskId);
 
         const todoTasks = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.deleteTodo(selectedTaskId);
-        console.log("Todo tasks after deletion:", todoTasks);
-
         const projectTasks = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.deleteTask(selectedTaskId, selectedProjectName);
-        console.log("Project tasks after deletion:", projectTasks);
 
         if(todoTasks || projectTasks) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId, containerSelector);
