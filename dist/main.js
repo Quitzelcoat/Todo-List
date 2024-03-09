@@ -538,10 +538,12 @@ const projectManager = (function () {
             return null;
         }
         
-        const updatedTask = { ...project.tasks[taskIndex], ...newData };
-        project.tasks[taskIndex] = updatedTask;
+        console.log("Current task:", { ...project.tasks[taskIndex] });
+        const updatedTask = Object.assign(project.tasks[taskIndex], newData);
         return updatedTask;
     };
+
+    
 
 
     // Delete projectsArray.
@@ -764,9 +766,7 @@ mainShow.addEventListener('click', (event) => {
 });
 
 const changeTaskDetail = () => {
-
     const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.mainDialog');
-
     console.log(taskValue);
 
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.updateTaskDetails(
@@ -785,16 +785,8 @@ const changeTaskDetail = () => {
     };
 
     const updatedTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.editTodo(selectedTaskId, updatedData);
-
     if (!updatedTodo) {
         console.log("Todo item not updated successfully");
-        return;
-    }
-
-    const updatedProjectTask = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
-
-    if (!updatedProjectTask) {
-        console.log("Project task not updated successfully");
         return;
     }
 }
@@ -939,6 +931,41 @@ newPageBtn.forEach(newPageBtns => {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearPagesData();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
     });
+});
+
+const changeProjectDetail = () => {
+    const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.mainDialog');
+    console.log(taskValue);
+
+    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.updateTaskDetails(
+        selectedTaskId,
+        taskValue.title,
+        taskValue.description,
+        taskValue.priority,
+        taskValue.date
+    );
+
+    const updatedData = {
+        title: taskValue.title,
+        description: taskValue.description,
+        priority: taskValue.priority,
+        date: taskValue.date
+    };
+
+    const updatedProjectTask = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
+    if (!updatedProjectTask) {
+        console.log("Project task not updated successfully");
+        return;
+    }
+}
+
+const updateProjectTask = document.querySelector('.updateProjectTask');
+updateProjectTask.addEventListener('click', () => {
+
+    changeProjectDetail();
+
+    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeEditTask();
+
 });
 
 const projectDivs = document.querySelector('.projectsTasksShow');

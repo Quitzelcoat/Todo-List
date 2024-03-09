@@ -56,10 +56,12 @@ export const projectManager = (function () {
             return null;
         }
         
-        const updatedTask = { ...project.tasks[taskIndex], ...newData };
-        project.tasks[taskIndex] = updatedTask;
+        console.log("Current task:", { ...project.tasks[taskIndex] });
+        const updatedTask = Object.assign(project.tasks[taskIndex], newData);
         return updatedTask;
     };
+
+    
 
 
     // Delete projectsArray.

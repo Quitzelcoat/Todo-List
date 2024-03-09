@@ -109,9 +109,7 @@ mainShow.addEventListener('click', (event) => {
 });
 
 const changeTaskDetail = () => {
-
     const taskValue = dom.getFormData('.mainDialog');
-
     console.log(taskValue);
 
     dom.updateTaskDetails(
@@ -130,16 +128,8 @@ const changeTaskDetail = () => {
     };
 
     const updatedTodo = todoManager.editTodo(selectedTaskId, updatedData);
-
     if (!updatedTodo) {
         console.log("Todo item not updated successfully");
-        return;
-    }
-
-    const updatedProjectTask = projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
-
-    if (!updatedProjectTask) {
-        console.log("Project task not updated successfully");
         return;
     }
 }
@@ -284,6 +274,41 @@ newPageBtn.forEach(newPageBtns => {
         dom.clearPagesData();
         dom.closeTaskPageDailog();
     });
+});
+
+const changeProjectDetail = () => {
+    const taskValue = dom.getFormData('.mainDialog');
+    console.log(taskValue);
+
+    dom.updateTaskDetails(
+        selectedTaskId,
+        taskValue.title,
+        taskValue.description,
+        taskValue.priority,
+        taskValue.date
+    );
+
+    const updatedData = {
+        title: taskValue.title,
+        description: taskValue.description,
+        priority: taskValue.priority,
+        date: taskValue.date
+    };
+
+    const updatedProjectTask = projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
+    if (!updatedProjectTask) {
+        console.log("Project task not updated successfully");
+        return;
+    }
+}
+
+const updateProjectTask = document.querySelector('.updateProjectTask');
+updateProjectTask.addEventListener('click', () => {
+
+    changeProjectDetail();
+
+    dom.closeEditTask();
+
 });
 
 const projectDivs = document.querySelector('.projectsTasksShow');
