@@ -49,14 +49,18 @@ export const projectManager = (function () {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const task = project.tasks.find(task => task.id.toString() === id);
-        if (!task) {
+        
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
+        if (taskIndex === -1) {
             console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
         }
-        Object.assign(task, newData);
-        return task;
+        
+        const updatedTask = { ...project.tasks[taskIndex], ...newData };
+        project.tasks[taskIndex] = updatedTask;
+        return updatedTask;
     };
+
 
     // Delete projectsArray.
     const deleteProject = (name) => {

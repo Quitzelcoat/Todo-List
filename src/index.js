@@ -87,21 +87,6 @@ const handleTaskButtons = (event, containerSelector) => {
             dom.showTaskForm(false);
             dom.showEditTask();
             dom.removeEditBtn(true);
-
-            todoManager.editTodo(selectedTaskId, {
-                title: captureData.title,
-                description: captureData.description,
-                priority: captureData.priority,
-                date: captureData.date
-            });
-
-            // projectManager.editProjectTask(selectedTaskId, selectedProjectName, {
-            //     title: captureData.title,
-            //     description: captureData.description,
-            //     priority: captureData.priority,
-            //     date: captureData.date
-            // });
-
         }
     }
 
@@ -123,11 +108,9 @@ mainShow.addEventListener('click', (event) => {
     handleTaskButtons(event, '.mainShow');
 });
 
-const updateBtn = document.querySelector('.updateBtn');
-updateBtn.addEventListener('click', () => {
-    console.log("Update button clicked");
+const changeTaskDetail = () => {
 
-    const taskValue = dom.getFormData();
+    const taskValue = dom.getFormData('.mainDialog');
 
     console.log(taskValue);
 
@@ -138,6 +121,33 @@ updateBtn.addEventListener('click', () => {
         taskValue.priority,
         taskValue.date
     );
+
+    const updatedData = {
+        title: taskValue.title,
+        description: taskValue.description,
+        priority: taskValue.priority,
+        date: taskValue.date
+    };
+
+    const updatedTodo = todoManager.editTodo(selectedTaskId, updatedData);
+
+    if (!updatedTodo) {
+        console.log("Todo item not updated successfully");
+        return;
+    }
+
+    const updatedProjectTask = projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
+
+    if (!updatedProjectTask) {
+        console.log("Project task not updated successfully");
+        return;
+    }
+}
+
+const updateBtn = document.querySelector('.updateBtn');
+updateBtn.addEventListener('click', () => {
+
+    changeTaskDetail();
 
     dom.closeEditTask();
 

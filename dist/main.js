@@ -34,7 +34,7 @@ const todoManager = (function () {
         return todoArray.filter(todo => todo.project === project);
     };
 
-    const editTodo = (id, {newData}) => {
+    const editTodo = (id, newData) => {
         const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };
@@ -531,14 +531,18 @@ const projectManager = (function () {
             console.log(`Project "${projectName}" not found.`);
             return null;
         }
-        const task = project.tasks.find(task => task.id.toString() === id);
-        if (!task) {
+        
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
+        if (taskIndex === -1) {
             console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
         }
-        Object.assign(task, newData);
-        return task;
+        
+        const updatedTask = { ...project.tasks[taskIndex], ...newData };
+        project.tasks[taskIndex] = updatedTask;
+        return updatedTask;
     };
+
 
     // Delete projectsArray.
     const deleteProject = (name) => {
@@ -738,21 +742,6 @@ const handleTaskButtons = (event, containerSelector) => {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showEditTask();
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(true);
-
-            _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.editTodo(selectedTaskId, {
-                title: captureData.title,
-                description: captureData.description,
-                priority: captureData.priority,
-                date: captureData.date
-            });
-
-            // projectManager.editProjectTask(selectedTaskId, selectedProjectName, {
-            //     title: captureData.title,
-            //     description: captureData.description,
-            //     priority: captureData.priority,
-            //     date: captureData.date
-            // });
-
         }
     }
 
@@ -774,11 +763,9 @@ mainShow.addEventListener('click', (event) => {
     handleTaskButtons(event, '.mainShow');
 });
 
-const updateBtn = document.querySelector('.updateBtn');
-updateBtn.addEventListener('click', () => {
-    console.log("Update button clicked");
+const changeTaskDetail = () => {
 
-    const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData();
+    const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.mainDialog');
 
     console.log(taskValue);
 
@@ -789,6 +776,33 @@ updateBtn.addEventListener('click', () => {
         taskValue.priority,
         taskValue.date
     );
+
+    const updatedData = {
+        title: taskValue.title,
+        description: taskValue.description,
+        priority: taskValue.priority,
+        date: taskValue.date
+    };
+
+    const updatedTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.editTodo(selectedTaskId, updatedData);
+
+    if (!updatedTodo) {
+        console.log("Todo item not updated successfully");
+        return;
+    }
+
+    const updatedProjectTask = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
+
+    if (!updatedProjectTask) {
+        console.log("Project task not updated successfully");
+        return;
+    }
+}
+
+const updateBtn = document.querySelector('.updateBtn');
+updateBtn.addEventListener('click', () => {
+
+    changeTaskDetail();
 
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeEditTask();
 
