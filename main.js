@@ -88,51 +88,30 @@ const dom = (function () {
     const pagesDialog = document.querySelector('.pagesDialog');
 
     const createTodoElement = (task) => {
-        const showTask = document.createElement('div');
-        const finishedTask = document.createElement('div');
-        const titleTask = document.createElement('div');
-        const descriptionTask = document.createElement('div');
-        const priorityTask = document.createElement('div');
-        const dateTask = document.createElement('div');
-        const detailTaskBtn = document.createElement('button');
-        const editTaskBtn = document.createElement('button');
-        const editProjectBtn = document.createElement('button');
-        const deleteTaskBtn = document.createElement('button');
+        const elements = ['finishedTask', 'titleTask', 'descriptionTask', 'priorityTask', 'dateTask'];
+        const buttons = ['detailTaskBtn', 'editTaskBtn', 'editProjectBtn', 'deleteTaskBtn', 'deleteProjectTasks'];
     
+        const showTask = document.createElement('div');
         showTask.className = "showTask";
         showTask.dataset.id = task.id;
-        finishedTask.className = "finishedTask";
-        titleTask.className = "titleTask";
-        descriptionTask.className = "descriptionTask";
-        priorityTask.className = "priorityTask";
-        dateTask.className = "dateTask";
-        detailTaskBtn.className = "detailTaskBtn";
-        editTaskBtn.className = "editTaskBtn";
-        editProjectBtn.className = "editProjectBtn";
-        deleteTaskBtn.className = "deleteTaskBtn";
     
-        finishedTask.textContent = task.finished;
-        titleTask.textContent = task.title;
-        descriptionTask.textContent = task.description;
-        priorityTask.textContent = task.priority;
-        dateTask.textContent = task.date;
-        detailTaskBtn.textContent = "Task Detail";
-        editTaskBtn.textContent = "Edit";
-        editProjectBtn.textContent = "Edit Project";
-        deleteTaskBtn.textContent = "Delete";
+        elements.forEach(element => {
+            const div = document.createElement('div');
+            div.className = element;
+            div.textContent = task[element.replace('Task', '').toLowerCase()];
+            showTask.appendChild(div);
+        });
     
-        showTask.appendChild(finishedTask);
-        showTask.appendChild(titleTask);
-        showTask.appendChild(descriptionTask);
-        showTask.appendChild(priorityTask);
-        showTask.appendChild(dateTask);
-        showTask.appendChild(detailTaskBtn);
-        showTask.appendChild(editTaskBtn);
-        showTask.appendChild(editProjectBtn);
-        showTask.appendChild(deleteTaskBtn);
+        buttons.forEach(button => {
+            const btn = document.createElement('button');
+            btn.className = button;
+            btn.textContent = (button === 'editProjectBtn') ? 'Edit Project' : (button === 'detailTaskBtn' ? 'Task Detail' : button.replace('TaskBtn', ''));
+            showTask.appendChild(btn);
+        });
     
         return showTask;
     };
+
 
     // Function to render tasks onto the page
     const renderTodos = (tasks, container) => {
@@ -200,25 +179,39 @@ const dom = (function () {
 
     const hideEditTaskBtn = () => {
         const editProjectBtn = document.querySelectorAll('.editProjectBtn');
-        editProjectBtn.forEach(btn => {
-            btn.style.display = 'none';
+        editProjectBtn.forEach(editProjectBtns => {
+            editProjectBtns.style.display = 'none';
         });
     };
 
     const hideEditProjectBtn = () => {
         const editTaskBtn = document.querySelectorAll('.editTaskBtn');
-        editTaskBtn.forEach(btn => {
-            btn.style.display = 'none';
+        editTaskBtn.forEach(editTaskBtns => {
+            editTaskBtns.style.display = 'none';
         });
     };
 
-    const getFormData = (dialogClass) => {
+    const hideDeleteTaskBtn = () => {
+        const deleteProjectTasks = document.querySelectorAll('.deleteProjectTasks');
+        deleteProjectTasks.forEach(deleteProjectTask => {
+            deleteProjectTask.style.display = 'none';
+        });
+    };
+
+    const hideDeleteProjectBtn = () => {
+        const deleteTaskBtn = document.querySelectorAll('.deleteTaskBtn');
+        deleteTaskBtn.forEach(deleteTaskBtns => {
+            deleteTaskBtns.style.display = 'none';
+        });
+    };
+
+    const getAllFormData = (dialogClass, titleId, descriptionId, priorityClass, dateId) => {
         const dialog = document.querySelector(dialogClass);
-        const title = document.getElementById('todoTitle').value;
-        const description = document.getElementById('todoDescription').value;
-        const priority = document.querySelectorAll('.priorityTask');
+        const title = document.getElementById(titleId).value;
+        const description = document.getElementById(descriptionId).value;
+        const priority = document.querySelectorAll(priorityClass);
         const checkedPriorityTask = Array.from(priority).find(task => task.checked);
-        const date = document.getElementById('todoTaskDate').value;
+        const date = document.getElementById(dateId).value;
     
         const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
     
@@ -230,23 +223,12 @@ const dom = (function () {
         };
     };
 
-
+    const getFormData = (dialogClass) => {
+        return getAllFormData(dialogClass, 'todoTitle', 'todoDescription', '.priorityTask', 'todoTaskDate');
+    };
+    
     const getPagesFormData = (dialogClass) => {
-        const dialog = document.querySelector(dialogClass);
-        const title = document.getElementById('todoPagesTitle').value;
-        const description = document.getElementById('todoPagesDescription').value;
-        const priority = document.querySelectorAll('.priorityPageTask');
-        const checkedPriorityTask = Array.from(priority).find(task => task.checked);
-        const date = document.getElementById('todoPagesDate').value;
-    
-        const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
-    
-        return {
-            title: title,
-            description: description,
-            priority: selectedPriority,
-            date: date,
-        };
+        return getAllFormData(dialogClass, 'todoPagesTitle', 'todoPagesDescription', '.priorityPageTask', 'todoPagesDate');
     };
 
 
@@ -473,6 +455,8 @@ const dom = (function () {
         hideAddTaskForm,
         hideEditTaskBtn,
         hideEditProjectBtn,
+        hideDeleteTaskBtn,
+        hideDeleteProjectBtn,
         getFormData,
         getPagesFormData,
         showTaskForm,
@@ -745,6 +729,7 @@ addNewTask.addEventListener('click', () => {
 
     inboxTaskdata();
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.hideEditTaskBtn()
+    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.hideDeleteTaskBtn();
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearDailogData();
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskCreateDailog();
 });
@@ -760,50 +745,34 @@ const handleTaskButtons = (event, containerSelector) => {
         }
     }
 
-    const editTaskData = (captureData) => {
-        document.getElementById('todoTitle').value = captureData.title;
-        document.getElementById('todoDescription').value = captureData.description;
+    const editData = (captureData, titleId, descriptionId, priorityValue, dateId) => {
+        document.getElementById(titleId).value = captureData.title;
+        document.getElementById(descriptionId).value = captureData.description;
         const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
         if (priorityRadio) {
             priorityRadio.checked = true;
         }
-        document.getElementById('todoTaskDate').value = captureData.date;
+        document.getElementById(dateId).value = captureData.date;
     }
-
-    const editProjectData = (captureData) => {
-        document.getElementById('todoPagesTitle').value = captureData.title;
-        document.getElementById('todoPagesDescription').value = captureData.description;
-        const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
-        if (priorityRadio) {
-            priorityRadio.checked = true;
-        }
-        document.getElementById('todoPagesDate').value = captureData.date;
-    }
-
+    
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-
         const captureData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.gettingTaskData(event.target);
         if (captureData) {
-
-            editTaskData(captureData);
-
+            editData(captureData, 'todoTitle', 'todoDescription', captureData.priority, 'todoTaskDate');
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showEditTask();
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(true);
         }
     }
-
+    
     if (clickedElement.classList.contains('editProjectBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-
         const captureData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.gettingTaskData(event.target);
         if (captureData) {
-
-            editProjectData(captureData);
-
+            editData(captureData, 'todoPagesTitle', 'todoPagesDescription', captureData.priority, 'todoPagesDate');
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(true);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskPageDailog();
@@ -813,12 +782,15 @@ const handleTaskButtons = (event, containerSelector) => {
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
-        const todoTasks = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.deleteTodo(selectedTaskId);
-        const projectTasks = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.deleteTask(selectedTaskId, selectedProjectName);
+        _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.deleteTodo(selectedTaskId);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId, containerSelector);
+    }
 
-        if(todoTasks || projectTasks) {
-            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId, containerSelector);
-        };
+    if(clickedElement.classList.contains('deleteProjectTasks')) {
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
+        _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.deleteTask(selectedTaskId, selectedProjectName);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.deleteTaskDetail(selectedTaskId, containerSelector);
     }
 }
 
@@ -960,7 +932,7 @@ projectsTasksShow.addEventListener('click', (event) => {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskPageDailog();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(true);
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(false);
-        console.log('the dom is next in working for this and that');
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearPagesData();
     }
 });
 
@@ -996,6 +968,7 @@ const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
         pageTaskdata();
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.hideDeleteProjectBtn();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.hideEditProjectBtn();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearPagesData();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
@@ -1003,7 +976,7 @@ newPageBtn.forEach(newPageBtns => {
 });
 
 const changeProjectDetail = () => {
-    const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.mainDialog');
+    const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getPagesFormData('.pagesDialog');
     console.log(taskValue);
 
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.updateTaskDetails(
