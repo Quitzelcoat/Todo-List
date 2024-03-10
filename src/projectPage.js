@@ -18,6 +18,7 @@ export const projectManager = (function () {
     
         const newTask = { id: projectCounter++, finished, title, description, priority, date, project: projectName };
         project.tasks.push(newTask);
+        console.log("Updated projectsArray:", projectsArray);
         return newTask;
     };
 

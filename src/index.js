@@ -248,7 +248,7 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-const pageTaskdata = () => {
+const pageTaskdata = (event) => {    
     const formData = dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
@@ -266,6 +266,9 @@ const pageTaskdata = () => {
         newTodoElement.date,
         selectedProjectName
     );
+
+    console.log("Selected task ID:", selectedTaskId);
+    console.log("Selected project name:", selectedProjectName);
 
     if (storedTask) {
         dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
