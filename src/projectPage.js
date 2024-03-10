@@ -50,7 +50,7 @@ export const projectManager = (function () {
             return null;
         }
         
-        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
+        const taskIndex = project.tasks.findIndex(task => task.id === id);
         if (taskIndex === -1) {
             console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
@@ -93,6 +93,10 @@ export const projectManager = (function () {
         }
     };
 
+    const findTaskIndex = (project, taskId) => {
+        return project.tasks.findIndex(task => task.id === taskId);
+    };
+
     return {
         projectsArray,
         createProjectTasks,
@@ -101,5 +105,6 @@ export const projectManager = (function () {
         editProjectTask,
         deleteProject,
         deleteTask,
+        findTaskIndex,
     };
 })();

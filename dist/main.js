@@ -532,7 +532,7 @@ const projectManager = (function () {
             return null;
         }
         
-        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
+        const taskIndex = project.tasks.findIndex(task => task.id === id);
         if (taskIndex === -1) {
             console.log(`Task with ID "${id}" not found in project "${projectName}".`);
             return null;
@@ -575,6 +575,10 @@ const projectManager = (function () {
         }
     };
 
+    const findTaskIndex = (project, taskId) => {
+        return project.tasks.findIndex(task => task.id === taskId);
+    };
+
     return {
         projectsArray,
         createProjectTasks,
@@ -583,6 +587,7 @@ const projectManager = (function () {
         editProjectTask,
         deleteProject,
         deleteTask,
+        findTaskIndex,
     };
 })();
 
@@ -789,6 +794,12 @@ const changeTaskDetail = () => {
         console.log("Todo item not updated successfully");
         return;
     }
+
+    const updatedProjectTask = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
+    if (!updatedProjectTask) {
+        console.log("Project task not updated successfully");
+        return;
+    }
 }
 
 const updateBtn = document.querySelector('.updateBtn');
@@ -936,6 +947,8 @@ newPageBtn.forEach(newPageBtns => {
 const changeProjectDetail = () => {
     const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.mainDialog');
     console.log(taskValue);
+
+    // const selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.updateTaskDetails(
         selectedTaskId,

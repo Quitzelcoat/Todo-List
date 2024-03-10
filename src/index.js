@@ -132,6 +132,12 @@ const changeTaskDetail = () => {
         console.log("Todo item not updated successfully");
         return;
     }
+
+    const updatedProjectTask = projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
+    if (!updatedProjectTask) {
+        console.log("Project task not updated successfully");
+        return;
+    }
 }
 
 const updateBtn = document.querySelector('.updateBtn');
@@ -279,6 +285,8 @@ newPageBtn.forEach(newPageBtns => {
 const changeProjectDetail = () => {
     const taskValue = dom.getFormData('.mainDialog');
     console.log(taskValue);
+
+    // const selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
     dom.updateTaskDetails(
         selectedTaskId,
