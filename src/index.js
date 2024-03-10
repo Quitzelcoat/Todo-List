@@ -54,6 +54,7 @@ addNewTask.addEventListener('click', () => {
 
     inboxTaskdata();
     dom.hideEditTaskBtn()
+    dom.hideDeleteTaskBtn();
     dom.clearDailogData();
     dom.closeTaskCreateDailog();
 });
@@ -69,50 +70,34 @@ const handleTaskButtons = (event, containerSelector) => {
         }
     }
 
-    const editTaskData = (captureData) => {
-        document.getElementById('todoTitle').value = captureData.title;
-        document.getElementById('todoDescription').value = captureData.description;
+    const editData = (captureData, titleId, descriptionId, priorityValue, dateId) => {
+        document.getElementById(titleId).value = captureData.title;
+        document.getElementById(descriptionId).value = captureData.description;
         const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
         if (priorityRadio) {
             priorityRadio.checked = true;
         }
-        document.getElementById('todoTaskDate').value = captureData.date;
+        document.getElementById(dateId).value = captureData.date;
     }
-
-    const editProjectData = (captureData) => {
-        document.getElementById('todoPagesTitle').value = captureData.title;
-        document.getElementById('todoPagesDescription').value = captureData.description;
-        const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
-        if (priorityRadio) {
-            priorityRadio.checked = true;
-        }
-        document.getElementById('todoPagesDate').value = captureData.date;
-    }
-
+    
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-
         const captureData = dom.gettingTaskData(event.target);
         if (captureData) {
-
-            editTaskData(captureData);
-
+            editData(captureData, 'todoTitle', 'todoDescription', captureData.priority, 'todoTaskDate');
             dom.showTaskForm(false);
             dom.showEditTask();
             dom.removeEditBtn(true);
         }
     }
-
+    
     if (clickedElement.classList.contains('editProjectBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
-
         const captureData = dom.gettingTaskData(event.target);
         if (captureData) {
-
-            editProjectData(captureData);
-
+            editData(captureData, 'todoPagesTitle', 'todoPagesDescription', captureData.priority, 'todoPagesDate');
             dom.removeEditBtn(true);
             dom.showTaskForm(false);
             dom.showTaskPageDailog();
@@ -122,12 +107,15 @@ const handleTaskButtons = (event, containerSelector) => {
     if(clickedElement.classList.contains('deleteTaskBtn')) {
         selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
-        const todoTasks = todoManager.deleteTodo(selectedTaskId);
-        const projectTasks = projectManager.deleteTask(selectedTaskId, selectedProjectName);
+        todoManager.deleteTodo(selectedTaskId);
+        dom.deleteTaskDetail(selectedTaskId, containerSelector);
+    }
 
-        if(todoTasks || projectTasks) {
-            dom.deleteTaskDetail(selectedTaskId, containerSelector);
-        };
+    if(clickedElement.classList.contains('deleteProjectTasks')) {
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
+        projectManager.deleteTask(selectedTaskId, selectedProjectName);
+        dom.deleteTaskDetail(selectedTaskId, containerSelector);
     }
 }
 
@@ -269,7 +257,7 @@ projectsTasksShow.addEventListener('click', (event) => {
         dom.showTaskPageDailog();
         dom.showTaskForm(true);
         dom.removeEditBtn(false);
-        console.log('the dom is next in working for this and that');
+        dom.clearPagesData();
     }
 });
 
@@ -305,6 +293,7 @@ const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
         pageTaskdata();
+        dom.hideDeleteProjectBtn();
         dom.hideEditProjectBtn();
         dom.clearPagesData();
         dom.closeTaskPageDailog();
@@ -312,7 +301,7 @@ newPageBtn.forEach(newPageBtns => {
 });
 
 const changeProjectDetail = () => {
-    const taskValue = dom.getFormData('.mainDialog');
+    const taskValue = dom.getPagesFormData('.pagesDialog');
     console.log(taskValue);
 
     dom.updateTaskDetails(

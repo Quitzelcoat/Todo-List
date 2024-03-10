@@ -8,51 +8,30 @@ export const dom = (function () {
     const pagesDialog = document.querySelector('.pagesDialog');
 
     const createTodoElement = (task) => {
-        const showTask = document.createElement('div');
-        const finishedTask = document.createElement('div');
-        const titleTask = document.createElement('div');
-        const descriptionTask = document.createElement('div');
-        const priorityTask = document.createElement('div');
-        const dateTask = document.createElement('div');
-        const detailTaskBtn = document.createElement('button');
-        const editTaskBtn = document.createElement('button');
-        const editProjectBtn = document.createElement('button');
-        const deleteTaskBtn = document.createElement('button');
+        const elements = ['finishedTask', 'titleTask', 'descriptionTask', 'priorityTask', 'dateTask'];
+        const buttons = ['detailTaskBtn', 'editTaskBtn', 'editProjectBtn', 'deleteTaskBtn', 'deleteProjectTasks'];
     
+        const showTask = document.createElement('div');
         showTask.className = "showTask";
         showTask.dataset.id = task.id;
-        finishedTask.className = "finishedTask";
-        titleTask.className = "titleTask";
-        descriptionTask.className = "descriptionTask";
-        priorityTask.className = "priorityTask";
-        dateTask.className = "dateTask";
-        detailTaskBtn.className = "detailTaskBtn";
-        editTaskBtn.className = "editTaskBtn";
-        editProjectBtn.className = "editProjectBtn";
-        deleteTaskBtn.className = "deleteTaskBtn";
     
-        finishedTask.textContent = task.finished;
-        titleTask.textContent = task.title;
-        descriptionTask.textContent = task.description;
-        priorityTask.textContent = task.priority;
-        dateTask.textContent = task.date;
-        detailTaskBtn.textContent = "Task Detail";
-        editTaskBtn.textContent = "Edit";
-        editProjectBtn.textContent = "Edit Project";
-        deleteTaskBtn.textContent = "Delete";
+        elements.forEach(element => {
+            const div = document.createElement('div');
+            div.className = element;
+            div.textContent = task[element.replace('Task', '').toLowerCase()];
+            showTask.appendChild(div);
+        });
     
-        showTask.appendChild(finishedTask);
-        showTask.appendChild(titleTask);
-        showTask.appendChild(descriptionTask);
-        showTask.appendChild(priorityTask);
-        showTask.appendChild(dateTask);
-        showTask.appendChild(detailTaskBtn);
-        showTask.appendChild(editTaskBtn);
-        showTask.appendChild(editProjectBtn);
-        showTask.appendChild(deleteTaskBtn);
+        buttons.forEach(button => {
+            const btn = document.createElement('button');
+            btn.className = button;
+            btn.textContent = (button === 'editProjectBtn') ? 'Edit Project' : (button === 'detailTaskBtn' ? 'Task Detail' : button.replace('TaskBtn', ''));
+            showTask.appendChild(btn);
+        });
     
         return showTask;
     };
+
 
     // Function to render tasks onto the page
     const renderTodos = (tasks, container) => {
@@ -120,25 +99,39 @@ export const dom = (function () {
 
     const hideEditTaskBtn = () => {
         const editProjectBtn = document.querySelectorAll('.editProjectBtn');
-        editProjectBtn.forEach(btn => {
-            btn.style.display = 'none';
+        editProjectBtn.forEach(editProjectBtns => {
+            editProjectBtns.style.display = 'none';
         });
     };
 
     const hideEditProjectBtn = () => {
         const editTaskBtn = document.querySelectorAll('.editTaskBtn');
-        editTaskBtn.forEach(btn => {
-            btn.style.display = 'none';
+        editTaskBtn.forEach(editTaskBtns => {
+            editTaskBtns.style.display = 'none';
         });
     };
 
-    const getFormData = (dialogClass) => {
+    const hideDeleteTaskBtn = () => {
+        const deleteProjectTasks = document.querySelectorAll('.deleteProjectTasks');
+        deleteProjectTasks.forEach(deleteProjectTask => {
+            deleteProjectTask.style.display = 'none';
+        });
+    };
+
+    const hideDeleteProjectBtn = () => {
+        const deleteTaskBtn = document.querySelectorAll('.deleteTaskBtn');
+        deleteTaskBtn.forEach(deleteTaskBtns => {
+            deleteTaskBtns.style.display = 'none';
+        });
+    };
+
+    const getAllFormData = (dialogClass, titleId, descriptionId, priorityClass, dateId) => {
         const dialog = document.querySelector(dialogClass);
-        const title = document.getElementById('todoTitle').value;
-        const description = document.getElementById('todoDescription').value;
-        const priority = document.querySelectorAll('.priorityTask');
+        const title = document.getElementById(titleId).value;
+        const description = document.getElementById(descriptionId).value;
+        const priority = document.querySelectorAll(priorityClass);
         const checkedPriorityTask = Array.from(priority).find(task => task.checked);
-        const date = document.getElementById('todoTaskDate').value;
+        const date = document.getElementById(dateId).value;
     
         const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
     
@@ -150,23 +143,12 @@ export const dom = (function () {
         };
     };
 
-
+    const getFormData = (dialogClass) => {
+        return getAllFormData(dialogClass, 'todoTitle', 'todoDescription', '.priorityTask', 'todoTaskDate');
+    };
+    
     const getPagesFormData = (dialogClass) => {
-        const dialog = document.querySelector(dialogClass);
-        const title = document.getElementById('todoPagesTitle').value;
-        const description = document.getElementById('todoPagesDescription').value;
-        const priority = document.querySelectorAll('.priorityPageTask');
-        const checkedPriorityTask = Array.from(priority).find(task => task.checked);
-        const date = document.getElementById('todoPagesDate').value;
-    
-        const selectedPriority = checkedPriorityTask ? checkedPriorityTask.value : "You haven't selected any priority";
-    
-        return {
-            title: title,
-            description: description,
-            priority: selectedPriority,
-            date: date,
-        };
+        return getAllFormData(dialogClass, 'todoPagesTitle', 'todoPagesDescription', '.priorityPageTask', 'todoPagesDate');
     };
 
 
@@ -393,6 +375,8 @@ export const dom = (function () {
         hideAddTaskForm,
         hideEditTaskBtn,
         hideEditProjectBtn,
+        hideDeleteTaskBtn,
+        hideDeleteProjectBtn,
         getFormData,
         getPagesFormData,
         showTaskForm,
