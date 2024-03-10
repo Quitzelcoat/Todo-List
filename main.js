@@ -500,6 +500,7 @@ const projectManager = (function () {
     
         const newTask = { id: projectCounter++, finished, title, description, priority, date, project: projectName };
         project.tasks.push(newTask);
+        console.log("Updated projectsArray:", projectsArray);
         return newTask;
     };
 
@@ -905,7 +906,7 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-const pageTaskdata = () => {
+const pageTaskdata = (event) => {    
     const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
@@ -923,6 +924,9 @@ const pageTaskdata = () => {
         newTodoElement.date,
         selectedProjectName
     );
+
+    console.log("Selected task ID:", selectedTaskId);
+    console.log("Selected project name:", selectedProjectName);
 
     if (storedTask) {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
