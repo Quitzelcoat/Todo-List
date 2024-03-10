@@ -30,7 +30,7 @@ export const projectManager = (function () {
             return null;
         }
         const newProject = {
-            name, 
+            name,
             tasks: [],
             pages: []
         };
@@ -51,19 +51,23 @@ export const projectManager = (function () {
             return null;
         }
         
-        const taskIndex = project.tasks.findIndex(task => task.id === id);
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
         if (taskIndex === -1) {
             console.log(`Task with ID "${id}" not found in project "${projectName}".`);
+            console.log("Type of Id is:", typeof id);
             return null;
         }
         
         console.log("Current task:", { ...project.tasks[taskIndex] });
-        const updatedTask = Object.assign(project.tasks[taskIndex], newData);
+        const updatedTask = {
+            ...project.tasks[taskIndex],
+            ...newData
+        };
+        project.tasks[taskIndex] = updatedTask;
+        
+        console.log("Updated project tasks:", project.tasks);
         return updatedTask;
     };
-
-    
-
 
     // Delete projectsArray.
     const deleteProject = (name) => {

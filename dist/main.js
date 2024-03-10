@@ -96,6 +96,7 @@ const dom = (function () {
         const dateTask = document.createElement('div');
         const detailTaskBtn = document.createElement('button');
         const editTaskBtn = document.createElement('button');
+        const editProjectBtn = document.createElement('button');
         const deleteTaskBtn = document.createElement('button');
     
         showTask.className = "showTask";
@@ -107,6 +108,7 @@ const dom = (function () {
         dateTask.className = "dateTask";
         detailTaskBtn.className = "detailTaskBtn";
         editTaskBtn.className = "editTaskBtn";
+        editProjectBtn.className = "editProjectBtn";
         deleteTaskBtn.className = "deleteTaskBtn";
     
         finishedTask.textContent = task.finished;
@@ -116,6 +118,7 @@ const dom = (function () {
         dateTask.textContent = task.date;
         detailTaskBtn.textContent = "Task Detail";
         editTaskBtn.textContent = "Edit";
+        editProjectBtn.textContent = "Edit Project";
         deleteTaskBtn.textContent = "Delete";
     
         showTask.appendChild(finishedTask);
@@ -125,6 +128,7 @@ const dom = (function () {
         showTask.appendChild(dateTask);
         showTask.appendChild(detailTaskBtn);
         showTask.appendChild(editTaskBtn);
+        showTask.appendChild(editProjectBtn);
         showTask.appendChild(deleteTaskBtn);
     
         return showTask;
@@ -194,6 +198,20 @@ const dom = (function () {
         showTask.style.display = 'none';
     };
 
+    const hideEditTaskBtn = () => {
+        const editProjectBtn = document.querySelectorAll('.editProjectBtn');
+        editProjectBtn.forEach(btn => {
+            btn.style.display = 'none';
+        });
+    };
+
+    const hideEditProjectBtn = () => {
+        const editTaskBtn = document.querySelectorAll('.editTaskBtn');
+        editTaskBtn.forEach(btn => {
+            btn.style.display = 'none';
+        });
+    };
+
     const getFormData = (dialogClass) => {
         const dialog = document.querySelector(dialogClass);
         const title = document.getElementById('todoTitle').value;
@@ -234,15 +252,27 @@ const dom = (function () {
 
     const showTaskForm = (showCreateButton = true) => {
         const createTaskBtn = document.querySelector('.addBtn');
+        const newPageBtn = document.querySelector('.newPageBtn');
+
         if (createTaskBtn) {
             createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
+        }
+
+        if(newPageBtn) {
+            newPageBtn.style.display = showCreateButton ? 'inline' : 'none';
         }
     };
 
     const removeEditBtn = (closeEditBtn = true) => {
         const updateBtn = document.querySelector('.updateBtn');
+        const updateProjectTask = document.querySelector('.updateProjectTask');
+        
         if(updateBtn) {
             updateBtn.style.display = closeEditBtn ? 'inline' : 'none';
+        }
+        
+        if(updateProjectTask) {
+            updateProjectTask.style.display = closeEditBtn ? 'inline' : 'none';
         }
     };
 
@@ -272,19 +302,16 @@ const dom = (function () {
             }
 
             const descriptionElement = taskElement.querySelector('.descriptionTask');
-            console.log("Description element:", descriptionElement);
             if (descriptionElement) {
                 descriptionElement.textContent = updateDescription;
             }
 
             const priorityElement = taskElement.querySelector('.priorityTask');
-            console.log("Priority element:", priorityElement);
             if (priorityElement) {
                 priorityElement.textContent = updatePriority;
             }
 
             const dateElement = taskElement.querySelector('.dateTask');
-            console.log("Date element:", dateElement);
             if (dateElement) {
                 dateElement.textContent = updateDate;
             }
@@ -444,6 +471,8 @@ const dom = (function () {
         gettingTaskData,
         showAddTaskForm,
         hideAddTaskForm,
+        hideEditTaskBtn,
+        hideEditProjectBtn,
         getFormData,
         getPagesFormData,
         showTaskForm,
@@ -512,7 +541,7 @@ const projectManager = (function () {
             return null;
         }
         const newProject = {
-            name, 
+            name,
             tasks: [],
             pages: []
         };
@@ -533,19 +562,23 @@ const projectManager = (function () {
             return null;
         }
         
-        const taskIndex = project.tasks.findIndex(task => task.id === id);
+        const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
         if (taskIndex === -1) {
             console.log(`Task with ID "${id}" not found in project "${projectName}".`);
+            console.log("Type of Id is:", typeof id);
             return null;
         }
         
         console.log("Current task:", { ...project.tasks[taskIndex] });
-        const updatedTask = Object.assign(project.tasks[taskIndex], newData);
+        const updatedTask = {
+            ...project.tasks[taskIndex],
+            ...newData
+        };
+        project.tasks[taskIndex] = updatedTask;
+        
+        console.log("Updated project tasks:", project.tasks);
         return updatedTask;
     };
-
-    
-
 
     // Delete projectsArray.
     const deleteProject = (name) => {
@@ -711,6 +744,7 @@ const addNewTask = document.querySelector('.addBtn');
 addNewTask.addEventListener('click', () => {
 
     inboxTaskdata();
+    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.hideEditTaskBtn()
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearDailogData();
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskCreateDailog();
 });
@@ -726,6 +760,26 @@ const handleTaskButtons = (event, containerSelector) => {
         }
     }
 
+    const editTaskData = (captureData) => {
+        document.getElementById('todoTitle').value = captureData.title;
+        document.getElementById('todoDescription').value = captureData.description;
+        const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
+        if (priorityRadio) {
+            priorityRadio.checked = true;
+        }
+        document.getElementById('todoTaskDate').value = captureData.date;
+    }
+
+    const editProjectData = (captureData) => {
+        document.getElementById('todoPagesTitle').value = captureData.title;
+        document.getElementById('todoPagesDescription').value = captureData.description;
+        const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
+        if (priorityRadio) {
+            priorityRadio.checked = true;
+        }
+        document.getElementById('todoPagesDate').value = captureData.date;
+    }
+
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
@@ -734,17 +788,25 @@ const handleTaskButtons = (event, containerSelector) => {
         const captureData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.gettingTaskData(event.target);
         if (captureData) {
 
-            document.getElementById('todoTitle').value = captureData.title;
-            document.getElementById('todoDescription').value = captureData.description;
-            const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
-            if (priorityRadio) {
-                priorityRadio.checked = true;
-            }
-            document.getElementById('todoTaskDate').value = captureData.date;
+            editTaskData(captureData);
 
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showEditTask();
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(true);
+        }
+    }
+
+    if (clickedElement.classList.contains('editProjectBtn')) {
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
+        const captureData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.gettingTaskData(event.target);
+        if (captureData) {
+
+            editProjectData(captureData);
+
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(true);
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(false);
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskPageDailog();
         }
     }
 
@@ -788,12 +850,6 @@ const changeTaskDetail = () => {
     const updatedTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.editTodo(selectedTaskId, updatedData);
     if (!updatedTodo) {
         console.log("Todo item not updated successfully");
-        return;
-    }
-
-    const updatedProjectTask = _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
-    if (!updatedProjectTask) {
-        console.log("Project task not updated successfully");
         return;
     }
 }
@@ -902,6 +958,8 @@ projectsTasksShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
     if (clickedElement.classList.contains('projectBtn')) {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskPageDailog();
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.showTaskForm(true);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.removeEditBtn(false);
         console.log('the dom is next in working for this and that');
     }
 });
@@ -938,6 +996,7 @@ const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
         pageTaskdata();
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.hideEditProjectBtn();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearPagesData();
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
     });
@@ -946,8 +1005,6 @@ newPageBtn.forEach(newPageBtns => {
 const changeProjectDetail = () => {
     const taskValue = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getFormData('.mainDialog');
     console.log(taskValue);
-
-    // const selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
     _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.updateTaskDetails(
         selectedTaskId,
@@ -975,8 +1032,7 @@ const updateProjectTask = document.querySelector('.updateProjectTask');
 updateProjectTask.addEventListener('click', () => {
 
     changeProjectDetail();
-
-    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeEditTask();
+    _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeTaskPageDailog();
 
 });
 

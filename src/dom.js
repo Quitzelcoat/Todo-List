@@ -16,6 +16,7 @@ export const dom = (function () {
         const dateTask = document.createElement('div');
         const detailTaskBtn = document.createElement('button');
         const editTaskBtn = document.createElement('button');
+        const editProjectBtn = document.createElement('button');
         const deleteTaskBtn = document.createElement('button');
     
         showTask.className = "showTask";
@@ -27,6 +28,7 @@ export const dom = (function () {
         dateTask.className = "dateTask";
         detailTaskBtn.className = "detailTaskBtn";
         editTaskBtn.className = "editTaskBtn";
+        editProjectBtn.className = "editProjectBtn";
         deleteTaskBtn.className = "deleteTaskBtn";
     
         finishedTask.textContent = task.finished;
@@ -36,6 +38,7 @@ export const dom = (function () {
         dateTask.textContent = task.date;
         detailTaskBtn.textContent = "Task Detail";
         editTaskBtn.textContent = "Edit";
+        editProjectBtn.textContent = "Edit Project";
         deleteTaskBtn.textContent = "Delete";
     
         showTask.appendChild(finishedTask);
@@ -45,6 +48,7 @@ export const dom = (function () {
         showTask.appendChild(dateTask);
         showTask.appendChild(detailTaskBtn);
         showTask.appendChild(editTaskBtn);
+        showTask.appendChild(editProjectBtn);
         showTask.appendChild(deleteTaskBtn);
     
         return showTask;
@@ -114,6 +118,20 @@ export const dom = (function () {
         showTask.style.display = 'none';
     };
 
+    const hideEditTaskBtn = () => {
+        const editProjectBtn = document.querySelectorAll('.editProjectBtn');
+        editProjectBtn.forEach(btn => {
+            btn.style.display = 'none';
+        });
+    };
+
+    const hideEditProjectBtn = () => {
+        const editTaskBtn = document.querySelectorAll('.editTaskBtn');
+        editTaskBtn.forEach(btn => {
+            btn.style.display = 'none';
+        });
+    };
+
     const getFormData = (dialogClass) => {
         const dialog = document.querySelector(dialogClass);
         const title = document.getElementById('todoTitle').value;
@@ -154,15 +172,27 @@ export const dom = (function () {
 
     const showTaskForm = (showCreateButton = true) => {
         const createTaskBtn = document.querySelector('.addBtn');
+        const newPageBtn = document.querySelector('.newPageBtn');
+
         if (createTaskBtn) {
             createTaskBtn.style.display = showCreateButton ? 'inline' : 'none';
+        }
+
+        if(newPageBtn) {
+            newPageBtn.style.display = showCreateButton ? 'inline' : 'none';
         }
     };
 
     const removeEditBtn = (closeEditBtn = true) => {
         const updateBtn = document.querySelector('.updateBtn');
+        const updateProjectTask = document.querySelector('.updateProjectTask');
+        
         if(updateBtn) {
             updateBtn.style.display = closeEditBtn ? 'inline' : 'none';
+        }
+        
+        if(updateProjectTask) {
+            updateProjectTask.style.display = closeEditBtn ? 'inline' : 'none';
         }
     };
 
@@ -192,19 +222,16 @@ export const dom = (function () {
             }
 
             const descriptionElement = taskElement.querySelector('.descriptionTask');
-            console.log("Description element:", descriptionElement);
             if (descriptionElement) {
                 descriptionElement.textContent = updateDescription;
             }
 
             const priorityElement = taskElement.querySelector('.priorityTask');
-            console.log("Priority element:", priorityElement);
             if (priorityElement) {
                 priorityElement.textContent = updatePriority;
             }
 
             const dateElement = taskElement.querySelector('.dateTask');
-            console.log("Date element:", dateElement);
             if (dateElement) {
                 dateElement.textContent = updateDate;
             }
@@ -364,6 +391,8 @@ export const dom = (function () {
         gettingTaskData,
         showAddTaskForm,
         hideAddTaskForm,
+        hideEditTaskBtn,
+        hideEditProjectBtn,
         getFormData,
         getPagesFormData,
         showTaskForm,

@@ -53,6 +53,7 @@ const addNewTask = document.querySelector('.addBtn');
 addNewTask.addEventListener('click', () => {
 
     inboxTaskdata();
+    dom.hideEditTaskBtn()
     dom.clearDailogData();
     dom.closeTaskCreateDailog();
 });
@@ -68,6 +69,26 @@ const handleTaskButtons = (event, containerSelector) => {
         }
     }
 
+    const editTaskData = (captureData) => {
+        document.getElementById('todoTitle').value = captureData.title;
+        document.getElementById('todoDescription').value = captureData.description;
+        const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
+        if (priorityRadio) {
+            priorityRadio.checked = true;
+        }
+        document.getElementById('todoTaskDate').value = captureData.date;
+    }
+
+    const editProjectData = (captureData) => {
+        document.getElementById('todoPagesTitle').value = captureData.title;
+        document.getElementById('todoPagesDescription').value = captureData.description;
+        const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
+        if (priorityRadio) {
+            priorityRadio.checked = true;
+        }
+        document.getElementById('todoPagesDate').value = captureData.date;
+    }
+
     // Adding event listener for the edit button of each task
     const clickedElement = event.target;
     if (clickedElement.classList.contains('editTaskBtn')) {
@@ -76,17 +97,25 @@ const handleTaskButtons = (event, containerSelector) => {
         const captureData = dom.gettingTaskData(event.target);
         if (captureData) {
 
-            document.getElementById('todoTitle').value = captureData.title;
-            document.getElementById('todoDescription').value = captureData.description;
-            const priorityRadio = document.querySelector(`input[value="${captureData.priority}"]`);
-            if (priorityRadio) {
-                priorityRadio.checked = true;
-            }
-            document.getElementById('todoTaskDate').value = captureData.date;
+            editTaskData(captureData);
 
             dom.showTaskForm(false);
             dom.showEditTask();
             dom.removeEditBtn(true);
+        }
+    }
+
+    if (clickedElement.classList.contains('editProjectBtn')) {
+        selectedTaskId = clickedElement.closest('.showTask').dataset.id;
+
+        const captureData = dom.gettingTaskData(event.target);
+        if (captureData) {
+
+            editProjectData(captureData);
+
+            dom.removeEditBtn(true);
+            dom.showTaskForm(false);
+            dom.showTaskPageDailog();
         }
     }
 
@@ -130,12 +159,6 @@ const changeTaskDetail = () => {
     const updatedTodo = todoManager.editTodo(selectedTaskId, updatedData);
     if (!updatedTodo) {
         console.log("Todo item not updated successfully");
-        return;
-    }
-
-    const updatedProjectTask = projectManager.editProjectTask(selectedTaskId, selectedProjectName, updatedData);
-    if (!updatedProjectTask) {
-        console.log("Project task not updated successfully");
         return;
     }
 }
@@ -244,6 +267,8 @@ projectsTasksShow.addEventListener('click', (event) => {
     const clickedElement = event.target;
     if (clickedElement.classList.contains('projectBtn')) {
         dom.showTaskPageDailog();
+        dom.showTaskForm(true);
+        dom.removeEditBtn(false);
         console.log('the dom is next in working for this and that');
     }
 });
@@ -280,6 +305,7 @@ const newPageBtn = document.querySelectorAll('.newPageBtn');
 newPageBtn.forEach(newPageBtns => {
     newPageBtns.addEventListener('click', () => {
         pageTaskdata();
+        dom.hideEditProjectBtn();
         dom.clearPagesData();
         dom.closeTaskPageDailog();
     });
@@ -288,8 +314,6 @@ newPageBtn.forEach(newPageBtns => {
 const changeProjectDetail = () => {
     const taskValue = dom.getFormData('.mainDialog');
     console.log(taskValue);
-
-    // const selectedTaskId = clickedElement.closest('.showTask').dataset.id;
 
     dom.updateTaskDetails(
         selectedTaskId,
@@ -317,8 +341,7 @@ const updateProjectTask = document.querySelector('.updateProjectTask');
 updateProjectTask.addEventListener('click', () => {
 
     changeProjectDetail();
-
-    dom.closeEditTask();
+    dom.closeTaskPageDailog();
 
 });
 
