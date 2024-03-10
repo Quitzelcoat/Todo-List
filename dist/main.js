@@ -575,10 +575,6 @@ const projectManager = (function () {
         }
     };
 
-    const findTaskIndex = (project, taskId) => {
-        return project.tasks.findIndex(task => task.id === taskId);
-    };
-
     return {
         projectsArray,
         createProjectTasks,
@@ -587,7 +583,6 @@ const projectManager = (function () {
         editProjectTask,
         deleteProject,
         deleteTask,
-        findTaskIndex,
     };
 })();
 

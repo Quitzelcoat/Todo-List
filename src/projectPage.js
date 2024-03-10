@@ -93,10 +93,6 @@ export const projectManager = (function () {
         }
     };
 
-    const findTaskIndex = (project, taskId) => {
-        return project.tasks.findIndex(task => task.id === taskId);
-    };
-
     return {
         projectsArray,
         createProjectTasks,
@@ -105,6 +101,5 @@ export const projectManager = (function () {
         editProjectTask,
         deleteProject,
         deleteTask,
-        findTaskIndex,
     };
 })();
