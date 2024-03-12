@@ -88,12 +88,18 @@ const dom = (function () {
     const pagesDialog = document.querySelector('.pagesDialog');
 
     const createTodoElement = (task) => {
-        const elements = ['finishedTask', 'titleTask', 'descriptionTask', 'priorityTask', 'dateTask'];
+        const elements = ['titleTask', 'descriptionTask', 'priorityTask', 'dateTask'];
         const buttons = ['detailTaskBtn', 'editTaskBtn', 'editProjectBtn', 'deleteTaskBtn', 'deleteProjectTasks'];
     
         const showTask = document.createElement('div');
         showTask.className = "showTask";
         showTask.dataset.id = task.id;
+
+        const finishedCheckbox = document.createElement('input');
+        finishedCheckbox.type = "checkbox";
+        finishedCheckbox.className = "finishedTask";
+        finishedCheckbox.checked = task.finished;
+        showTask.appendChild(finishedCheckbox);
     
         elements.forEach(element => {
             const div = document.createElement('div');
@@ -744,6 +750,23 @@ const handleTaskButtons = (event, containerSelector) => {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.populateDetailDailog(taskData.title, taskData.description, taskData.priority, taskData.date);
         }
     }
+
+
+    const finishedTask = document.querySelectorAll('.finishedTask');
+    finishedTask.forEach(checkbox => {
+        checkbox.addEventListener('click', (event) => {
+            const isChecked = event.target.checked;
+            if (isChecked) {
+                const taskContainer = checkbox.closest('.showTask');
+                const todayTasksContainer = document.querySelector('.todayTasksShow');
+                todayTasksContainer.appendChild(taskContainer);
+                console.log("Task is finished");
+            } else {
+                console.log("Task is not finished");
+            }
+        });
+    });
+
 
     const editData = (captureData, titleId, descriptionId, priorityValue, dateId) => {
         document.getElementById(titleId).value = captureData.title;
