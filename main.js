@@ -743,22 +743,6 @@ const handleTaskButtons = (event, containerSelector) => {
         }
     }
 
-
-    const finishedTask = document.querySelectorAll('.finishedTask');
-    finishedTask.forEach(checkbox => {
-        checkbox.addEventListener('click', (event) => {
-            const isChecked = event.target.checked;
-            const taskContainer = checkbox.closest('.showTask');
-            if (isChecked) {
-                console.log("Task is finished");
-            } else {
-                taskContainer.remove();
-                console.log("Task is not finished");
-            }
-        });
-    });
-
-
     const editData = (captureData, titleId, descriptionId, priorityValue, dateId) => {
         document.getElementById(titleId).value = captureData.title;
         document.getElementById(descriptionId).value = captureData.description;
@@ -808,9 +792,31 @@ const handleTaskButtons = (event, containerSelector) => {
     }
 }
 
+
+
+// Function to handle task completion for both mainShow and projectsTasksShow
+const handleTaskCompletion = (clickedElement) => {
+    if (clickedElement.classList.contains('finishedTask')) {
+        const isChecked = clickedElement.checked;
+        const taskContainer = clickedElement.closest('.showTask');
+        if (isChecked) {
+            taskContainer.classList.add('finished');
+            console.log("Task is finished");
+        } else {
+            taskContainer.classList.remove('finished');
+            console.log("Task is not finished");
+        }
+    }
+};
+
+
+
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
     
+    const clickedElement = event.target;
+    handleTaskCompletion(clickedElement);
+
     handleTaskButtons(event, '.mainShow');
 });
 
@@ -999,6 +1005,10 @@ updateProjectTask.addEventListener('click', () => {
 
 const projectDivs = document.querySelector('.projectsTasksShow');
 projectDivs.addEventListener('click', (event) => {
+
+    const clickedElement = event.target;
+    handleTaskCompletion(clickedElement);
+
     handleTaskButtons(event, `#${selectedProjectName}`);
 });
 
