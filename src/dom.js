@@ -8,12 +8,18 @@ export const dom = (function () {
     const pagesDialog = document.querySelector('.pagesDialog');
 
     const createTodoElement = (task) => {
-        const elements = ['finishedTask', 'titleTask', 'descriptionTask', 'priorityTask', 'dateTask'];
+        const elements = ['titleTask', 'descriptionTask', 'priorityTask', 'dateTask'];
         const buttons = ['detailTaskBtn', 'editTaskBtn', 'editProjectBtn', 'deleteTaskBtn', 'deleteProjectTasks'];
     
         const showTask = document.createElement('div');
         showTask.className = "showTask";
         showTask.dataset.id = task.id;
+
+        const finishedCheckbox = document.createElement('input');
+        finishedCheckbox.type = "checkbox";
+        finishedCheckbox.className = "finishedTask";
+        finishedCheckbox.checked = task.finished;
+        showTask.appendChild(finishedCheckbox);
     
         elements.forEach(element => {
             const div = document.createElement('div');

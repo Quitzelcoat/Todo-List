@@ -70,6 +70,23 @@ const handleTaskButtons = (event, containerSelector) => {
         }
     }
 
+
+    const finishedTask = document.querySelectorAll('.finishedTask');
+    finishedTask.forEach(checkbox => {
+        checkbox.addEventListener('click', (event) => {
+            const isChecked = event.target.checked;
+            if (isChecked) {
+                const taskContainer = checkbox.closest('.showTask');
+                const todayTasksContainer = document.querySelector('.todayTasksShow');
+                todayTasksContainer.appendChild(taskContainer);
+                console.log("Task is finished");
+            } else {
+                console.log("Task is not finished");
+            }
+        });
+    });
+
+
     const editData = (captureData, titleId, descriptionId, priorityValue, dateId) => {
         document.getElementById(titleId).value = captureData.title;
         document.getElementById(descriptionId).value = captureData.description;
