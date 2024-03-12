@@ -287,18 +287,10 @@ export const dom = (function () {
 
     const controllAllPages = (hideInboxPages = true) => {
         const mainPage = document.querySelector('.mainPage');
-        const todayPage = document.querySelector('.todayPage');
-        const upcomingTasks = document.querySelector('.upcomingPage');
-        const completeTasks = document.querySelector('.completePage');
         const projectPage = document.querySelector('.projectPage');
-        const notesPage = document.querySelector('.notesPage');
 
         if (mainPage) { mainPage.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (todayPage) { todayPage.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (upcomingTasks) { upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (completeTasks) { completeTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
         if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (notesPage) { notesPage.style.display = hideInboxPages ? 'inline' : 'none'; }
     };
     
     const sidePageDivs = () => {

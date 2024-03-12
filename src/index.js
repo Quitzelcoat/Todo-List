@@ -75,12 +75,11 @@ const handleTaskButtons = (event, containerSelector) => {
     finishedTask.forEach(checkbox => {
         checkbox.addEventListener('click', (event) => {
             const isChecked = event.target.checked;
+            const taskContainer = checkbox.closest('.showTask');
             if (isChecked) {
-                const taskContainer = checkbox.closest('.showTask');
-                const todayTasksContainer = document.querySelector('.todayTasksShow');
-                todayTasksContainer.appendChild(taskContainer);
                 console.log("Task is finished");
             } else {
+                taskContainer.remove();
                 console.log("Task is not finished");
             }
         });
@@ -189,32 +188,6 @@ sideInbox.forEach(sideInboxs => {
         dom.controllMainPage(true);
     });
 });
-
-const sideToday = document.querySelectorAll('.sideToday');
-sideToday.forEach(sideTodays => {
-    sideTodays.addEventListener('click', () => {        
-        dom.controllAllPages(false);
-        dom.controllTodayPage(true);
-    });
-});
-
-const sideFuture = document.querySelectorAll('.sideFuture');
-sideFuture.forEach(sideFutures => {
-    sideFutures.addEventListener('click', () => {        
-        dom.controllAllPages(false);
-        dom.controllUpcomingPage(true);
-    });
-});
-
-const completeSide = document.querySelectorAll('.completeSide');
-completeSide.forEach(completeSides => {
-    completeSides.addEventListener('click', () => {        
-        dom.controllAllPages(false);
-        dom.controllCompletePage(true);
-    });
-});
-
-
 
 const createNewProject = document.querySelectorAll('.createNewProject');
 createNewProject.forEach(createNewProjects => {
@@ -354,14 +327,6 @@ updateProjectTask.addEventListener('click', () => {
 const projectDivs = document.querySelector('.projectsTasksShow');
 projectDivs.addEventListener('click', (event) => {
     handleTaskButtons(event, `#${selectedProjectName}`);
-});
-
-const sideNotes = document.querySelectorAll('.sideNotes');
-sideNotes.forEach(sideNotess => {
-    sideNotess.addEventListener('click', () => {        
-        dom.controllAllPages(false);
-        dom.controllNotesPage(true);
-    });
 });
 
 /*

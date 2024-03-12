@@ -367,18 +367,10 @@ const dom = (function () {
 
     const controllAllPages = (hideInboxPages = true) => {
         const mainPage = document.querySelector('.mainPage');
-        const todayPage = document.querySelector('.todayPage');
-        const upcomingTasks = document.querySelector('.upcomingPage');
-        const completeTasks = document.querySelector('.completePage');
         const projectPage = document.querySelector('.projectPage');
-        const notesPage = document.querySelector('.notesPage');
 
         if (mainPage) { mainPage.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (todayPage) { todayPage.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (upcomingTasks) { upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (completeTasks) { completeTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
         if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
-        if (notesPage) { notesPage.style.display = hideInboxPages ? 'inline' : 'none'; }
     };
     
     const sidePageDivs = () => {
@@ -756,12 +748,11 @@ const handleTaskButtons = (event, containerSelector) => {
     finishedTask.forEach(checkbox => {
         checkbox.addEventListener('click', (event) => {
             const isChecked = event.target.checked;
+            const taskContainer = checkbox.closest('.showTask');
             if (isChecked) {
-                const taskContainer = checkbox.closest('.showTask');
-                const todayTasksContainer = document.querySelector('.todayTasksShow');
-                todayTasksContainer.appendChild(taskContainer);
                 console.log("Task is finished");
             } else {
+                taskContainer.remove();
                 console.log("Task is not finished");
             }
         });
@@ -870,32 +861,6 @@ sideInbox.forEach(sideInboxs => {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllMainPage(true);
     });
 });
-
-const sideToday = document.querySelectorAll('.sideToday');
-sideToday.forEach(sideTodays => {
-    sideTodays.addEventListener('click', () => {        
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllTodayPage(true);
-    });
-});
-
-const sideFuture = document.querySelectorAll('.sideFuture');
-sideFuture.forEach(sideFutures => {
-    sideFutures.addEventListener('click', () => {        
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllUpcomingPage(true);
-    });
-});
-
-const completeSide = document.querySelectorAll('.completeSide');
-completeSide.forEach(completeSides => {
-    completeSides.addEventListener('click', () => {        
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllCompletePage(true);
-    });
-});
-
-
 
 const createNewProject = document.querySelectorAll('.createNewProject');
 createNewProject.forEach(createNewProjects => {
@@ -1035,14 +1000,6 @@ updateProjectTask.addEventListener('click', () => {
 const projectDivs = document.querySelector('.projectsTasksShow');
 projectDivs.addEventListener('click', (event) => {
     handleTaskButtons(event, `#${selectedProjectName}`);
-});
-
-const sideNotes = document.querySelectorAll('.sideNotes');
-sideNotes.forEach(sideNotess => {
-    sideNotess.addEventListener('click', () => {        
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllNotesPage(true);
-    });
 });
 
 /*
