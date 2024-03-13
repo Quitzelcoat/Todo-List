@@ -119,8 +119,6 @@ const handleTaskButtons = (event, containerSelector) => {
     }
 }
 
-
-
 // Function to handle task completion for both mainShow and projectsTasksShow
 const handleTaskCompletion = (clickedElement) => {
     if (clickedElement.classList.contains('finishedTask')) {
@@ -190,6 +188,14 @@ detailCloseBtn.forEach(detailCloseBtns => {
 const sideInbox = document.querySelectorAll('.sideInbox');
 sideInbox.forEach(sideInboxs => {
     sideInboxs.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllAllTasksPage(true);
+    });
+});
+
+const sideAllTasks = document.querySelectorAll('.sideAllTasks');
+sideAllTasks.forEach(sideAllTaskss => {
+    sideAllTaskss.addEventListener('click', () => {        
         dom.controllAllPages(false);
         dom.controllMainPage(true);
     });

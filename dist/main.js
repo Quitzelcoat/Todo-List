@@ -337,6 +337,13 @@ const dom = (function () {
         }
     }
 
+    const controllAllTasksPage = (hideAllTaskPage = true) => {
+        const allTasks = document.querySelector('.allTasks');
+        if(allTasks) {
+            allTasks.style.display = hideAllTaskPage ? 'inline' : 'none';
+        }
+    }
+
     const controllTodayPage = (hideTodayPage = true) => {
         const todayPage = document.querySelector('.todayPage');
         if(todayPage) {
@@ -351,13 +358,6 @@ const dom = (function () {
         } 
     }
 
-    const controllCompletePage = (hideCompletePage = true) => {
-        const completePage = document.querySelector('.completePage');
-        if(completePage) {
-            completePage.style.display = hideCompletePage ? 'inline' : 'none';
-        } 
-    }
-
     const controllProjectPage = (controllProjectPages = true) => {
         const projectPage = document.querySelector('.projectPage');
         if(projectPage) {
@@ -367,9 +367,11 @@ const dom = (function () {
 
     const controllAllPages = (hideInboxPages = true) => {
         const mainPage = document.querySelector('.mainPage');
+        const allTasks = document.querySelector('.allTasks');
         const projectPage = document.querySelector('.projectPage');
 
         if (mainPage) { mainPage.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (allTasks) { allTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
         if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
     };
     
@@ -467,9 +469,9 @@ const dom = (function () {
         clearDailogData,
         clearPagesData,
         controllMainPage,
+        controllAllTasksPage,
         controllTodayPage,
         controllUpcomingPage,
-        controllCompletePage,
         controllProjectPage,
         controllAllPages,
         ProjectPageDom,
@@ -792,8 +794,6 @@ const handleTaskButtons = (event, containerSelector) => {
     }
 }
 
-
-
 // Function to handle task completion for both mainShow and projectsTasksShow
 const handleTaskCompletion = (clickedElement) => {
     if (clickedElement.classList.contains('finishedTask')) {
@@ -863,6 +863,14 @@ detailCloseBtn.forEach(detailCloseBtns => {
 const sideInbox = document.querySelectorAll('.sideInbox');
 sideInbox.forEach(sideInboxs => {
     sideInboxs.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllTasksPage(true);
+    });
+});
+
+const sideAllTasks = document.querySelectorAll('.sideAllTasks');
+sideAllTasks.forEach(sideAllTaskss => {
+    sideAllTaskss.addEventListener('click', () => {        
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllMainPage(true);
     });

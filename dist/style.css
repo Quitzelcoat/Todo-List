@@ -45,6 +45,6 @@ h2, h3 {
     opacity: 0.7;
 }
 
-.allPages {
+.allPages, .allTasks {
     display: none;
 }
