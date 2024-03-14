@@ -337,25 +337,25 @@ const dom = (function () {
         }
     }
 
+    const controllTodayPage = (hideTodayPage = true) => {
+        const todayTasks = document.querySelector('.todayTasks');
+        if(todayTasks) {
+            todayTasks.style.display = hideTodayPage ? 'inline' : 'none';
+        }
+    }
+
+    const controllUpcomingPage = (hideUpcomingPage = true) => {
+        const upcomingTasks = document.querySelector('.upcomingTasks');
+        if(upcomingTasks) {
+            upcomingTasks.style.display = hideUpcomingPage ? 'inline' : 'none';
+        } 
+    }
+
     const controllAllTasksPage = (hideAllTaskPage = true) => {
         const allTasks = document.querySelector('.allTasks');
         if(allTasks) {
             allTasks.style.display = hideAllTaskPage ? 'inline' : 'none';
         }
-    }
-
-    const controllTodayPage = (hideTodayPage = true) => {
-        const todayPage = document.querySelector('.todayPage');
-        if(todayPage) {
-            todayPage.style.display = hideTodayPage ? 'inline' : 'none';
-        }
-    }
-
-    const controllUpcomingPage = (hideUpcomingPage = true) => {
-        const upcomingPage = document.querySelector('.upcomingPage');
-        if(upcomingPage) {
-            upcomingPage.style.display = hideUpcomingPage ? 'inline' : 'none';
-        } 
     }
 
     const controllProjectPage = (controllProjectPages = true) => {
@@ -367,10 +367,14 @@ const dom = (function () {
 
     const controllAllPages = (hideInboxPages = true) => {
         const mainPage = document.querySelector('.mainPage');
+        const todayTasks = document.querySelector('.todayTasks');
+        const upcomingTasks = document.querySelector('.upcomingTasks');
         const allTasks = document.querySelector('.allTasks');
         const projectPage = document.querySelector('.projectPage');
 
         if (mainPage) { mainPage.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (todayTasks) { todayTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (upcomingTasks) { upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
         if (allTasks) { allTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
         if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
     };
@@ -497,6 +501,18 @@ const projectManager = (function () {
     let projectsArray = [];
     let projectCounter = 1;
 
+    // Function to save projects (and todos) to localStorage
+    const saveToLocalStorage = () => {
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
+    };
+
+    const loadFromLocalStorage = () => {
+        const projectData = localStorage.getItem('projects');
+        if (projectData) {
+            projectsArray = JSON.parse(projectData);
+        }
+    };
+
     // store created project tasks
     const createProjectTasks = (finished, title, description, priority, date, projectName) => {
         const project = findProjectByName(projectName);
@@ -514,6 +530,9 @@ const projectManager = (function () {
         const newTask = { id: projectCounter++, finished, title, description, priority, date, project: projectName };
         project.tasks.push(newTask);
         console.log("Updated projectsArray:", projectsArray);
+
+        saveToLocalStorage();
+
         return newTask;
     };
 
@@ -530,6 +549,9 @@ const projectManager = (function () {
             pages: []
         };
         projectsArray.push(newProject);
+
+        saveToLocalStorage();
+
         return newProject;
     };
 
@@ -561,6 +583,9 @@ const projectManager = (function () {
         project.tasks[taskIndex] = updatedTask;
         
         console.log("Updated project tasks:", project.tasks);
+
+        saveToLocalStorage();
+
         return updatedTask;
     };
 
@@ -569,6 +594,9 @@ const projectManager = (function () {
         const projectIndex = projectsArray.findIndex(project => project.name === name);
         if (projectIndex !== -1) {
             const deletedProject = projectsArray.splice(projectIndex, 1);
+
+            saveToLocalStorage();
+
             return deletedProject[0];
         } else {
             console.log(`Project "${name}" not found.`);
@@ -586,12 +614,14 @@ const projectManager = (function () {
         const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
         if (taskIndex !== -1) {
             const deletedTask = project.tasks.splice(taskIndex, 1);
+
+            saveToLocalStorage();
+
             return deletedTask;
-        } else {
-            console.log(`Task with ID "${id}" not found in project "${projectName}".`);
-            return null;
         }
     };
+
+    loadFromLocalStorage();
 
     return {
         projectsArray,
@@ -864,7 +894,23 @@ const sideInbox = document.querySelectorAll('.sideInbox');
 sideInbox.forEach(sideInboxs => {
     sideInboxs.addEventListener('click', () => {        
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllTasksPage(true);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllMainPage(true);
+    });
+});
+
+const sideToday = document.querySelectorAll('.sideToday');
+sideToday.forEach(sideTodays => {
+    sideTodays.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllTodayPage(true);
+    });
+});
+
+const sideUpcoming = document.querySelectorAll('.sideUpcoming');
+sideUpcoming.forEach(sideUpcomings => {
+    sideUpcomings.addEventListener('click', () => {        
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllUpcomingPage(true);
     });
 });
 
@@ -872,7 +918,7 @@ const sideAllTasks = document.querySelectorAll('.sideAllTasks');
 sideAllTasks.forEach(sideAllTaskss => {
     sideAllTaskss.addEventListener('click', () => {        
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllPages(false);
-        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllMainPage(true);
+        _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.controllAllTasksPage(true);
     });
 });
 
@@ -1045,19 +1091,17 @@ DOM MINIPULATION:
     12. Create priority sections, when click show the priority on todo and on detail dialog.(Done).
     13. Make the edit, (delete) functions work for the tasks (Check later). (Done).
         a. when click on the btn should show the dialog.(Done).
-        b. store the data of the task inside an object and push it inside an array when taskEdit
-        c. btn is clicked.(Done)
-        d. Access the data from the array inside the dialog when click on editBtn.(Done)
-        e. And when the add btn is clicked push the edit data from the dialog and update
-            the task.(Done)
+        b. store the data of the task inside an object and push it inside an array when taskEdit btn is clicked.(Done)
+        c. Access the data from the array inside the dialog when click on editBtn.(Done)
+        d. And when the add btn is clicked push the edit data from the dialog and update the task.(Done)
     14. Make the calander working so it shows the date selected on the task and inside the description. (Done)
+    15. Make the check work. (Done)
 
     15. Make the data Storage for it working.
 
-    16. Now Put todo's tasks in the right pages when created.
-    17. Put todo's in the rest of the right pages when created. Also make the check work.
-    18. Do the remaining css and other stuff.
-    19. Finally move to notes and make a dialogue for them to make them working.
+    16. Now Put todo's tasks of Inbox and project pages in the all tasks when created.
+    17. Do the remaining css and other stuff.
+    18. Make the date work that if date is today's it will go to today, all Tasks and where task is created.
 
 */
 })();

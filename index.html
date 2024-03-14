@@ -32,6 +32,24 @@
                 </div>
             </div>
 
+            <div id="mainContent" class="todayTasks">
+                <div class="todayTasksTitle">
+                    <h2>Today Tasks</h2>
+                </div>
+                <div class="todayTasksShow">
+                    
+                </div>
+            </div>
+
+            <div id="mainContent" class="upcomingTasks">
+                <div class="upcomingTasksTitle">
+                    <h2>Upcoming Tasks</h2>
+                </div>
+                <div class="upcomingTasksShow">
+                    
+                </div>
+            </div>
+
             <div id="mainContent" class="allTasks">
                 <div class="allTasksTitle">
                     <h2>All Tasks</h2>
@@ -65,7 +83,7 @@
 
             <!-- Task Page main Dialog -->
             <dialog class="mainDialog">
-                <form>
+                <form id="mainPageDialog">
                     <div class="title">
                         <label class="todo-title" for="todoTitle">Task Name</label>
                         <input type="text" name="todoTitle" id="todoTitle">
@@ -101,7 +119,7 @@
 
             <!-- New Project Pages Title Dialog -->
             <dialog class="projectDialog">
-                <form>
+                <form id="projectCreate">
                     <div class="title">
                         <label for="projectTtile">Create Project</label>
                         <input type="text" name="projectTtile" id="projectTtile">
@@ -113,7 +131,7 @@
 
             <!-- Pages Task Creation Dialog -->
             <dialog class="pagesDialog">
-                <form>
+                <form id="projectPageDialog">
                     <div class="title">
                         <label class="todo-title" for="todoPagesTitle">Task Name</label>
                         <input type="text" name="todoPagesTitle" id="todoPagesTitle">
@@ -149,7 +167,7 @@
 
             <!-- Task Detail Dialog -->
             <dialog class="taskDetailDailog">
-                <form>
+                <form id="eachTaskDailog">
                     <div class="titleDetails">
                         <h3>Title:</h3>
                         <div class="taskDetailTitle"></div>
@@ -190,6 +208,12 @@
                     </div>
                     <div class="side sideAllTasks">
                         <p>All Tasks</p>
+                    </div>
+                    <div class="side sideToday">
+                        <p>Today Tasks</p>
+                    </div>
+                    <div class="side sideUpcoming">
+                        <p>Upcoming Tasks</p>
                     </div>
                 </div>
                 <div class="newProject">
