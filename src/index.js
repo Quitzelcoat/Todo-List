@@ -189,7 +189,23 @@ const sideInbox = document.querySelectorAll('.sideInbox');
 sideInbox.forEach(sideInboxs => {
     sideInboxs.addEventListener('click', () => {        
         dom.controllAllPages(false);
-        dom.controllAllTasksPage(true);
+        dom.controllMainPage(true);
+    });
+});
+
+const sideToday = document.querySelectorAll('.sideToday');
+sideToday.forEach(sideTodays => {
+    sideTodays.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllTodayPage(true);
+    });
+});
+
+const sideUpcoming = document.querySelectorAll('.sideUpcoming');
+sideUpcoming.forEach(sideUpcomings => {
+    sideUpcomings.addEventListener('click', () => {        
+        dom.controllAllPages(false);
+        dom.controllUpcomingPage(true);
     });
 });
 
@@ -197,7 +213,7 @@ const sideAllTasks = document.querySelectorAll('.sideAllTasks');
 sideAllTasks.forEach(sideAllTaskss => {
     sideAllTaskss.addEventListener('click', () => {        
         dom.controllAllPages(false);
-        dom.controllMainPage(true);
+        dom.controllAllTasksPage(true);
     });
 });
 
@@ -370,18 +386,16 @@ DOM MINIPULATION:
     12. Create priority sections, when click show the priority on todo and on detail dialog.(Done).
     13. Make the edit, (delete) functions work for the tasks (Check later). (Done).
         a. when click on the btn should show the dialog.(Done).
-        b. store the data of the task inside an object and push it inside an array when taskEdit
-        c. btn is clicked.(Done)
-        d. Access the data from the array inside the dialog when click on editBtn.(Done)
-        e. And when the add btn is clicked push the edit data from the dialog and update
-            the task.(Done)
+        b. store the data of the task inside an object and push it inside an array when taskEdit btn is clicked.(Done)
+        c. Access the data from the array inside the dialog when click on editBtn.(Done)
+        d. And when the add btn is clicked push the edit data from the dialog and update the task.(Done)
     14. Make the calander working so it shows the date selected on the task and inside the description. (Done)
+    15. Make the check work. (Done)
 
     15. Make the data Storage for it working.
 
-    16. Now Put todo's tasks in the right pages when created.
-    17. Put todo's in the rest of the right pages when created. Also make the check work.
-    18. Do the remaining css and other stuff.
-    19. Finally move to notes and make a dialogue for them to make them working.
+    16. Now Put todo's tasks of Inbox and project pages in the all tasks when created.
+    17. Do the remaining css and other stuff.
+    18. Make the date work that if date is today's it will go to today, all Tasks and where task is created.
 
 */

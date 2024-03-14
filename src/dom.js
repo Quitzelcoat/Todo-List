@@ -257,25 +257,25 @@ export const dom = (function () {
         }
     }
 
+    const controllTodayPage = (hideTodayPage = true) => {
+        const todayTasks = document.querySelector('.todayTasks');
+        if(todayTasks) {
+            todayTasks.style.display = hideTodayPage ? 'inline' : 'none';
+        }
+    }
+
+    const controllUpcomingPage = (hideUpcomingPage = true) => {
+        const upcomingTasks = document.querySelector('.upcomingTasks');
+        if(upcomingTasks) {
+            upcomingTasks.style.display = hideUpcomingPage ? 'inline' : 'none';
+        } 
+    }
+
     const controllAllTasksPage = (hideAllTaskPage = true) => {
         const allTasks = document.querySelector('.allTasks');
         if(allTasks) {
             allTasks.style.display = hideAllTaskPage ? 'inline' : 'none';
         }
-    }
-
-    const controllTodayPage = (hideTodayPage = true) => {
-        const todayPage = document.querySelector('.todayPage');
-        if(todayPage) {
-            todayPage.style.display = hideTodayPage ? 'inline' : 'none';
-        }
-    }
-
-    const controllUpcomingPage = (hideUpcomingPage = true) => {
-        const upcomingPage = document.querySelector('.upcomingPage');
-        if(upcomingPage) {
-            upcomingPage.style.display = hideUpcomingPage ? 'inline' : 'none';
-        } 
     }
 
     const controllProjectPage = (controllProjectPages = true) => {
@@ -287,10 +287,14 @@ export const dom = (function () {
 
     const controllAllPages = (hideInboxPages = true) => {
         const mainPage = document.querySelector('.mainPage');
+        const todayTasks = document.querySelector('.todayTasks');
+        const upcomingTasks = document.querySelector('.upcomingTasks');
         const allTasks = document.querySelector('.allTasks');
         const projectPage = document.querySelector('.projectPage');
 
         if (mainPage) { mainPage.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (todayTasks) { todayTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
+        if (upcomingTasks) { upcomingTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
         if (allTasks) { allTasks.style.display = hideInboxPages ? 'inline' : 'none'; }
         if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
     };

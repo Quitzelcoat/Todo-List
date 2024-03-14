@@ -2,6 +2,18 @@ export const projectManager = (function () {
     let projectsArray = [];
     let projectCounter = 1;
 
+    // Function to save projects (and todos) to localStorage
+    const saveToLocalStorage = () => {
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
+    };
+
+    const loadFromLocalStorage = () => {
+        const projectData = localStorage.getItem('projects');
+        if (projectData) {
+            projectsArray = JSON.parse(projectData);
+        }
+    };
+
     // store created project tasks
     const createProjectTasks = (finished, title, description, priority, date, projectName) => {
         const project = findProjectByName(projectName);
@@ -19,6 +31,9 @@ export const projectManager = (function () {
         const newTask = { id: projectCounter++, finished, title, description, priority, date, project: projectName };
         project.tasks.push(newTask);
         console.log("Updated projectsArray:", projectsArray);
+
+        saveToLocalStorage();
+
         return newTask;
     };
 
@@ -35,6 +50,9 @@ export const projectManager = (function () {
             pages: []
         };
         projectsArray.push(newProject);
+
+        saveToLocalStorage();
+
         return newProject;
     };
 
@@ -66,6 +84,9 @@ export const projectManager = (function () {
         project.tasks[taskIndex] = updatedTask;
         
         console.log("Updated project tasks:", project.tasks);
+
+        saveToLocalStorage();
+
         return updatedTask;
     };
 
@@ -74,6 +95,9 @@ export const projectManager = (function () {
         const projectIndex = projectsArray.findIndex(project => project.name === name);
         if (projectIndex !== -1) {
             const deletedProject = projectsArray.splice(projectIndex, 1);
+
+            saveToLocalStorage();
+
             return deletedProject[0];
         } else {
             console.log(`Project "${name}" not found.`);
@@ -91,12 +115,14 @@ export const projectManager = (function () {
         const taskIndex = project.tasks.findIndex(task => task.id.toString() === id);
         if (taskIndex !== -1) {
             const deletedTask = project.tasks.splice(taskIndex, 1);
+
+            saveToLocalStorage();
+
             return deletedTask;
-        } else {
-            console.log(`Task with ID "${id}" not found in project "${projectName}".`);
-            return null;
         }
     };
+
+    loadFromLocalStorage();
 
     return {
         projectsArray,
