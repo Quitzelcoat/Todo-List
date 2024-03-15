@@ -2,6 +2,10 @@ export const todoManager = (function () {
     let todoArray = [];
     let todoCounter = 1;
 
+    // Function to save projects (and todos) to localStorage
+    const saveToLocalStorage = () => {
+        localStorage.setItem('projects', JSON.stringify(projectsArray));
+    };
 
     const createTodo = (finished, title, description, priority, date, project) => {
         const existingTodo = todoArray.find(todo => todo.title === title && todo.project === project);
