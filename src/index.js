@@ -300,8 +300,10 @@ const pageTaskdata = (event) => {
 
     console.log("Selected task ID:", selectedTaskId);
     console.log("Selected project name:", selectedProjectName);
+    console.log("Stored Task:", storedTask);
 
     if (storedTask) {
+
         dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
         console.log(storedTask);
     }
