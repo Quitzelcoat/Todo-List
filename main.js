@@ -621,10 +621,11 @@ const projectManager = (function () {
         }
     };
 
-    loadFromLocalStorage();
+    // loadFromLocalStorage();
 
     return {
         projectsArray,
+        loadFromLocalStorage,
         createProjectTasks,
         createProject,
         findProjectByName,
@@ -984,7 +985,10 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-const pageTaskdata = (event) => {    
+const pageTaskdata = () => {
+
+    _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
+
     const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
@@ -1010,7 +1014,6 @@ const pageTaskdata = (event) => {
     if (storedTask) {
 
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
-        console.log(storedTask);
     }
 };
 
