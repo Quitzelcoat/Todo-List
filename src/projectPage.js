@@ -122,10 +122,11 @@ export const projectManager = (function () {
         }
     };
 
-    loadFromLocalStorage();
+    // loadFromLocalStorage();
 
     return {
         projectsArray,
+        loadFromLocalStorage,
         createProjectTasks,
         createProject,
         findProjectByName,

@@ -279,7 +279,10 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-const pageTaskdata = (event) => {    
+const pageTaskdata = () => {
+
+    projectManager.loadFromLocalStorage();
+
     const formData = dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
         finished: false,
@@ -305,7 +308,6 @@ const pageTaskdata = (event) => {
     if (storedTask) {
 
         dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
-        console.log(storedTask);
     }
 };
 
