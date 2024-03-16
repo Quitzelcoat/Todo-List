@@ -1005,8 +1005,10 @@ const pageTaskdata = (event) => {
 
     console.log("Selected task ID:", selectedTaskId);
     console.log("Selected project name:", selectedProjectName);
+    console.log("Stored Task:", storedTask);
 
     if (storedTask) {
+
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
         console.log(storedTask);
     }
