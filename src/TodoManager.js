@@ -2,6 +2,17 @@ export const todoManager = (function () {
     let todoArray = [];
     let todoCounter = 1;
 
+    // Function to save projects (and todos) to localStorage
+    const saveLocalStorageTasks = () => {
+        localStorage.setItem('todo', JSON.stringify(todoArray));
+    };
+
+    const loadTodoLocalStorage = () => {
+        const TasksData = localStorage.getItem('todo');
+        if (TasksData) {
+            todoArray = JSON.parse(TasksData);
+        }
+    };
 
     const createTodo = (finished, title, description, priority, date, project) => {
         const existingTodo = todoArray.find(todo => todo.title === title && todo.project === project);
@@ -13,6 +24,9 @@ export const todoManager = (function () {
         const todo = { id: todoCounter++, finished, title, description, priority, date, project };
         todoArray.push(todo);
         console.log(todoArray);
+
+        saveLocalStorageTasks();
+
         return todo;
     }
 
@@ -24,6 +38,9 @@ export const todoManager = (function () {
         const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };
+            
+            saveLocalStorageTasks();
+            
             return todoArray[todoIndex];
         } else {
             console.log(`Todo with ID "${id}" not found.`);
@@ -35,6 +52,9 @@ export const todoManager = (function () {
         const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             const deletedTodo = todoArray.splice(todoIndex, 1);
+
+            saveLocalStorageTasks();
+
             return deletedTodo;
         } else {
             console.log(`Todo with ID "${id}" not found.`);
@@ -44,6 +64,7 @@ export const todoManager = (function () {
 
     return {
         todoArray,
+        loadTodoLocalStorage,
         createTodo,
         findTodosByProject,
         editTodo,

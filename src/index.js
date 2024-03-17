@@ -279,9 +279,27 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-const pageTaskdata = () => {
-
+const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
+    console.log(projectManager.projectsArray)
+    projectManager.projectsArray.forEach(project => {
+        const projectContainer = document.getElementById(selectedProjectName);
+        if (projectContainer) {
+            dom.renderTodos(project.tasks, projectContainer);
+            console.log("Successfully stored");
+        } else {
+            console.log(`Project container not found for project: ${project.name}`);
+        }
+    });
+};
+
+// Call loadAndRenderTasks when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+    loadAndRenderTasks();
+});
+
+
+const pageTaskdata = () => {
 
     const formData = dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
@@ -306,7 +324,6 @@ const pageTaskdata = () => {
     console.log("Stored Task:", storedTask);
 
     if (storedTask) {
-
         dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
     }
 };

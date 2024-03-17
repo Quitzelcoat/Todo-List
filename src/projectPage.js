@@ -122,8 +122,6 @@ export const projectManager = (function () {
         }
     };
 
-    // loadFromLocalStorage();
-
     return {
         projectsArray,
         loadFromLocalStorage,
