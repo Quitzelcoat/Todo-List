@@ -16,6 +16,17 @@ const todoManager = (function () {
     let todoArray = [];
     let todoCounter = 1;
 
+    // Function to save projects (and todos) to localStorage
+    const saveLocalStorageTasks = () => {
+        localStorage.setItem('todo', JSON.stringify(todoArray));
+    };
+
+    const loadTodoLocalStorage = () => {
+        const TasksData = localStorage.getItem('todo');
+        if (TasksData) {
+            todoArray = JSON.parse(TasksData);
+        }
+    };
 
     const createTodo = (finished, title, description, priority, date, project) => {
         const existingTodo = todoArray.find(todo => todo.title === title && todo.project === project);
@@ -27,6 +38,9 @@ const todoManager = (function () {
         const todo = { id: todoCounter++, finished, title, description, priority, date, project };
         todoArray.push(todo);
         console.log(todoArray);
+
+        saveLocalStorageTasks();
+
         return todo;
     }
 
@@ -38,6 +52,9 @@ const todoManager = (function () {
         const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             todoArray[todoIndex] = { ...todoArray[todoIndex], ...newData };
+            
+            saveLocalStorageTasks();
+            
             return todoArray[todoIndex];
         } else {
             console.log(`Todo with ID "${id}" not found.`);
@@ -49,6 +66,9 @@ const todoManager = (function () {
         const todoIndex = todoArray.findIndex(todo => todo.id.toString() === id);
         if (todoIndex !== -1) {
             const deletedTodo = todoArray.splice(todoIndex, 1);
+
+            saveLocalStorageTasks();
+
             return deletedTodo;
         } else {
             console.log(`Todo with ID "${id}" not found.`);
@@ -58,6 +78,7 @@ const todoManager = (function () {
 
     return {
         todoArray,
+        loadTodoLocalStorage,
         createTodo,
         findTodosByProject,
         editTodo,
@@ -621,8 +642,6 @@ const projectManager = (function () {
         }
     };
 
-    // loadFromLocalStorage();
-
     return {
         projectsArray,
         loadFromLocalStorage,
@@ -985,9 +1004,27 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-const pageTaskdata = () => {
-
+const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
+    console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray)
+    _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
+        const projectContainer = document.getElementById(selectedProjectName);
+        if (projectContainer) {
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectContainer);
+            console.log("Successfully stored");
+        } else {
+            console.log(`Project container not found for project: ${project.name}`);
+        }
+    });
+};
+
+// Call loadAndRenderTasks when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+    loadAndRenderTasks();
+});
+
+
+const pageTaskdata = () => {
 
     const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getPagesFormData('.pagesDialog');
     const newTodoElement = {
@@ -1012,7 +1049,6 @@ const pageTaskdata = () => {
     console.log("Stored Task:", storedTask);
 
     if (storedTask) {
-
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTask], document.getElementById(selectedProjectName));
     }
 };
