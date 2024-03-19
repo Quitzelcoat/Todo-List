@@ -1023,7 +1023,6 @@ window.addEventListener('DOMContentLoaded', () => {
     loadAndRenderTasks();
 });
 
-
 const pageTaskdata = () => {
 
     const formData = _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.getPagesFormData('.pagesDialog');
