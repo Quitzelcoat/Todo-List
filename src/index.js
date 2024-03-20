@@ -293,7 +293,6 @@ const loadAndRenderTasks = () => {
     });
 };
 
-
 // Call loadAndRenderTasks when the page loads
 window.addEventListener('DOMContentLoaded', () => {
     loadAndRenderTasks();
