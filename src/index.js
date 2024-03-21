@@ -298,7 +298,6 @@ window.addEventListener('DOMContentLoaded', () => {
     loadAndRenderTasks();
 });
 
-
 const pageTaskdata = () => {
 
     const formData = dom.getPagesFormData('.pagesDialog');
