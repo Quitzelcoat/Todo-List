@@ -24,7 +24,7 @@ const todoManager = (function () {
     const loadTodoLocalStorage = () => {
         const TasksData = localStorage.getItem('todo');
         if (TasksData) {
-            todoArray = JSON.parse(TasksData);
+            todoArray.push(...JSON.parse(TasksData));
         }
     };
 
@@ -138,7 +138,6 @@ const dom = (function () {
     
         return showTask;
     };
-
 
     // Function to render tasks onto the page
     const renderTodos = (tasks, container) => {
@@ -530,7 +529,8 @@ const projectManager = (function () {
     const loadFromLocalStorage = () => {
         const projectData = localStorage.getItem('projects');
         if (projectData) {
-            projectsArray = JSON.parse(projectData);
+            projectsArray.push(...JSON.parse(projectData));
+            console.log("Data is", projectsArray);
         }
     };
 
@@ -1006,16 +1006,26 @@ projectsTasksShow.addEventListener('click', (event) => {
 
 const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
-    console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray)
+    console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
-        const projectContainer = document.getElementById(selectedProjectName);
-        if (projectContainer) {
-            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectContainer);
+        const projectTaskContainer = document.querySelector(`.projectsTasksShow`);
+        if (projectTaskContainer) {
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectTaskContainer);
             console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);
         }
+
+        const projectNames = document.querySelector(`.projectNames .${project.name}`);
+        if (projectNames) {
+            // You can render project pages here if needed
+            console.log("Found container for project pages:", project.name);
+        } else {
+            console.log(`Page container not found for project: ${project.name}`);
+        }
+
     });
+    
 };
 
 // Call loadAndRenderTasks when the page loads

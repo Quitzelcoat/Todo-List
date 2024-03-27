@@ -10,7 +10,7 @@ export const todoManager = (function () {
     const loadTodoLocalStorage = () => {
         const TasksData = localStorage.getItem('todo');
         if (TasksData) {
-            todoArray = JSON.parse(TasksData);
+            todoArray.push(...JSON.parse(TasksData));
         }
     };
 

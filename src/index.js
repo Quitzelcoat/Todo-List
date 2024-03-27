@@ -281,16 +281,26 @@ projectsTasksShow.addEventListener('click', (event) => {
 
 const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
-    console.log(projectManager.projectsArray)
+    console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
-        const projectContainer = document.getElementById(selectedProjectName);
-        if (projectContainer) {
-            dom.renderTodos(project.tasks, projectContainer);
+        const projectTaskContainer = document.querySelector(`.projectsTasksShow`);
+        if (projectTaskContainer) {
+            dom.renderTodos(project.tasks, projectTaskContainer);
             console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);
         }
+
+        const projectNames = document.querySelector(`.projectNames .${project.name}`);
+        if (projectNames) {
+            // You can render project pages here if needed
+            console.log("Found container for project pages:", project.name);
+        } else {
+            console.log(`Page container not found for project: ${project.name}`);
+        }
+
     });
+    
 };
 
 // Call loadAndRenderTasks when the page loads

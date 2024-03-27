@@ -38,7 +38,6 @@ export const dom = (function () {
         return showTask;
     };
 
-
     // Function to render tasks onto the page
     const renderTodos = (tasks, container) => {
         tasks.forEach(task => {

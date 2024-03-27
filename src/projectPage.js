@@ -10,7 +10,8 @@ export const projectManager = (function () {
     const loadFromLocalStorage = () => {
         const projectData = localStorage.getItem('projects');
         if (projectData) {
-            projectsArray = JSON.parse(projectData);
+            projectsArray.push(...JSON.parse(projectData));
+            console.log("Data is", projectsArray);
         }
     };
 
