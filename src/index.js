@@ -283,6 +283,7 @@ const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
     console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
+
         const projectTaskContainer = document.querySelector(`.projectsTasksShow`);
         if (projectTaskContainer) {
             dom.renderTodos(project.tasks, projectTaskContainer);
@@ -291,7 +292,7 @@ const loadAndRenderTasks = () => {
             console.log(`Project container not found for project: ${project.name}`);
         }
 
-        const projectNames = document.querySelector(`.projectNames .${project.name}`);
+        const projectNames = document.getElementById('projectTtile').value;
         if (projectNames) {
             // You can render project pages here if needed
             console.log("Found container for project pages:", project.name);
