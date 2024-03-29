@@ -431,7 +431,6 @@ const dom = (function () {
             const projectBtn = document.createElement('button');
             const removeProject = document.createElement('button');
 
-
             projectDiv.id = projectName;
             projectDiv.className = 'projectDiv';
             projectBtn.className = 'projectBtn';
@@ -440,7 +439,7 @@ const dom = (function () {
             projectBtn.textContent = "Create Task";
             removeProject.textContent = "Delete Project";
 
-            projectsTasksShow.appendChild(projectDiv);
+            projectsTasksShow.appendChild(projectDiv);projectsTasksShow
             projectDiv.appendChild(projectBtn);
             projectDiv.appendChild(removeProject);
         }
@@ -530,7 +529,6 @@ const projectManager = (function () {
         const projectData = localStorage.getItem('projects');
         if (projectData) {
             projectsArray.push(...JSON.parse(projectData));
-            console.log("Data is", projectsArray);
         }
     };
 
@@ -1009,22 +1007,13 @@ const loadAndRenderTasks = () => {
     console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
-        const projectTaskContainer = document.querySelector(`.projectsTasksShow`);
-        if (projectTaskContainer) {
-            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectTaskContainer);
+        const projectsTasksShow = document.querySelector(`.projectsTasksShow #${project.name}`);
+        if (projectsTasksShow) {
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);
         }
-
-        const projectNames = document.getElementById('projectTtile').value;
-        if (projectNames) {
-            // You can render project pages here if needed
-            console.log("Found container for project pages:", project.name);
-        } else {
-            console.log(`Page container not found for project: ${project.name}`);
-        }
-
     });
     
 };

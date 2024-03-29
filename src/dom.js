@@ -330,7 +330,6 @@ export const dom = (function () {
             const projectBtn = document.createElement('button');
             const removeProject = document.createElement('button');
 
-
             projectDiv.id = projectName;
             projectDiv.className = 'projectDiv';
             projectBtn.className = 'projectBtn';
@@ -339,7 +338,7 @@ export const dom = (function () {
             projectBtn.textContent = "Create Task";
             removeProject.textContent = "Delete Project";
 
-            projectsTasksShow.appendChild(projectDiv);
+            projectsTasksShow.appendChild(projectDiv);projectsTasksShow
             projectDiv.appendChild(projectBtn);
             projectDiv.appendChild(removeProject);
         }

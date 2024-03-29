@@ -284,22 +284,13 @@ const loadAndRenderTasks = () => {
     console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
 
-        const projectTaskContainer = document.querySelector(`.projectsTasksShow`);
-        if (projectTaskContainer) {
-            dom.renderTodos(project.tasks, projectTaskContainer);
+        const projectsTasksShow = document.querySelector(`.projectsTasksShow #${project.name}`);
+        if (projectsTasksShow) {
+            dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);
         }
-
-        const projectNames = document.getElementById('projectTtile').value;
-        if (projectNames) {
-            // You can render project pages here if needed
-            console.log("Found container for project pages:", project.name);
-        } else {
-            console.log(`Page container not found for project: ${project.name}`);
-        }
-
     });
     
 };

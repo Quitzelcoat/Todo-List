@@ -11,7 +11,6 @@ export const projectManager = (function () {
         const projectData = localStorage.getItem('projects');
         if (projectData) {
             projectsArray.push(...JSON.parse(projectData));
-            console.log("Data is", projectsArray);
         }
     };
 
