@@ -436,6 +436,8 @@ const dom = (function () {
             projectBtn.className = 'projectBtn';
             removeProject.className = 'removeProject';
 
+            projectDiv.setAttribute('data-project-name', projectName);
+
             projectBtn.textContent = "Create Task";
             removeProject.textContent = "Delete Project";
 
@@ -1007,7 +1009,8 @@ const loadAndRenderTasks = () => {
     console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
-        const projectsTasksShow = document.getElementById(selectedProjectName);
+        const projectsTasksShow = document.querySelector(`.projectsTasksShow [data-project-name="${project.name}"]`);
+        console.log(projectsTasksShow);
         if (projectsTasksShow) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
