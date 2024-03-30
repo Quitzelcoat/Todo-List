@@ -1007,7 +1007,7 @@ const loadAndRenderTasks = () => {
     console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
-        const projectsTasksShow = document.querySelector(`.projectsTasksShow #${project.name}`);
+        const projectsTasksShow = document.getElementById(selectedProjectName);
         if (projectsTasksShow) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
