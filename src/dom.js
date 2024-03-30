@@ -298,17 +298,16 @@ export const dom = (function () {
         if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
     };
     
-    const sidePageDivs = () => {
-        const projectTtile = document.getElementById('projectTtile').value;
+    const sidePageDivs = (projectTitle) => {
+        projectTitle = document.getElementById('projectTitle').value;
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 
         newProjectPages.className = "newProjectPages";
-
-        newProjectPages.textContent = projectTtile;
+        newProjectPages.textContent = projectTitle;
         
         projectNames.appendChild(newProjectPages);
-        
+
     };
     
     const hideProjectPages = () => {
@@ -318,6 +317,30 @@ export const dom = (function () {
         });
     };
 
+
+    const projectTasksDom = (projectName) => {
+        const projectsTasksShow = document.querySelector('.projectsTasksShow');
+        const projectDiv = document.createElement('div');
+        const projectBtn = document.createElement('button');
+        const removeProject = document.createElement('button');
+
+        projectDiv.id = projectName;
+        projectDiv.className = 'projectDiv';
+        projectBtn.className = 'projectBtn';
+        removeProject.className = 'removeProject';
+
+        projectDiv.setAttribute('data-project-name', projectName);
+
+        projectBtn.textContent = "Create Task";
+        removeProject.textContent = "Delete Project";
+
+        projectsTasksShow.appendChild(projectDiv);
+        projectDiv.appendChild(projectBtn);
+        projectDiv.appendChild(removeProject);
+    }
+
+
+
     const ProjectPageDom = (clickedElement) => {
         const projectTasksTitle = document.querySelector('.projectTasksTitle');
         const projectName = clickedElement.textContent;
@@ -325,24 +348,7 @@ export const dom = (function () {
 
         let projectDiv = document.getElementById(projectName);
         if (!projectDiv) {
-            const projectsTasksShow = document.querySelector('.projectsTasksShow');
-            projectDiv = document.createElement('div');
-            const projectBtn = document.createElement('button');
-            const removeProject = document.createElement('button');
-
-            projectDiv.id = projectName;
-            projectDiv.className = 'projectDiv';
-            projectBtn.className = 'projectBtn';
-            removeProject.className = 'removeProject';
-
-            projectDiv.setAttribute('data-project-name', projectName);
-
-            projectBtn.textContent = "Create Task";
-            removeProject.textContent = "Delete Project";
-
-            projectsTasksShow.appendChild(projectDiv);projectsTasksShow
-            projectDiv.appendChild(projectBtn);
-            projectDiv.appendChild(removeProject);
+            projectTasksDom(projectName);
         }
     
         const selectedProjectDiv = document.querySelectorAll(`#${projectName}`);
@@ -398,6 +404,7 @@ export const dom = (function () {
         controllUpcomingPage,
         controllProjectPage,
         controllAllPages,
+        projectTasksDom,
         ProjectPageDom,
         sidePageDivs,
         hideProjectPages,

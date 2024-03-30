@@ -10,7 +10,10 @@ export const projectManager = (function () {
     const loadFromLocalStorage = () => {
         const projectData = localStorage.getItem('projects');
         if (projectData) {
+            const parsedProjects = JSON.parse(projectData);
             projectsArray.push(...JSON.parse(projectData));
+            return parsedProjects;
+
         }
     };
 
@@ -124,6 +127,7 @@ export const projectManager = (function () {
 
     return {
         projectsArray,
+        saveToLocalStorage,
         loadFromLocalStorage,
         createProjectTasks,
         createProject,

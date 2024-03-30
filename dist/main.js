@@ -399,17 +399,16 @@ const dom = (function () {
         if (projectPage) { projectPage.style.display = hideInboxPages ? 'inline' : 'none'; }
     };
     
-    const sidePageDivs = () => {
-        const projectTtile = document.getElementById('projectTtile').value;
+    const sidePageDivs = (projectTitle) => {
+        projectTitle = document.getElementById('projectTitle').value;
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 
         newProjectPages.className = "newProjectPages";
-
-        newProjectPages.textContent = projectTtile;
+        newProjectPages.textContent = projectTitle;
         
         projectNames.appendChild(newProjectPages);
-        
+
     };
     
     const hideProjectPages = () => {
@@ -419,6 +418,30 @@ const dom = (function () {
         });
     };
 
+
+    const projectTasksDom = (projectName) => {
+        const projectsTasksShow = document.querySelector('.projectsTasksShow');
+        const projectDiv = document.createElement('div');
+        const projectBtn = document.createElement('button');
+        const removeProject = document.createElement('button');
+
+        projectDiv.id = projectName;
+        projectDiv.className = 'projectDiv';
+        projectBtn.className = 'projectBtn';
+        removeProject.className = 'removeProject';
+
+        projectDiv.setAttribute('data-project-name', projectName);
+
+        projectBtn.textContent = "Create Task";
+        removeProject.textContent = "Delete Project";
+
+        projectsTasksShow.appendChild(projectDiv);
+        projectDiv.appendChild(projectBtn);
+        projectDiv.appendChild(removeProject);
+    }
+
+
+
     const ProjectPageDom = (clickedElement) => {
         const projectTasksTitle = document.querySelector('.projectTasksTitle');
         const projectName = clickedElement.textContent;
@@ -426,24 +449,7 @@ const dom = (function () {
 
         let projectDiv = document.getElementById(projectName);
         if (!projectDiv) {
-            const projectsTasksShow = document.querySelector('.projectsTasksShow');
-            projectDiv = document.createElement('div');
-            const projectBtn = document.createElement('button');
-            const removeProject = document.createElement('button');
-
-            projectDiv.id = projectName;
-            projectDiv.className = 'projectDiv';
-            projectBtn.className = 'projectBtn';
-            removeProject.className = 'removeProject';
-
-            projectDiv.setAttribute('data-project-name', projectName);
-
-            projectBtn.textContent = "Create Task";
-            removeProject.textContent = "Delete Project";
-
-            projectsTasksShow.appendChild(projectDiv);projectsTasksShow
-            projectDiv.appendChild(projectBtn);
-            projectDiv.appendChild(removeProject);
+            projectTasksDom(projectName);
         }
     
         const selectedProjectDiv = document.querySelectorAll(`#${projectName}`);
@@ -499,6 +505,7 @@ const dom = (function () {
         controllUpcomingPage,
         controllProjectPage,
         controllAllPages,
+        projectTasksDom,
         ProjectPageDom,
         sidePageDivs,
         hideProjectPages,
@@ -530,7 +537,10 @@ const projectManager = (function () {
     const loadFromLocalStorage = () => {
         const projectData = localStorage.getItem('projects');
         if (projectData) {
+            const parsedProjects = JSON.parse(projectData);
             projectsArray.push(...JSON.parse(projectData));
+            return parsedProjects;
+
         }
     };
 
@@ -644,6 +654,7 @@ const projectManager = (function () {
 
     return {
         projectsArray,
+        saveToLocalStorage,
         loadFromLocalStorage,
         createProjectTasks,
         createProject,
@@ -954,7 +965,7 @@ const newProjectBtn = document.querySelectorAll('.newProjectBtn');
 newProjectBtn.forEach(newProjectBtns => {
     newProjectBtns.addEventListener('click', () => {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.sidePageDivs();
-        document.getElementById('projectTtile').value = '';
+        document.getElementById('projectTitle').value = '';
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.closeProjectPages();
     });
 });
@@ -1010,7 +1021,12 @@ const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
         const projectsTasksShow = document.querySelector(`.projectsTasksShow [data-project-name="${project.name}"]`);
-        console.log(projectsTasksShow);
+        
+        if (!projectsTasksShow) {
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.sidePageDivs(project.name);
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.projectTasksDom(project.name);
+        }
+
         if (projectsTasksShow) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
@@ -1018,7 +1034,6 @@ const loadAndRenderTasks = () => {
             console.log(`Project container not found for project: ${project.name}`);
         }
     });
-    
 };
 
 // Call loadAndRenderTasks when the page loads

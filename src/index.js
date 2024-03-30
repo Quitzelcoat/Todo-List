@@ -229,7 +229,7 @@ const newProjectBtn = document.querySelectorAll('.newProjectBtn');
 newProjectBtn.forEach(newProjectBtns => {
     newProjectBtns.addEventListener('click', () => {
         dom.sidePageDivs();
-        document.getElementById('projectTtile').value = '';
+        document.getElementById('projectTitle').value = '';
         dom.closeProjectPages();
     });
 });
@@ -285,7 +285,12 @@ const loadAndRenderTasks = () => {
     projectManager.projectsArray.forEach(project => {
 
         const projectsTasksShow = document.querySelector(`.projectsTasksShow [data-project-name="${project.name}"]`);
-        console.log(projectsTasksShow);
+        
+        if (!projectsTasksShow) {
+            dom.sidePageDivs(project.name);
+            dom.projectTasksDom(project.name);
+        }
+
         if (projectsTasksShow) {
             dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
@@ -293,7 +298,6 @@ const loadAndRenderTasks = () => {
             console.log(`Project container not found for project: ${project.name}`);
         }
     });
-    
 };
 
 // Call loadAndRenderTasks when the page loads
