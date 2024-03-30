@@ -284,7 +284,8 @@ const loadAndRenderTasks = () => {
     console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
 
-        const projectsTasksShow = document.getElementById(selectedProjectName);
+        const projectsTasksShow = document.querySelector(`.projectsTasksShow [data-project-name="${project.name}"]`);
+        console.log(projectsTasksShow);
         if (projectsTasksShow) {
             dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");

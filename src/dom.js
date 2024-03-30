@@ -335,6 +335,8 @@ export const dom = (function () {
             projectBtn.className = 'projectBtn';
             removeProject.className = 'removeProject';
 
+            projectDiv.setAttribute('data-project-name', projectName);
+
             projectBtn.textContent = "Create Task";
             removeProject.textContent = "Delete Project";
 
