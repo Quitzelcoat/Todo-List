@@ -279,7 +279,6 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-
 const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
     console.log(projectManager.projectsArray);
@@ -300,7 +299,6 @@ const loadAndRenderTasks = () => {
         }
     });
 };
-
 
 // Call loadAndRenderTasks when the page loads
 window.addEventListener('DOMContentLoaded', () => {
