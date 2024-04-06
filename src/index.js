@@ -284,14 +284,15 @@ const loadAndRenderTasks = () => {
     console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
 
-        const projectsTasksShow = document.querySelector(`.projectsTasksShow [data-project-name="${project.name}"]`);
+        const projectsTasksShow = document.querySelector(`[data-project-name="${project.name}"]`);
+        const projectTasksTitle = document.querySelector('.projectTasksTitle');
         
         if (!projectsTasksShow) {
             dom.sidePageDivs(project.name);
             dom.projectTasksDom(project.name);
         }
 
-        if (projectsTasksShow) {
+        if (projectTasksTitle ) {
             dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
         } else {

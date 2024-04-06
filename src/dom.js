@@ -299,7 +299,9 @@ export const dom = (function () {
     };
     
     const sidePageDivs = (projectTitle) => {
-        projectTitle = document.getElementById('projectTitle').value;
+        if (!projectTitle) {
+            projectTitle = document.getElementById('projectTitle').value;
+        }
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 
