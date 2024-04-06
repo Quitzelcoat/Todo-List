@@ -400,7 +400,9 @@ const dom = (function () {
     };
     
     const sidePageDivs = (projectTitle) => {
-        projectTitle = document.getElementById('projectTitle').value;
+        if (!projectTitle) {
+            projectTitle = document.getElementById('projectTitle').value;
+        }
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 
@@ -1015,20 +1017,20 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-
 const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
     console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
-        const projectsTasksShow = document.querySelector(`.projectsTasksShow [data-project-name="${project.name}"]`);
+        const projectsTasksShow = document.querySelector(`[data-project-name="${project.name}"]`);
+        const projectTasksTitle = document.querySelector('.projectTasksTitle');
         
         if (!projectsTasksShow) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.sidePageDivs(project.name);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.projectTasksDom(project.name);
         }
 
-        if (projectsTasksShow) {
+        if (projectTasksTitle ) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectsTasksShow);
             console.log("Successfully stored");
         } else {
@@ -1036,7 +1038,6 @@ const loadAndRenderTasks = () => {
         }
     });
 };
-
 
 // Call loadAndRenderTasks when the page loads
 window.addEventListener('DOMContentLoaded', () => {
