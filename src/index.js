@@ -278,8 +278,7 @@ projectsTasksShow.addEventListener('click', (event) => {
         dom.clearPagesData();
     }
 });
-
-
+ 
 const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
     console.log(projectManager.projectsArray);
@@ -301,7 +300,6 @@ const loadAndRenderTasks = () => {
         }
     });
 };
-
 
 // Call loadAndRenderTasks when the page loads
 window.addEventListener('DOMContentLoaded', () => {
