@@ -302,6 +302,9 @@ export const dom = (function () {
         if (!projectTitle) {
             projectTitle = document.getElementById('projectTitle').value;
         }
+
+        console.log(projectTitle);
+
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 

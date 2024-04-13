@@ -278,22 +278,22 @@ projectsTasksShow.addEventListener('click', (event) => {
         dom.clearPagesData();
     }
 });
- 
+
 const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
     console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
 
-        const projectsTasksShow = document.querySelector(`[data-project-name="${project.name}"]`);
+        const projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
         const projectTasksTitle = document.querySelector('.projectTasksTitle');
-        
-        if (!projectsTasksShow) {
+
+        if (!projectDiv) {
             dom.sidePageDivs(project.name);
             dom.projectTasksDom(project.name);
         }
 
-        if (projectTasksTitle ) {
-            dom.renderTodos(project.tasks, projectsTasksShow);
+        if (projectDiv) {
+            dom.renderTodos(project.tasks, projectDiv);
             console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);

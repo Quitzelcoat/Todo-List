@@ -403,6 +403,9 @@ const dom = (function () {
         if (!projectTitle) {
             projectTitle = document.getElementById('projectTitle').value;
         }
+
+        console.log(projectTitle);
+
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 
@@ -1016,22 +1019,22 @@ projectsTasksShow.addEventListener('click', (event) => {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.clearPagesData();
     }
 });
- 
+
 const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
     console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
-        const projectsTasksShow = document.querySelector(`[data-project-name="${project.name}"]`);
+        const projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
         const projectTasksTitle = document.querySelector('.projectTasksTitle');
-        
-        if (!projectsTasksShow) {
+
+        if (!projectDiv) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.sidePageDivs(project.name);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.projectTasksDom(project.name);
         }
 
-        if (projectTasksTitle ) {
-            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectsTasksShow);
+        if (projectDiv) {
+            _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectDiv);
             console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);
