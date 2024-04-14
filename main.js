@@ -1033,7 +1033,9 @@ const loadAndRenderTasks = () => {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.projectTasksDom(project.name);
         }
 
+        console.log("projectDiv:", projectDiv);
         if (projectDiv) {
+            console.log("Rendering tasks for project:", project.name);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectDiv);
             console.log("Successfully stored");
         } else {
