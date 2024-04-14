@@ -292,7 +292,9 @@ const loadAndRenderTasks = () => {
             dom.projectTasksDom(project.name);
         }
 
+        console.log("projectDiv:", projectDiv);
         if (projectDiv) {
+            console.log("Rendering tasks for project:", project.name);
             dom.renderTodos(project.tasks, projectDiv);
             console.log("Successfully stored");
         } else {
