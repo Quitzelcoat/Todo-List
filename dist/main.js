@@ -1020,6 +1020,7 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
+
 const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
     console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
@@ -1043,6 +1044,7 @@ const loadAndRenderTasks = () => {
         }
     });
 };
+
 
 // Call loadAndRenderTasks when the page loads
 window.addEventListener('DOMContentLoaded', () => {
