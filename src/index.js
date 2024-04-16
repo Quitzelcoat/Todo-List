@@ -279,18 +279,19 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-
 const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
     console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
 
         const projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
-        const projectTasksTitle = document.querySelector('.projectTasksTitle');
 
         if (!projectDiv) {
             dom.sidePageDivs(project.name);
             dom.projectTasksDom(project.name);
+            console.log("Not present");
+
+            projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
         }
 
         console.log("projectDiv:", projectDiv);
@@ -303,7 +304,6 @@ const loadAndRenderTasks = () => {
         }
     });
 };
-
 
 // Call loadAndRenderTasks when the page loads
 window.addEventListener('DOMContentLoaded', () => {
