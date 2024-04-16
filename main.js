@@ -1020,18 +1020,19 @@ projectsTasksShow.addEventListener('click', (event) => {
     }
 });
 
-
 const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
     console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
         const projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
-        const projectTasksTitle = document.querySelector('.projectTasksTitle');
 
         if (!projectDiv) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.sidePageDivs(project.name);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.projectTasksDom(project.name);
+            console.log("Not present");
+
+            projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
         }
 
         console.log("projectDiv:", projectDiv);
@@ -1044,7 +1045,6 @@ const loadAndRenderTasks = () => {
         }
     });
 };
-
 
 // Call loadAndRenderTasks when the page loads
 window.addEventListener('DOMContentLoaded', () => {
