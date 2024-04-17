@@ -2,10 +2,6 @@ import{ projectManager } from './projectPage.js'
 import { todoManager } from './TodoManager';
 import { dom } from './dom.js';
 
-// TodoManager file
-const newCreateTodo = todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
-console.log(newCreateTodo);
-
 // dom file
 const newTaskBtn = document.querySelectorAll('.newTaskBtn');
 newTaskBtn.forEach(newTaskBtns => {
@@ -45,7 +41,6 @@ const inboxTaskdata = () => {
 
     if (storedTodo) {
         dom.renderTodos([storedTodo], document.querySelector('.mainShow'));
-        console.log(storedTodo);
     }
 };
 
@@ -133,8 +128,6 @@ const handleTaskCompletion = (clickedElement) => {
         }
     }
 };
-
-
 
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
@@ -281,24 +274,19 @@ projectsTasksShow.addEventListener('click', (event) => {
 
 const loadAndRenderTasks = () => {
     projectManager.loadFromLocalStorage();
-    console.log(projectManager.projectsArray);
     projectManager.projectsArray.forEach(project => {
 
-        const projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
+        let projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
 
         if (!projectDiv) {
             dom.sidePageDivs(project.name);
             dom.projectTasksDom(project.name);
-            console.log("Not present");
 
             projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
         }
 
-        console.log("projectDiv:", projectDiv);
         if (projectDiv) {
-            console.log("Rendering tasks for project:", project.name);
             dom.renderTodos(project.tasks, projectDiv);
-            console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);
         }

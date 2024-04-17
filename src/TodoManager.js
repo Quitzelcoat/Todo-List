@@ -23,7 +23,6 @@ export const todoManager = (function () {
 
         const todo = { id: todoCounter++, finished, title, description, priority, date, project };
         todoArray.push(todo);
-        console.log(todoArray);
 
         saveLocalStorageTasks();
 

@@ -37,7 +37,6 @@ const todoManager = (function () {
 
         const todo = { id: todoCounter++, finished, title, description, priority, date, project };
         todoArray.push(todo);
-        console.log(todoArray);
 
         saveLocalStorageTasks();
 
@@ -404,8 +403,6 @@ const dom = (function () {
             projectTitle = document.getElementById('projectTitle').value;
         }
 
-        console.log(projectTitle);
-
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 
@@ -743,10 +740,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// TodoManager file
-const newCreateTodo = _TodoManager__WEBPACK_IMPORTED_MODULE_1__.todoManager.createTodo(false, "Finish report", "Complete the quarterly report", "High", new Date(), "Work");
-console.log(newCreateTodo);
-
 // dom file
 const newTaskBtn = document.querySelectorAll('.newTaskBtn');
 newTaskBtn.forEach(newTaskBtns => {
@@ -786,7 +779,6 @@ const inboxTaskdata = () => {
 
     if (storedTodo) {
         _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos([storedTodo], document.querySelector('.mainShow'));
-        console.log(storedTodo);
     }
 };
 
@@ -874,8 +866,6 @@ const handleTaskCompletion = (clickedElement) => {
         }
     }
 };
-
-
 
 const mainShow = document.querySelector('.mainShow');
 mainShow.addEventListener('click', (event) => {
@@ -1022,24 +1012,19 @@ projectsTasksShow.addEventListener('click', (event) => {
 
 const loadAndRenderTasks = () => {
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.loadFromLocalStorage();
-    console.log(_projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray);
     _projectPage_js__WEBPACK_IMPORTED_MODULE_0__.projectManager.projectsArray.forEach(project => {
 
-        const projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
+        let projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
 
         if (!projectDiv) {
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.sidePageDivs(project.name);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.projectTasksDom(project.name);
-            console.log("Not present");
 
             projectDiv = document.querySelector(`[data-project-name="${project.name}"]`);
         }
 
-        console.log("projectDiv:", projectDiv);
         if (projectDiv) {
-            console.log("Rendering tasks for project:", project.name);
             _dom_js__WEBPACK_IMPORTED_MODULE_2__.dom.renderTodos(project.tasks, projectDiv);
-            console.log("Successfully stored");
         } else {
             console.log(`Project container not found for project: ${project.name}`);
         }

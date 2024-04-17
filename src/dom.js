@@ -303,8 +303,6 @@ export const dom = (function () {
             projectTitle = document.getElementById('projectTitle').value;
         }
 
-        console.log(projectTitle);
-
         const projectNames = document.querySelector('.projectNames');
         const newProjectPages = document.createElement('li');
 
